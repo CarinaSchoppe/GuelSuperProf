@@ -34,11 +34,7 @@ public class Bank {
         return accountNumber; // Kontonummer des neuen Kontos zurückgeben
     }
 
-    private void expandArray() {
-        BankAccount[] newArray = new BankAccount[accounts.length * 2]; // Array verdoppeln
-        System.arraycopy(accounts, 0, newArray, 0, accounts.length); // Konten ins neue Array kopieren
-        accounts = newArray; // Neues Array als aktuelles Array setzen
-    }
+    public static final int TWO = 2;
 
     // Methode zum Löschen eines Bankkontos
     public boolean removeAccount(int accountNumber) {
@@ -60,10 +56,11 @@ public class Bank {
         }
         return false; // Konto nicht gefunden
     }
-
-    private void shrinkArray() {
-        BankAccount[] newArray = new BankAccount[accounts.length / 2]; // Array halbieren
-        System.arraycopy(accounts, 0, newArray, 0, size()); // Konten ins neue Array kopieren
+    public static final int MINIMUM = 0;
+    
+    private void expandArray() {
+        BankAccount[] newArray = new BankAccount[accounts.length * TWO]; // Array verdoppeln
+        System.arraycopy(accounts, 0, newArray, 0, accounts.length); // Konten ins neue Array kopieren
         accounts = newArray; // Neues Array als aktuelles Array setzen
     }
 
@@ -88,9 +85,15 @@ public class Bank {
         return accounts.length;
     }
 
+    private void shrinkArray() {
+        BankAccount[] newArray = new BankAccount[accounts.length / TWO]; // Array halbieren
+        System.arraycopy(accounts, MINIMUM, newArray, MINIMUM, size()); // Konten ins neue Array kopieren
+        accounts = newArray; // Neues Array als aktuelles Array setzen
+    }
+
     // Methode zur Berechnung der Anzahl der besetzten Array-Felder (Konten)
     public int size() {
-        int count = 0;
+        int count = MINIMUM;
         for (BankAccount account : accounts) {
             if (account != null) {
                 count++;
@@ -100,7 +103,7 @@ public class Bank {
     }
 
     public boolean internalTransfer(int fromAccountNumber, int toAccountNumber, int amount) {
-        if (amount <= 0) {
+        if (amount <= MINIMUM) {
             return false;
         }
         BankAccount fromAccount = getAccount(fromAccountNumber);

@@ -37,7 +37,7 @@ public class InputHandler {
      */
     public InputHandler(TicTacToe ticTacToe, boolean useAI, Scanner scanner) {
         this.ticTacToe = ticTacToe;
-        MAX_POSITION = Board.SIZE * Board.SIZE - 1;
+        MAX_POSITION = Board.size * Board.size - 1;
         this.useAI = useAI;
         this.scanner = scanner;
     }

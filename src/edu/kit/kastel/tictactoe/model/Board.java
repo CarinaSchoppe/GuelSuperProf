@@ -18,26 +18,26 @@ import java.util.StringJoiner;
 public class Board {
 
     private static final int DIVISOR = 2;
-    public static int SIZE = 4;
-    public static int TOKENS = 0;
-    private static int WIN_CRIT = 3;
-    private static int MAX_TOKENS = 9;
+    public static int size = 4;
+    public static int tokens = 0;
+    private static int winCrit = 3;
+    private static int maxTokens = 9;
     private static final Queue<Integer> SET_TOKENS = new ArrayDeque<>();
 
-    private final Entry[] entries = new Entry[SIZE * SIZE];
+    private final Entry[] entries = new Entry[size * size];
 
     /**
      * Creates a new instance of a board. All entries are {@link Entry#EMPTY} by default
      */
     public Board(int size, int winCrit, int maxTokens) {
-        Board.SIZE = size > 9 || size < 3 ? 3 : size;
-        Board.WIN_CRIT = winCrit > size ? size : winCrit < 3 ? 3 : winCrit;
-        Board.MAX_TOKENS = maxTokens > 81 || maxTokens < 9 ? 81 : maxTokens;
+        Board.size = size > 9 || size < 3 ? 3 : size;
+        Board.winCrit = winCrit > size ? size : winCrit < 3 ? 3 : winCrit;
+        Board.maxTokens = maxTokens > 81 || maxTokens < 9 ? 81 : maxTokens;
         Arrays.fill(entries, Entry.EMPTY);
     }
 
     private Board(Board board) {
-        System.arraycopy(board.entries, 0, entries, 0, SIZE * SIZE);
+        System.arraycopy(board.entries, 0, entries, 0, size * size);
     }
 
     /**
@@ -48,10 +48,10 @@ public class Board {
      */
     public void set(int pos, Entry entry) {
         entries[pos] = entry;
-        TOKENS++;
+        tokens++;
         SET_TOKENS.add(pos);
-        if (TOKENS > MAX_TOKENS) {
-            TOKENS--;
+        if (tokens > maxTokens) {
+            tokens--;
             entries[SET_TOKENS.poll()] = Entry.EMPTY;
         }
     }
@@ -92,17 +92,17 @@ public class Board {
      * @return the entry if it covers a whole line on the board, {@code null} otherwise
      */
     public Entry getSameInLine() {
-        Entry diagonalFromTopLeft = checkDiagonal(0, SIZE + 1);
+        Entry diagonalFromTopLeft = checkDiagonal(0, size + 1);
         if (diagonalFromTopLeft != null) return diagonalFromTopLeft;
 
-        Entry diagonalFromTopRight = checkDiagonal(SIZE - 1, SIZE - 1);
+        Entry diagonalFromTopRight = checkDiagonal(size - 1, size - 1);
         if (diagonalFromTopRight != null) return diagonalFromTopRight;
 
-        for (int i = 0; i < SIZE; i++) {
-            Entry horizontal = checkLine(i * SIZE, 1);
+        for (int i = 0; i < size; i++) {
+            Entry horizontal = checkLine(i * size, 1);
             if (horizontal != null) return horizontal;
 
-            Entry vertical = checkLine(i, SIZE);
+            Entry vertical = checkLine(i, size);
             if (vertical != null) return vertical;
         }
 
@@ -115,7 +115,7 @@ public class Board {
             return null;
         }
 
-        for (int i = startPos; i < startPos + step * SIZE; i += step) {
+        for (int i = startPos; i < startPos + step * size; i += step) {
             if (!entries[i].equals(initial)) {
                 return null;
             }
@@ -130,7 +130,7 @@ public class Board {
             return null;
         }
 
-        for (int i = startPos; i < SIZE * SIZE; i += step) {
+        for (int i = startPos; i < size * size; i += step) {
             if (!entries[i].equals(initial)) {
                 return null;
             }
@@ -173,10 +173,10 @@ public class Board {
     @Override
     public String toString() {
         StringJoiner joiner = new StringJoiner(System.lineSeparator());
-        for (int row = 0; row < SIZE; row++) {
+        for (int row = 0; row < size; row++) {
             StringBuilder builder = new StringBuilder();
-            for (int column = 0; column < SIZE; column++) {
-                builder.append(entries[row * SIZE + column].getToken());
+            for (int column = 0; column < size; column++) {
+                builder.append(entries[row * size + column].getToken());
             }
             joiner.add(builder.toString());
         }

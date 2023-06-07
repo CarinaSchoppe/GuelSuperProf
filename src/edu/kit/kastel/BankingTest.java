@@ -3,26 +3,30 @@ package edu.kit.kastel;
 public class BankingTest {
     public static void main(String[] args) {
         // Test der Klasse BankAccount
-        BankAccount account1 = new BankAccount(123, 1);
-        BankAccount account2 = new BankAccount(123, 2);
+        int oneTwoThree = 123;
+        BankAccount account1 = new BankAccount(oneTwoThree, 1);
+        BankAccount account2 = new BankAccount(oneTwoThree, 2);
 
         // Einzahlung auf das Konto
-        account1.deposit(100);
+        int hundred = 100;
+        account1.deposit(hundred);
         System.out.println("Kontostand von Konto 1 nach Einzahlung: " + account1.getBalance());
 
         // Auszahlung vom Konto
-        boolean success = account1.withdraw(50);
+        int fity = 50;
+        boolean success = account1.withdraw(fity);
         System.out.println("Erfolgreiche Auszahlung von Konto 1: " + success);
         System.out.println("Kontostand von Konto 1 nach Auszahlung: " + account1.getBalance());
 
         // Überweisung zwischen Konten
-        success = account1.transfer(account2, 30);
+        int thirty = 30;
+        success = account1.transfer(account2, thirty);
         System.out.println("Erfolgreiche Überweisung von Konto 1 auf Konto 2: " + success);
         System.out.println("Kontostand von Konto 1 nach Überweisung: " + account1.getBalance());
         System.out.println("Kontostand von Konto 2 nach Überweisung: " + account2.getBalance());
 
         // Test der Klasse Bank
-        Bank bank = new Bank(123);
+        Bank bank = new Bank(oneTwoThree);
 
         // Konto erstellen
         int accountNumber1 = bank.createAccount();
@@ -38,8 +42,10 @@ public class BankingTest {
         boolean containsAccount = bank.containsAccount(accountNumber1);
         System.out.println("Konto 1 existiert: " + containsAccount);
 
+
+        int twenty = 20;
         // Interne Überweisung zwischen Konten der Bank
-        success = bank.internalTransfer(accountNumber2, accountNumber1, 20);
+        success = bank.internalTransfer(accountNumber2, accountNumber1, twenty);
         System.out.println("Erfolgreiche interne Überweisung von Konto 2 auf Konto 1: " + success);
 
         // Länge des Konten-Arrays und Anzahl der besetzten Felder
