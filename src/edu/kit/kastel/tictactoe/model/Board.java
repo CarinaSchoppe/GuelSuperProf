@@ -94,10 +94,10 @@ public class Board {
      * @return the entry if it covers a whole line on the board, {@code null} otherwise
      */
     public Entry getSameInLine() {
-        Entry diagonalFromTopLeft = checkDiagonal(0, size + 1);
+        Entry diagonalFromTopLeft = checkDiagonal();
         if (diagonalFromTopLeft != null) return diagonalFromTopLeft;
 
-        Entry diagonalFromTopRight = checkDiagonal(size - 1, size - 1);
+        Entry diagonalFromTopRight = checkDiagonal();
         if (diagonalFromTopRight != null) return diagonalFromTopRight;
 
         for (int i = 0; i < size; i++) {
@@ -117,28 +117,59 @@ public class Board {
             return null;
         }
 
+        int count = 0;
         for (int i = startPos; i < startPos + step * size; i += step) {
-            if (!entries[i].equals(initial)) {
-                return null;
+            if (entries[i].equals(initial)) {
+                count++;
+                if (count == winCrit) {
+                    return initial;
+                }
+            } else {
+                count = 0;
             }
         }
 
-        return initial;
+        return null;
     }
 
-    private Entry checkDiagonal(int startPos, int step) {
-        Entry initial = entries[startPos];
-        if (initial.equals(Entry.EMPTY)) {
-            return null;
-        }
-
-        for (int i = startPos; i < size * size; i += step) {
-            if (!entries[i].equals(initial)) {
-                return null;
+    private Entry checkDiagonal() {
+        // Überprüfen der Hauptdiagonalen (von links oben nach rechts unten)
+        for (int i = 0; i <= size - winCrit; i++) {
+            Entry initial = entries[i * size + i];
+            if (initial != Entry.EMPTY) {
+                int count = 1;
+                for (int j = 1; j < winCrit; j++) {
+                    if (entries[(i + j) * size + (i + j)] == initial) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                if (count == winCrit) {
+                    return initial;
+                }
             }
         }
 
-        return initial;
+        // Überprüfen der Nebendiagonalen (von rechts oben nach links unten)
+        for (int i = 0; i <= size - winCrit; i++) {
+            Entry initial = entries[i * size + (size - i - 1)];
+            if (initial != Entry.EMPTY) {
+                int count = 1;
+                for (int j = 1; j < winCrit; j++) {
+                    if (entries[(i + j) * size + (size - (i + j) - 1)] == initial) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                if (count == winCrit) {
+                    return initial;
+                }
+            }
+        }
+
+        return null;
     }
 
 
