@@ -32,9 +32,10 @@ public class Board {
     public Board(int size, int winCrit, int maxTokens) {
         Board.size = size > 9 || size < 3 ? 3 : size;
         entries = new Entry[Board.size * Board.size];
-        Board.winCrit = winCrit > size ? size : winCrit < 3 ? 3 : winCrit;
-        Board.maxTokens = maxTokens > 81 || maxTokens < 9 ? 81 : maxTokens;
+        Board.winCrit = winCrit > size || winCrit < 3 ? 3 : winCrit;
+        Board.maxTokens = maxTokens > 81 || maxTokens < 9 ? 9 : maxTokens;
         Arrays.fill(entries, Entry.EMPTY);
+        System.out.println("wincrit" + Board.winCrit);
     }
 
     private Board(Board board) {

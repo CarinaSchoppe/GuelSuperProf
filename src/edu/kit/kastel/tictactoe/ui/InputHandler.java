@@ -23,7 +23,7 @@ public class InputHandler {
     private static final String TEXT_WINNER_FORMAT = "Sieger: %s";
     private static final String TEXT_NO_WINNER = "Kein Sieger";
     private static final int ODD_NUMBERS_MODULO = 2;
-    private static int MAX_POSITION;
+    private static int maxPosition;
     private final TicTacToe ticTacToe;
     private final boolean useAI;
     private final Scanner scanner;
@@ -37,7 +37,7 @@ public class InputHandler {
      */
     public InputHandler(TicTacToe ticTacToe, boolean useAI, Scanner scanner) {
         this.ticTacToe = ticTacToe;
-        MAX_POSITION = Board.size * Board.size - 1;
+        maxPosition = Board.size * Board.size - 1;
         this.useAI = useAI;
         this.scanner = scanner;
     }
@@ -86,7 +86,7 @@ public class InputHandler {
                     continue; //deliberately ignoring exception itself as it contains no further usable information here
                 }
             }
-            if (input >= MIN_POSITION && input <= MAX_POSITION && ticTacToe.isEmpty(input)) {
+            if (input >= MIN_POSITION && input <= maxPosition && ticTacToe.isEmpty(input)) {
                 pendingInput = false;
             }
         }
