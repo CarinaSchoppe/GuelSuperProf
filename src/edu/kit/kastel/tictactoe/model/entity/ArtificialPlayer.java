@@ -52,6 +52,7 @@ public class ArtificialPlayer extends Player {
         }
 
         int preventionIndex = this.board.getWinningIndex(opponent.getToken());
+        System.out.println(preventionIndex);
         if (preventionIndex != -1) {
             return preventionIndex;
         }

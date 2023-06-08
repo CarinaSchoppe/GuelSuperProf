@@ -35,7 +35,6 @@ public class Board {
         Board.winCrit = winCrit > size || winCrit < 3 ? 3 : winCrit;
         Board.maxTokens = maxTokens > 81 || maxTokens < 9 ? 9 : maxTokens;
         Arrays.fill(entries, Entry.EMPTY);
-        System.out.println("wincrit" + Board.winCrit);
     }
 
     private Board(Board board) {
@@ -95,43 +94,72 @@ public class Board {
      * @return the entry if it covers a whole line on the board, {@code null} otherwise
      */
     public Entry getSameInLine() {
-        Entry diagonalFromTopLeft = checkDiagonal();
-        if (diagonalFromTopLeft != null) return diagonalFromTopLeft;
+        Entry checkDiagonal = checkDiagonal();
+        if (checkDiagonal != null) return checkDiagonal;
 
-        Entry diagonalFromTopRight = checkDiagonal();
-        if (diagonalFromTopRight != null) return diagonalFromTopRight;
 
-        for (int i = 0; i < size; i++) {
-            Entry horizontal = checkLine(i * size, 1);
-            if (horizontal != null) return horizontal;
+        //check for a straight line horizontally or vertically
 
-            Entry vertical = checkLine(i, size);
-            if (vertical != null) return vertical;
-        }
-
-        return null;
-    }
-
-    private Entry checkLine(int startPos, int step) {
-        Entry initial = entries[startPos];
-        if (initial.equals(Entry.EMPTY)) {
-            return null;
-        }
-
+        //convert the 1d array with (size*size) to a 2d array
+        Entry[][] twoDArray = new Entry[size][size];
         int count = 0;
-        for (int i = startPos; i < startPos + step * size; i += step) {
-            if (entries[i].equals(initial)) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                twoDArray[i][j] = entries[count];
                 count++;
-                if (count == winCrit) {
-                    return initial;
+            }
+        }
+
+        //check for a straight line horizontally in the amount of winCrit
+        for (int i = 0; i < size; i++) {
+            int countX = 0;
+            int countO = 0;
+            for (int j = 0; j < size; j++) {
+                if (twoDArray[i][j] == Entry.X) {
+                    countX++;
+                    countO = 0;
+                } else if (twoDArray[i][j] == Entry.O) {
+                    countO++;
+                    countX = 0;
+                } else {
+                    countX = 0;
+                    countO = 0;
                 }
-            } else {
-                count = 0;
+                if (countX == winCrit) {
+                    return Entry.X;
+                } else if (countO == winCrit) {
+                    return Entry.O;
+                }
+            }
+
+        }
+
+        //check for a straight line vertically in the amount of winCrit
+        for (int i = 0; i < size; i++) {
+            int countX = 0;
+            int countO = 0;
+            for (int j = 0; j < size; j++) {
+                if (twoDArray[j][i] == Entry.X) {
+                    countX++;
+                    countO = 0;
+                } else if (twoDArray[j][i] == Entry.O) {
+                    countO++;
+                    countX = 0;
+                } else {
+                    countX = 0;
+                    countO = 0;
+                }
+                if (countX == winCrit) {
+                    return Entry.X;
+                } else if (countO == winCrit) {
+                    return Entry.O;
+                }
             }
         }
 
         return null;
     }
+
 
     private Entry checkDiagonal() {
         // Überprüfen der Hauptdiagonalen (von links oben nach rechts unten)
@@ -183,12 +211,12 @@ public class Board {
      * @return the index of the cell {@code token} has to play to win the game or {@code -1}
      */
     public int getWinningIndex(Entry token) {
-        for (int i = 0; i < this.entries.length; i++) {
+        for (int i = 0; i < Board.size * Board.size; i++) {
             if (!this.entries[i].equals(Entry.EMPTY)) {
                 continue;
             }
 
-            this.entries[i] = token;
+                this.entries[i] = token;
             boolean hasWon = hasWon(token);
             this.entries[i] = Entry.EMPTY;
 
