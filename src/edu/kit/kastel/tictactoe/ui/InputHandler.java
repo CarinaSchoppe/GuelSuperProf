@@ -66,7 +66,7 @@ public class InputHandler {
                 running = false;
             }
 
-            ++move;
+            move++;
         }
     }
 

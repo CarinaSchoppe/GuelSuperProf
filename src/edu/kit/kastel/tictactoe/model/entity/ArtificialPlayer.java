@@ -51,15 +51,29 @@ public class ArtificialPlayer extends Player {
             return winningIndex;
         }
 
-
         int preventionIndex = this.board.getWinningIndex(opponent.getToken());
         if (preventionIndex != -1) {
             return preventionIndex;
         }
 
-        for (int currentIndex : INDEX_PRIORITIES) {
-            if (board.get(currentIndex).equals(Entry.EMPTY)) {
-                return currentIndex;
+        // Rule 3: If the middle field is free, return its index
+        int middleIndex = Board.size * Board.size / 2;
+        if (board.get(middleIndex).equals(Entry.EMPTY)) {
+            return middleIndex;
+        }
+
+        // Rule 4: If any corner is free, return its index.
+        int[] corners = {0, Board.size - 1, Board.size * (Board.size - 1), Board.size * Board.size - 1};
+        for (int corner : corners) {
+            if (board.get(corner).equals(Entry.EMPTY)) {
+                return corner;
+            }
+        }
+
+        // Rule 5: Return the index of the first empty field
+        for (int i = 0; i < Board.size * Board.size; i++) {
+            if (board.get(i).equals(Entry.EMPTY)) {
+                return i;
             }
         }
 
