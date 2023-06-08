@@ -26,15 +26,17 @@ public class Board {
 
     private final Entry[] entries;
 
+    private final int maxSize = 9;
+    private final int minSize = 3;
 
     /**
      * Creates a new instance of a board. All entries are {@link Entry#EMPTY} by default
      */
     public Board(int size, int winCrit, int maxTokens) {
-        Board.size = size > 9 || size < 3 ? 3 : size;
+        Board.size = size > maxSize || size < minSize ? minSize : size;
         entries = new Entry[Board.size * Board.size];
-        Board.winCrit = winCrit > size || winCrit < 3 ? 3 : winCrit;
-        Board.maxTokens = maxTokens > 81 || maxTokens < 9 ? 9 : maxTokens;
+        Board.winCrit = winCrit > size || winCrit < minSize ? minSize : winCrit;
+        Board.maxTokens = maxTokens > maxSize * maxSize || maxTokens < maxSize ? maxSize : maxTokens;
         Arrays.fill(entries, Entry.EMPTY);
     }
 
