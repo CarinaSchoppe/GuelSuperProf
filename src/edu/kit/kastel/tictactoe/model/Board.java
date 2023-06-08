@@ -19,12 +19,13 @@ public class Board {
 
     private static final int DIVISOR = 2;
     public static int size = 4;
-    public static int tokens = 0;
+    public int tokens = 0;
     private static int winCrit = 3;
     private static int maxTokens = 9;
-    private static final Queue<Integer> SET_TOKENS = new ArrayDeque<>();
+    private Queue<Integer> setTokens = new ArrayDeque<>();
 
     private final Entry[] entries;
+
 
     /**
      * Creates a new instance of a board. All entries are {@link Entry#EMPTY} by default
@@ -42,6 +43,14 @@ public class Board {
         System.arraycopy(board.entries, 0, entries, 0, board.entries.length);
     }
 
+    public Board clone() {
+        var board = new Board(size, winCrit, maxTokens);
+        System.arraycopy(entries, 0, board.entries, 0, entries.length);
+        board.tokens = tokens;
+        setTokens = new ArrayDeque<>(setTokens);
+        return board;
+    }
+
     /**
      * Changes the entry on the board on a specific position
      *
@@ -51,12 +60,29 @@ public class Board {
     public void set(int pos, Entry entry) {
         entries[pos] = entry;
         tokens++;
-        SET_TOKENS.add(pos);
+        setTokens.add(pos);
         if (tokens > maxTokens) {
             tokens--;
-            entries[SET_TOKENS.poll()] = Entry.EMPTY;
+            entries[setTokens.poll()] = Entry.EMPTY;
         }
     }
+
+    public void setExtra(int pos, Entry entry) {
+     /*   for (var i = 0; i< entries.length; i++) {
+        if (entries[i] != Entry.EMPTY) {
+            tokens++;
+        }
+        }*/
+        entries[pos] = entry;
+        tokens++;
+        setTokens.add(pos);
+        if (tokens > maxTokens) {
+            tokens--;
+            var value = setTokens.poll();
+            entries[value] = Entry.TMP;
+        }
+    }
+
 
     /**
      * Gets the current entry on a specific position
@@ -216,9 +242,9 @@ public class Board {
                 continue;
             }
 
-                this.entries[i] = token;
-            boolean hasWon = hasWon(token);
-            this.entries[i] = Entry.EMPTY;
+            var boardCone = clone();
+            boardCone.setExtra(i, token);
+            boolean hasWon = boardCone.hasWon(token);
 
             if (hasWon) {
                 return i;

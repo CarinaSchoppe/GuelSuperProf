@@ -13,7 +13,8 @@ public enum Entry {
 
     EMPTY('-'),
     X('x'),
-    O('o');
+    O('o'),
+    TMP('t');
 
     private final char token;
 

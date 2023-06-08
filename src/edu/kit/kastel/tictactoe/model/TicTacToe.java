@@ -57,6 +57,7 @@ public class TicTacToe {
     }
 
     private void nextPlayer() {
+
         playerPointer = playerPointer == players.size() - 1 ? 0 : ++playerPointer;
     }
 
@@ -68,6 +69,7 @@ public class TicTacToe {
     public void set(int position) {
         board.set(position, players.get(playerPointer).getToken());
         nextPlayer();
+
     }
 
     /**
