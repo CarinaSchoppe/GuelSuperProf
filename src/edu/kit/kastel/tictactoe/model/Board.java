@@ -24,20 +24,22 @@ public class Board {
     private static int maxTokens = 9;
     private static final Queue<Integer> SET_TOKENS = new ArrayDeque<>();
 
-    private final Entry[] entries = new Entry[size * size];
+    private final Entry[] entries;
 
     /**
      * Creates a new instance of a board. All entries are {@link Entry#EMPTY} by default
      */
     public Board(int size, int winCrit, int maxTokens) {
         Board.size = size > 9 || size < 3 ? 3 : size;
+        entries = new Entry[Board.size * Board.size];
         Board.winCrit = winCrit > size ? size : winCrit < 3 ? 3 : winCrit;
         Board.maxTokens = maxTokens > 81 || maxTokens < 9 ? 81 : maxTokens;
         Arrays.fill(entries, Entry.EMPTY);
     }
 
     private Board(Board board) {
-        System.arraycopy(board.entries, 0, entries, 0, size * size);
+        entries = new Entry[Board.size * Board.size];
+        System.arraycopy(board.entries, 0, entries, 0, board.entries.length);
     }
 
     /**
