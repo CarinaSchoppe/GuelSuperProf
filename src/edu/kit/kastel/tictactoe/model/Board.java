@@ -18,8 +18,8 @@ import java.util.StringJoiner;
 public class Board {
 
     private static final int DIVISOR = 2;
-    public static int size = 4;
-    public int tokens = 0;
+    private static int size;
+    private int tokens = 0;
     private static int winCrit = 3;
     private static int maxTokens = 9;
     private Queue<Integer> setTokens = new ArrayDeque<>();
@@ -269,5 +269,9 @@ public class Board {
             joiner.add(builder.toString());
         }
         return joiner.toString();
+    }
+
+    public static int getSize() {
+        return size;
     }
 }
