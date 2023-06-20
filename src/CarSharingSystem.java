@@ -144,9 +144,16 @@ public class CarSharingSystem {
                     while (number.length() < 3) {
                         number = "0" + number;
                     }
-                    var price = String.valueOf(car.getCategory().getPrice());
-                    price = price + "0";
-                    System.out.println(number + ";" + car.getCategory().name().toLowerCase() + ";" + price);
+                    var totalString = String.valueOf(car.getCategory().getPrice());
+                    if (totalString.contains(".")) {
+                        while (totalString.split("\\.")[1].length() != 2) {
+                            totalString += "0";
+
+                        }
+                    } else {
+                        totalString += ".00";
+                    }
+                    System.out.println(number + ";" + car.getCategory().name().toLowerCase() + ";" + totalString);
                 }
 
 
@@ -172,7 +179,7 @@ public class CarSharingSystem {
                 }
                 var totalString = String.valueOf(total);
                 if (totalString.contains(".")) {
-                    while (totalString.split(".")[1].length() != 2) {
+                    while (totalString.split("\\.")[1].length() != 2) {
                         totalString += "0";
 
                     }
