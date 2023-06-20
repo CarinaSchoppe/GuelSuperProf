@@ -1,16 +1,18 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Scanner;
 
 public class CarSharingSystem {
     private static CarSharingSystem instance;
-    private final Set<Station> stations;
-    private final Set<Booking> bookings;
+    private final ArrayList<Station> stations;
+    private final ArrayList<Booking> bookings;
 
 
     private CarSharingSystem() {
-        stations = new HashSet<>();
-        bookings = new HashSet<>();
+        stations = new ArrayList<>();
+        bookings = new ArrayList<>();
         instance = this;
 
     }
@@ -36,11 +38,15 @@ public class CarSharingSystem {
                 input = input.replace("add ", "");
                 var fahrzeugID = Integer.parseInt(input.split(";")[0]);
                 var stationsID = Integer.parseInt(input.split(";")[1]);
-                var category = Category.valueOf(input.split(";")[2]);
+                var category = Category.valueOf(input.split(";")[2].toUpperCase());
                 var car = new Car(fahrzeugID, category);
                 var station = Station.getStationsByID(stationsID);
                 station.getCars().add(car);
-                System.out.println("OK: added " + car.getCarNumber() + " to " + station.getStationName() + " which has " + station.getCars().size() + " cars");
+                var number = String.valueOf(car.getCarNumber());
+                while (number.length() < 3) {
+                    number = "0" + number;
+                }
+                System.out.println("OK: added " + number + " to " + station.getStationName() + " which has " + station.getCars().size() + " cars");
             } else if (input.startsWith("remove")) {
 
                 var fahrzeugID = Integer.parseInt(input.split(" ")[1]);
@@ -49,8 +55,12 @@ public class CarSharingSystem {
                 for (var station : carSharingSystem.getStations()) {
                     for (var car : station.getCars()) {
                         if (car.getCarNumber() == fahrzeugID) {
+                            var number = String.valueOf(car.getCarNumber());
+                            while (number.length() < 3) {
+                                number = "0" + number;
+                            }
                             station.getCars().remove(car);
-                            System.out.println("OK: removed " + car.getCarNumber());
+                            System.out.println("OK: removed " + number);
                             found = true;
                             break;
                         }
@@ -61,7 +71,9 @@ public class CarSharingSystem {
                     }
                 }
             } else if (input.startsWith("list-stations")) {
-                for (var station : carSharingSystem.getStations()) {
+                var stations = new ArrayList<>(carSharingSystem.getStations());
+                stations.sort(Comparator.comparingInt(Station::getStationID));
+                for (var station : stations) {
                     System.out.println(station.getStationID() + ";" + station.getStationName() + ";" + station.getCars().size());
                 }
             } else if (input.startsWith("list-cars")) {
@@ -72,7 +84,14 @@ public class CarSharingSystem {
 
                 //sort the cars based on their car number
                 for (var car : cars) {
-                    System.out.println(car.getCarNumber() + ";" + station.getStationName() + ";" + station.getStationID() + ";" + car.getCategory());
+
+                    //add "0" infront of the car.getCarNumber() until is has 3 digits
+                    var number = String.valueOf(car.getCarNumber());
+                    while (number.length() < 3) {
+                        number = "0" + number;
+                    }
+
+                    System.out.println(number + ";" + station.getStationName() + ";" + station.getStationID() + ";" + car.getCategory().name().toLowerCase());
                 }
             } else if (input.startsWith("book")) {
                 input = input.replace("book ", "");
@@ -121,7 +140,13 @@ public class CarSharingSystem {
                 availableCars.sort(Comparator.comparingInt(Car::getCarNumber));
 
                 for (var car : availableCars) {
-                    System.out.println(car.getCarNumber() + ";" + car.getCategory() + ";" + car.getCategory().getPrice());
+                    var number = String.valueOf(car.getCarNumber());
+                    while (number.length() < 3) {
+                        number = "0" + number;
+                    }
+                    var price = String.valueOf(car.getCategory().getPrice());
+                    price = price + "0";
+                    System.out.println(number + ";" + car.getCategory().name().toLowerCase() + ";" + price);
                 }
 
 
@@ -152,11 +177,11 @@ public class CarSharingSystem {
 
     }
 
-    public Set<Station> getStations() {
+    public ArrayList<Station> getStations() {
         return stations;
     }
 
-    public Set<Booking> getBookings() {
+    public ArrayList<Booking> getBookings() {
         return bookings;
     }
 }
