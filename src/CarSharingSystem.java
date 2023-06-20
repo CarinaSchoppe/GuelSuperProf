@@ -170,7 +170,17 @@ public class CarSharingSystem {
                     total += price;
                     System.out.println(bill.getCustomer().getCustomerNumber() + ";" + bill.getCar().getCarNumber() + ";" + bill.getBookingNumber() + ";" + bill.getDate() + ";" + bill.getTime() + ";" + bill.getDuration() + ";" + price);
                 }
-                System.out.println("Sum: " + total);
+                var totalString = String.valueOf(total);
+                if (totalString.contains(".")) {
+                    while (totalString.split(".")[1].length() != 2) {
+                        totalString += "0";
+
+                    }
+                } else {
+                    totalString += ".00";
+                }
+
+                System.out.println("Sum: " + totalString);
             }
         }
 
