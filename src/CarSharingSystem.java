@@ -81,8 +81,9 @@ public class CarSharingSystem {
             var totalString = String.valueOf(costs);
             if (totalString.contains(".")) {
                 while (totalString.split("\\.")[1].length() != 2) {
-                    if (totalString.split("\\.")[1].length() > 2) totalString = totalString.substring(0, totalString.length() - 1);
-                    else totalString += "0";
+                    if (totalString.split("\\.")[1].length() > 2) {
+                        totalString = totalString.substring(0, totalString.length() - 1);
+                    } else totalString += "0";
 
                 }
             } else {
