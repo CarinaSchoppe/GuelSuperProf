@@ -88,7 +88,11 @@ public class CarSharingSystem {
             } else {
                 totalString += ".00";
             }
-            System.out.println(booking.getCustomerNumber() + ";" + booking.getCar().getCarNumber() + ";" + booking.getBookingNumber() + ";" + booking.getDate() + ";" + booking.getTime() + ";" + booking.getDuration() + ";" + totalString);
+            var a = booking.getCustomerNumber() + ";" + booking.getCar().getCarNumber();
+            var b = a + ";" + booking.getBookingNumber() + ";" + booking.getDate();
+            var c = b + ";" + booking.getTime() + ";" + booking.getDuration() + ";";
+            var d = c + totalString;
+            System.out.println(d);
         }
     }
 
