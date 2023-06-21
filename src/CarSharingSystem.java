@@ -262,7 +262,7 @@ public class CarSharingSystem {
             var l = bill.getCustomer().getCustomerNumber() + ";" + number + ";";
             var a = l + bill.getBookingNumber() + ";" + bill.getDate() + ";" + bill.getTime() + ";";
             var x = a + bill.getDuration() + ";" + price;
-            System.out.println(a);
+            System.out.println(x);
         }
         var totalString = String.valueOf(total);
         if (totalString.contains(".")) {
