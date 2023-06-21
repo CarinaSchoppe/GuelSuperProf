@@ -141,7 +141,20 @@ public class CarSharingSystem {
 
         assert car != null;
         var costs = car.getCategory().getPrice() * dauer;
-        var x = ";" + customer.getCustomerNumber() + " for " + costs;
+        var totalString = String.valueOf(costs);
+        if (totalString.contains(".")) {
+            while (totalString.split("\\.")[1].length() != 2) {
+                if (totalString.split("\\.")[1].length() > 2)
+                    totalString = totalString.substring(0, totalString.length() - 1);
+                else
+                    totalString += "0";
+
+            }
+        } else {
+            totalString += ".00";
+        }
+
+        var x = ";" + customer.getCustomerNumber() + " for " + totalString;
         System.out.println("OK: booked " + booking.getBookingNumber() + x);
 
 
@@ -234,14 +247,19 @@ public class CarSharingSystem {
         var year = Integer.parseInt(input.split(";")[1]);
         //find all bills with that customer number and year
         var bills = Booking.getBillsByCustomerNumberAndYear(kundennummer, year);
-        //sort the bills ascending based on the booking number
-        bills.sort(Comparator.comparingInt(Booking::getBookingNumber));
+        //sort the bills descending based on the booking number
+        bills.sort(Comparator.comparingInt(Booking::getBookingNumber).reversed());
+
         var total = 0;
         for (var bill : bills) {
             var price = bill.getCar().getCategory().getPrice() * bill.getDuration();
             total += price;
 
-            var l = bill.getCustomer().getCustomerNumber() + ";" + bill.getCar().getCarNumber() + ";";
+            var number = String.valueOf(bill.getCar().getCarNumber());
+            while (number.length() < 3) {
+                number = "0" + number;
+            }
+            var l = bill.getCustomer().getCustomerNumber() + ";" + number + ";";
             var a = l + bill.getBookingNumber() + ";" + bill.getDate() + ";" + bill.getTime() + ";";
             var x = a + bill.getDuration() + ";" + price;
             System.out.println(a);
