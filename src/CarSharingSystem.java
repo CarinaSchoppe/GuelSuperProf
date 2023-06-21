@@ -68,9 +68,7 @@ public class CarSharingSystem {
     private static void listBookings(CarSharingSystem carSharingSystem) {
 
         var bookings = new ArrayList<>(carSharingSystem.bookings);
-        //sort the bookings ascending based on the customer number and than desc based on the booking number
-        bookings.sort(Comparator.comparingInt(Booking::getCustomerNumber).thenComparingInt(Booking::getBookingNumber));
-
+        bookings.sort(Comparator.comparingInt(Booking::getCustomerNumber).thenComparingInt(Booking::getBookingNumber).reversed());
         for (var booking : bookings) {
 
             var costs = booking.getCar().getCategory().getPrice() * booking.getDuration();
