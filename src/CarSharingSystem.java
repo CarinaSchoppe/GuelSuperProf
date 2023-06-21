@@ -254,14 +254,25 @@ public class CarSharingSystem {
         for (var bill : bills) {
             var price = bill.getCar().getCategory().getPrice() * bill.getDuration();
             total += price;
+            var totalString = String.valueOf(price);
+            if (totalString.contains(".")) {
+                while (totalString.split("\\.")[1].length() != 2) {
+                    if (totalString.length() > 2)
+                        totalString = totalString.substring(0, totalString.length() - 1);
+                    else
+                        totalString += "0";
 
+                }
+            } else {
+                totalString += ".00";
+            }
             var number = String.valueOf(bill.getCar().getCarNumber());
             while (number.length() < 3) {
                 number = "0" + number;
             }
             var l = bill.getCustomer().getCustomerNumber() + ";" + number + ";";
             var a = l + bill.getBookingNumber() + ";" + bill.getDate() + ";" + bill.getTime() + ";";
-            var x = a + bill.getDuration() + ";" + price;
+            var x = a + bill.getDuration() + ";" + totalString;
             System.out.println(x);
         }
         var totalString = String.valueOf(total);
