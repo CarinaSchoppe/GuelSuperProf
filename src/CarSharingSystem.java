@@ -54,7 +54,7 @@ public class CarSharingSystem {
                 checkAvailable(carSharingSystem, input);
 
             } else if (input.startsWith("list-bookings")) {
-                listBookings(carSharingSystem, input);
+                listBookings(carSharingSystem);
 
             } else if (input.startsWith("bill")) {
                 bill(carSharingSystem, input);
@@ -65,12 +65,27 @@ public class CarSharingSystem {
         }
     }
 
-    private static void listBookings(CarSharingSystem carSharingSystem, String input) {
+    private static void listBookings(CarSharingSystem carSharingSystem) {
 
         var bookings = new ArrayList<>(carSharingSystem.bookings);
         //sort the bookings ascending based on the customer number and than desc based on the booking number
         bookings.sort(Comparator.comparingInt(Booking::getCustomerNumber).thenComparingInt(Booking::getBookingNumber));
 
+        for (var booking : bookings) {
+
+            var costs = booking.getCar().getCategory().getPrice() * booking.getDuration();
+            var totalString = String.valueOf(costs);
+            if (totalString.contains(".")) {
+                while (totalString.split("\\.")[1].length() != 2) {
+                    if (totalString.split("\\.")[1].length() > 2) totalString = totalString.substring(0, totalString.length() - 1);
+                    else totalString += "0";
+
+                }
+            } else {
+                totalString += ".00";
+            }
+            System.out.println(booking.getCustomerNumber() + ";" + booking.getCar().getCarNumber() + ";" + booking.getBookingNumber() + ";" + booking.getDate() + ";" + booking.getTime() + ";" + booking.getDuration() + ";" + totalString);
+        }
     }
 
     private static void checkAvailable(CarSharingSystem carSharingSystem, String input) {
@@ -129,12 +144,13 @@ public class CarSharingSystem {
         var dauer = Integer.parseInt(input.split(";")[5]);
 
         var car = Car.getCarByCarNumber(fahrzeugID);
-        var customer = Customer.findOrAddCustomer(vorname, nachname);
         //check if the car is available
         assert car != null;
         if (!car.isAvailable(date, time, dauer)) {
+            System.out.println("ERROR: Cannot book due to overlapping booking!");
             return;
         }
+        var customer = Customer.findOrAddCustomer(vorname, nachname);
 
         var booking = new Booking(car, customer, date, time, dauer);
         carSharingSystem.bookings.add(booking);
