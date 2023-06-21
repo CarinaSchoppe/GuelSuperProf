@@ -1,7 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class CarSharingSystem {
@@ -47,7 +46,7 @@ public class CarSharingSystem {
             } else if (input.startsWith("list-stations")) {
                 listStations(carSharingSystem, input);
             } else if (input.startsWith("list-cars")) {
-                listCars(carSharingSystem, input);
+                listCars(input);
             } else if (input.startsWith("book")) {
                 book(carSharingSystem, input);
             } else if (input.startsWith("check-available")) {
@@ -68,7 +67,14 @@ public class CarSharingSystem {
     private static void listBookings(CarSharingSystem carSharingSystem) {
 
         var bookings = new ArrayList<>(carSharingSystem.bookings);
-        bookings.sort(Comparator.comparingInt(Booking::getCustomerNumber).thenComparingInt(Booking::getBookingNumber).reversed());
+        bookings.sort((b1, b2) -> {
+            int cmp = Integer.compare(b2.getCustomerNumber(), b1.getCustomerNumber());
+            if (cmp != 0) {
+                return cmp;
+            } else {
+                return Integer.compare(b2.getBookingNumber(), b1.getBookingNumber());
+            }
+        });
         for (var booking : bookings) {
 
             var costs = booking.getCar().getCategory().getPrice() * booking.getDuration();
@@ -103,8 +109,7 @@ public class CarSharingSystem {
         var availableCars = station.getAvailableCars(date, time, dauer);
 
         //sort the available cars based on their car number ascending
-        availableCars.sort(Comparator.comparingInt(Car::getCarNumber));
-
+        availableCars.sort((c1, c2) -> Integer.compare(c1.getCarNumber(), c2.getCarNumber()));
         for (var car : availableCars) {
             var number = String.valueOf(car.getCarNumber());
             while (number.length() < 3) {
@@ -174,11 +179,11 @@ public class CarSharingSystem {
 
     }
 
-    private static void listCars(CarSharingSystem carSharingSystem, String input) {
+    private static void listCars(String input) {
         var stationsNummer = Integer.parseInt(input.split(" ")[1]);
         var station = Station.getStationsByID(stationsNummer);
         var cars = new ArrayList<>(station.getCars());
-        cars.sort(Comparator.comparingInt(Car::getCarNumber));
+        cars.sort((c1, c2) -> Integer.compare(c1.getCarNumber(), c2.getCarNumber()));
 
         //sort the cars based on their car number
         for (var car : cars) {
@@ -196,7 +201,7 @@ public class CarSharingSystem {
 
     private static void listStations(CarSharingSystem carSharingSystem, String input) {
         var stations = new ArrayList<>(carSharingSystem.getStations());
-        stations.sort(Comparator.comparingInt(Station::getStationID));
+        stations.sort((s1, s2) -> Integer.compare(s1.getStationID(), s2.getStationID()));
         for (var station : stations) {
             var l = station.getStationID() + ";" + station.getStationName() + ";" + station.getCars().size();
             System.out.println(l);
@@ -262,8 +267,7 @@ public class CarSharingSystem {
         //find all bills with that customer number and year
         var bills = Booking.getBillsByCustomerNumberAndYear(kundennummer, year);
         //sort the bills descending based on the booking number
-        bills.sort(Comparator.comparingInt(Booking::getBookingNumber).reversed());
-
+        bills.sort((b1, b2) -> Integer.compare(b2.getBookingNumber(), b1.getBookingNumber()));
         var total = 0;
         for (var bill : bills) {
             var price = bill.getCar().getCategory().getPrice() * bill.getDuration();
