@@ -113,7 +113,7 @@ public class CarSharingSystem {
         var station = Station.getStationsByID(stationsID);
         var availableCars = station.getAvailableCars(date, time, dauer);
 
-        availableCars.sort((c1, c2) -> Integer.compare(c2.getCarNumber(), c1.getCarNumber()));
+        availableCars.sort((c1, c2) -> Integer.compare(c1.getCarNumber(), c2.getCarNumber()));
         //reverse the list so that the cars are sorted descending
         
         

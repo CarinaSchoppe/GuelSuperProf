@@ -47,14 +47,9 @@ class Car {
                 continue;
             var terminationTime = LocalDateTime.of(booking.getDate(), booking.getTime());
             //check if terminationTime is before nowtime + dauer
-            if (!nowTime.plusHours(dauer).isAfter(terminationTime)) {
-                return false;
-            }
 
-            if (!nowTime.isAfter(terminationTime.plusHours(booking.getDuration()))) {
+            if (!(nowTime.isAfter(terminationTime.plusHours(booking.getDuration())) || nowTime.plusHours(dauer).isBefore(terminationTime)))
                 return false;
-            }
-
         }
 
         return true;
