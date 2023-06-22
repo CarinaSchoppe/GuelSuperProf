@@ -43,18 +43,18 @@ class Car {
         var nowTime = LocalDateTime.of(date, uhrzeit);
 
         for (var booking : bookings) {
-            if (booking.getCar().getCarNumber() == this.getCarNumber()) {
-                var terminationTime = LocalDateTime.of(booking.getDate(), booking.getTime());
-                //check if terminationTime is before nowtime + dauer
-                if (terminationTime.isBefore(nowTime.plusHours(dauer))) {
-                    return false;
-                }
-                //check if terminationTime+booking.duration is after nowtime
-                if (nowTime.isBefore(terminationTime.plusHours(booking.getDuration()))) {
-                    return false;
-                }
-
+            if (booking.getCar().getCarNumber() != this.getCarNumber())
+                continue;
+            var terminationTime = LocalDateTime.of(booking.getDate(), booking.getTime());
+            //check if terminationTime is before nowtime + dauer
+            if (!nowTime.plusHours(dauer).isAfter(terminationTime)) {
+                return false;
             }
+
+            if (!nowTime.isAfter(terminationTime.plusHours(booking.getDuration()))) {
+                return false;
+            }
+
         }
 
         return true;

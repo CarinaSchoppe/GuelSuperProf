@@ -113,8 +113,10 @@ public class CarSharingSystem {
         var station = Station.getStationsByID(stationsID);
         var availableCars = station.getAvailableCars(date, time, dauer);
 
-        //sort the available cars based on their car number ascending
-        availableCars.sort((c1, c2) -> Integer.compare(c1.getCarNumber(), c2.getCarNumber()));
+        availableCars.sort((c1, c2) -> Integer.compare(c2.getCarNumber(), c1.getCarNumber()));
+        //reverse the list so that the cars are sorted descending
+        
+        
         for (var car : availableCars) {
             var number = String.valueOf(car.getCarNumber());
             while (number.length() < 3) {
@@ -280,7 +282,7 @@ public class CarSharingSystem {
             var totalString = String.valueOf(price);
             if (totalString.contains(".")) {
                 while (totalString.split("\\.")[1].length() != 2) {
-                    if (totalString.length() > 2)
+                    if (totalString.split("\\.")[1].length() > 2)
                         totalString = totalString.substring(0, totalString.length() - 1);
                     else
                         totalString += "0";
@@ -301,6 +303,9 @@ public class CarSharingSystem {
         var totalString = String.valueOf(total);
         if (totalString.contains(".")) {
             while (totalString.split("\\.")[1].length() != 2) {
+                if (totalString.split("\\.")[1].length() > 2)
+                    totalString = totalString.substring(0, totalString.length() - 1);
+                else
                 totalString += "0";
 
             }
