@@ -26,6 +26,13 @@ public class CarSharingSystem {
 
     private static void station(CarSharingSystem carSharingSystem, String input) {
         var station = new Station(input.split(" ")[1]);
+        //Check if station already exists
+        for (var station1 : carSharingSystem.stations) {
+            if (station1.getStationName().equalsIgnoreCase(station.getStationName())) {
+                System.out.println("ERROR: station " + station.getStationName() + " already exists");
+                return;
+            }
+        }
         carSharingSystem.stations.add(station);
         System.out.println("OK: added " + input.split(" ")[1] + " identified by " + station.getStationID());
 
@@ -35,29 +42,33 @@ public class CarSharingSystem {
         var scanner = new Scanner(System.in);
         var carSharingSystem = getInstance();
         String input = null;
-        while (!(input = scanner.nextLine()).equalsIgnoreCase("quit")) {
-            if (input.startsWith("station")) {
-                station(carSharingSystem, input);
-            } else if (input.startsWith("add")) {
-                add(input, carSharingSystem);
-            } else if (input.startsWith("remove")) {
+        while (!(input = scanner.nextLine()).startsWith("quit")) {
+            try {
+                if (input.startsWith("station")) {
+                    station(carSharingSystem, input);
+                } else if (input.startsWith("add")) {
+                    add(input);
+                } else if (input.startsWith("remove")) {
 
-                remove(input, carSharingSystem);
-            } else if (input.startsWith("list-stations")) {
-                listStations(carSharingSystem, input);
-            } else if (input.startsWith("list-cars")) {
-                listCars(input);
-            } else if (input.startsWith("book")) {
-                book(carSharingSystem, input);
-            } else if (input.startsWith("check-available")) {
-                checkAvailable(carSharingSystem, input);
+                    remove(input, carSharingSystem);
+                } else if (input.startsWith("list-stations")) {
+                    listStations(carSharingSystem);
+                } else if (input.startsWith("list-cars")) {
+                    listCars(input);
+                } else if (input.startsWith("book")) {
+                    book(carSharingSystem, input);
+                } else if (input.startsWith("check-available")) {
+                    checkAvailable(input);
 
-            } else if (input.startsWith("list-bookings")) {
-                listBookings(carSharingSystem);
+                } else if (input.startsWith("list-bookings")) {
+                    listBookings(carSharingSystem);
 
-            } else if (input.startsWith("bill")) {
-                bill(carSharingSystem, input);
+                } else if (input.startsWith("bill")) {
+                    bill(carSharingSystem, input);
 
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR: " + e.getMessage());
             }
 
 
@@ -101,7 +112,7 @@ public class CarSharingSystem {
         }
     }
 
-    private static void checkAvailable(CarSharingSystem carSharingSystem, String input) {
+    private static void checkAvailable(String input) {
         input = input.replace("check-available ", "");
         var stationsID = Integer.parseInt(input.split(";")[0]);
         var datum = input.split(";")[1];
@@ -111,15 +122,24 @@ public class CarSharingSystem {
 
         var dauer = Integer.parseInt(input.split(";")[3]);
 
+        if (dauer <= 0) {
+            System.out.println("ERROR: duration must be greater than 0");
+            return;
+        }
+
         var a = Integer.parseInt(datum.split("-")[0]);
         var b = Integer.parseInt(datum.split("-")[2]);
         var date = LocalDate.of(a, Integer.parseInt(datum.split("-")[1]), b);
         var station = Station.getStationsByID(stationsID);
+        if (station == null) {
+            System.out.println("ERROR: station " + stationsID + " does not exist");
+            return;
+        }
+
         var availableCars = station.getAvailableCars(date, time, dauer);
 
         availableCars.sort((c1, c2) -> Integer.compare(c1.getCarNumber(), c2.getCarNumber()));
         //reverse the list so that the cars are sorted descending
-
 
         for (var car : availableCars) {
             var number = String.valueOf(car.getCarNumber());
@@ -137,7 +157,6 @@ public class CarSharingSystem {
             }
             System.out.println(number + ";" + car.getCategory().name().toLowerCase() + ";" + totalString);
         }
-
     }
 
     private static void book(CarSharingSystem carSharingSystem, String input) {
@@ -156,10 +175,17 @@ public class CarSharingSystem {
         var time = LocalTime.of(Integer.parseInt(uhrzeit.split(":")[0]), Integer.parseInt(uhrzeit.split(":")[1]));
 
         var dauer = Integer.parseInt(input.split(";")[5]);
+        if (dauer <= 0) {
+            System.out.println("ERROR: duration must be greater than 0");
+            return;
+        }
 
         var car = Car.getCarByCarNumber(fahrzeugID);
+        if (car == null) {
+            System.out.println("ERROR: car " + fahrzeugID + " does not exist");
+            return;
+        }
         //check if the car is available
-        assert car != null;
         if (!car.isAvailable(date, time, dauer)) {
             System.out.println("ERROR: Cannot book due to overlapping booking!");
             return;
@@ -191,8 +217,16 @@ public class CarSharingSystem {
     }
 
     private static void listCars(String input) {
+        if (input.split(" ").length != 2) {
+            System.out.println("ERROR: wrong number of arguments");
+            return;
+        }
         var stationsNummer = Integer.parseInt(input.split(" ")[1]);
         var station = Station.getStationsByID(stationsNummer);
+        if (station == null) {
+            System.out.println("ERROR: station " + stationsNummer + " does not exist");
+            return;
+        }
         var cars = new ArrayList<>(station.getCars());
         cars.sort((c1, c2) -> Integer.compare(c1.getCarNumber(), c2.getCarNumber()));
 
@@ -210,7 +244,7 @@ public class CarSharingSystem {
         }
     }
 
-    private static void listStations(CarSharingSystem carSharingSystem, String input) {
+    private static void listStations(CarSharingSystem carSharingSystem) {
         var stations = new ArrayList<>(carSharingSystem.getStations());
         stations.sort((s1, s2) -> Integer.compare(s1.getStationID(), s2.getStationID()));
         for (var station : stations) {
@@ -244,13 +278,23 @@ public class CarSharingSystem {
 
     }
 
-    private static void add(String input, CarSharingSystem carSharingSystem) {
+    private static void add(String input) {
         input = input.replace("add ", "");
         var fahrzeugID = Integer.parseInt(input.split(";")[0]);
         var stationsID = Integer.parseInt(input.split(";")[1]);
         var category = Category.valueOf(input.split(";")[2].toUpperCase());
+        //check if that car number is already in use
+        if (Car.getCarByCarNumber(fahrzeugID) != null) {
+            System.out.println("ERROR: Car number already in use!");
+            return;
+        }
+
         var car = new Car(fahrzeugID, category);
         var station = Station.getStationsByID(stationsID);
+        if (station == null) {
+            System.out.println("ERROR: station " + stationsID + " does not exist");
+            return;
+        }
         station.getCars().add(car);
         var number = String.valueOf(car.getCarNumber());
         while (number.length() < 3) {
@@ -304,6 +348,10 @@ public class CarSharingSystem {
             var x = a + bill.getDuration() + ";" + totalString;
             System.out.println(x);
         }
+        if (bills.size() == 0) {
+            return;
+        }
+
         var totalString = String.valueOf(total);
         if (totalString.contains(".")) {
             while (totalString.split("\\.")[1].length() != 2) {

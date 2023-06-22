@@ -6,6 +6,7 @@ class Car {
     private final int carNumber;
     private final Category category;
 
+
     public Car(int carNumber, Category category) {
         if (carNumber < 0 || carNumber > 1000) {
             throw new IllegalArgumentException("Car number must be positive");
