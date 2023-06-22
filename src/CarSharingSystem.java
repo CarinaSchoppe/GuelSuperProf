@@ -89,7 +89,11 @@ public class CarSharingSystem {
             } else {
                 totalString += ".00";
             }
-            var a = booking.getCustomerNumber() + ";" + booking.getCar().getCarNumber();
+            var number = String.valueOf(booking.getCar().getCarNumber());
+            while (number.length() < 3) {
+                number = "0" + number;
+            }
+            var a = booking.getCustomerNumber() + ";" + number;
             var b = a + ";" + booking.getBookingNumber() + ";" + booking.getDate();
             var c = b + ";" + booking.getTime() + ";" + booking.getDuration() + ";";
             var d = c + totalString;
@@ -115,8 +119,8 @@ public class CarSharingSystem {
 
         availableCars.sort((c1, c2) -> Integer.compare(c1.getCarNumber(), c2.getCarNumber()));
         //reverse the list so that the cars are sorted descending
-        
-        
+
+
         for (var car : availableCars) {
             var number = String.valueOf(car.getCarNumber());
             while (number.length() < 3) {
@@ -305,8 +309,7 @@ public class CarSharingSystem {
             while (totalString.split("\\.")[1].length() != 2) {
                 if (totalString.split("\\.")[1].length() > 2)
                     totalString = totalString.substring(0, totalString.length() - 1);
-                else
-                totalString += "0";
+                else totalString += "0";
 
             }
         } else {
