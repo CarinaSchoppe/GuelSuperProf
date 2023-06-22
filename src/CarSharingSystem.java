@@ -68,7 +68,7 @@ public class CarSharingSystem {
 
         var bookings = new ArrayList<>(carSharingSystem.bookings);
         bookings.sort((b1, b2) -> {
-            int cmp = Integer.compare(b2.getCustomerNumber(), b1.getCustomerNumber());
+            int cmp = Integer.compare(b1.getCustomerNumber(), b2.getCustomerNumber());
             if (cmp != 0) {
                 return cmp;
             } else {
@@ -275,7 +275,7 @@ public class CarSharingSystem {
         var bills = Booking.getBillsByCustomerNumberAndYear(kundennummer, year);
         //sort the bills descending based on the booking number
         bills.sort((b1, b2) -> Integer.compare(b2.getBookingNumber(), b1.getBookingNumber()));
-        var total = 0;
+        float total = 0;
         for (var bill : bills) {
             var price = bill.getCar().getCategory().getPrice() * bill.getDuration();
             total += price;
