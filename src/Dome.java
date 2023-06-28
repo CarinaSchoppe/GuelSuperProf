@@ -5,4 +5,10 @@ public class Dome extends Gameobject {
     public Dome(int x, int y) {
         super(x, y);
     }
+
+    @Override
+    public String toString() {
+        var string = "";
+        return string + TYPE.getSymbol();
+    }
 }

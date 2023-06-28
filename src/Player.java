@@ -1,7 +1,10 @@
 public class Player {
 
+
     private final Playingfigure[] figures = new Playingfigure[2];
 
+
+    private final String name;
     private int godCardsDrawn = 0;
 
     private boolean athenaBlocked;
@@ -15,16 +18,28 @@ public class Player {
     private boolean demeterBuild;
 
     private boolean hermesTeleport;
+    private Godcard godcard;
+    private boolean canEndTurn = false;
 
-    public Player(Playingfigure playingfigure1, Playingfigure playingfigure2) {
+    public Player(Playingfigure playingfigure1, Playingfigure playingfigure2, String name) {
         figures[0] = playingfigure1;
         figures[1] = playingfigure2;
+        this.name = name;
     }
 
-    public void drawGodCard() {
-        if (godCardsDrawn > 3) {
-            throw new IllegalStateException("You can only draw 2 godcards");
+
+    public void drawGodCard(Godcard godcard) {
+        //check if godcard is already drawn
+        if (!Game.getInstance().getGodcards().contains(godcard)) {
+            throw new IllegalStateException("ERROR: This godcard is already drawn");
         }
+
+        if (godCardsDrawn > 3) {
+            throw new IllegalStateException("ERROR: You can only draw 2 godcards");
+        }
+        Game.getInstance().getGodcards().remove(godcard);
+        System.out.println("OK");
+        this.godcard = godcard;
         godCardsDrawn++;
     }
 
@@ -40,15 +55,36 @@ public class Player {
         if (!whereToBuild.isBuildable()) return;
 
         if (whatToBuild == BuildObject.DOME) {
-            var dome = new Dome(whereToBuild.getX(), whereToBuild.getY());
+
+            if (Game.getInstance().getDomeList().isEmpty()) {
+                throw new IllegalStateException("ERROR: No domes left");
+            }
+
+
+            var dome = Game.getInstance().getDomeList().get(0);
+            Game.getInstance().getDomeList().remove(0);
             //player wants to build a dome: if atlas is active can build at any height
             if (atlasBuild || whereToBuild.isDomeable()) {
                 whereToBuild.getGameobjects()[whereToBuild.getHeightSquares()] = dome;
             }
         } else if (whatToBuild == BuildObject.CUBOID) {
-            var cube = new Cuboid(whereToBuild.getX(), whereToBuild.getY());
+            //check if enough cuboids are left
+
+            if (Game.getInstance().getCuboidList().isEmpty()) {
+                throw new IllegalStateException("ERROR: No cuboids left");
+            }
+
+            var cube = Game.getInstance().getCuboidList().get(0);
+            Game.getInstance().getCuboidList().remove(0);
             whereToBuild.getGameobjects()[whereToBuild.getHeightSquares()] = cube;
         }
+
+        if (Game.getInstance().checkWinning()) {
+            System.out.println(name + " wins!");
+        }
+
+        canEndTurn = true;
+
     }
 
     public void moveFigure(Playingfigure playingfigure, Gamefield where) {
@@ -63,17 +99,31 @@ public class Player {
         } else {
             playingfigure.setGameField(where);
         }
+
+        if (Game.getInstance().checkWinning()) {
+            System.out.println(name + " wins!");
+        }
     }
 
     public void endTurn() {
+        if (!canEndTurn) return;
         athenaBlocked = false;
         apolloMove = false;
         artemisMove = false;
         atlasBuild = false;
         demeterBuild = false;
         hermesTeleport = false;
+        canEndTurn = false;
         Game.getInstance().setCurrentPlayer(Game.getInstance().getOpponent(this));
+        System.out.println(Game.getInstance().getCurrentPlayer().name);
     }
+
+    public void surrender() {
+        Game.getInstance().setRunning(false);
+        System.out.println(Game.getInstance().getOpponent(this).name + " wins!");
+    }
+    
+
 
     public boolean isAthenaBlocked() {
         return athenaBlocked;
@@ -129,5 +179,9 @@ public class Player {
 
     public void setHermesTeleport(boolean hermesTeleport) {
         this.hermesTeleport = hermesTeleport;
+    }
+
+    public String getName() {
+        return name;
     }
 }

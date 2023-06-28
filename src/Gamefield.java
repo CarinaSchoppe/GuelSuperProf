@@ -101,4 +101,45 @@ public class Gamefield extends Gameobject {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        if (gameobjects[0] == null)
+            return "Empty";
+        var string = "";
+        for (var element : gameobjects) {
+            if (element instanceof Cuboid cube || element instanceof Dome dome) {
+                string += element + ",";
+            }
+
+        }
+        string = string.substring(0, string.length() - 1);
+        return string;
+    }
+
+    public Character getTopCharacter() {
+        var topGameObject = getTopGameObject();
+        if (topGameObject == null)
+            return '.';
+
+        if (topGameObject instanceof Cuboid cube) {
+            return 'C';
+        } else if (topGameObject instanceof Dome dome) {
+            return 'D';
+        } else if (topGameObject instanceof Playingfigure figure) {
+            //Return the first letter of the name
+            return figure.getName().charAt(0);
+        }
+
+        return '.';
+    }
+
+    private Gameobject getTopGameObject() {
+        for (int i = gameobjects.length - 1; i >= 0; i--) {
+            if (gameobjects[i] != null) {
+                return gameobjects[i];
+            }
+        }
+        return null;
+    }
 }

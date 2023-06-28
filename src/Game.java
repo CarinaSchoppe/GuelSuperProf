@@ -4,6 +4,7 @@ import java.util.List;
 public class Game {
 
 
+    private final ArrayList<Cuboid> cuboidList = new ArrayList<>();
     private static Game instance = null;
     private final Player player1;
     private final Player player2;
@@ -12,20 +13,33 @@ public class Game {
     private final List<Godcard> godcards = new ArrayList<>(List.of(Godcard.values()));
 
     private Player currentPlayer;
+    private final ArrayList<Dome> domeList = new ArrayList<>();
+    private boolean isRunning;
 
     private Game() {
         instance = this;
         var figure1 = new Playingfigure("blue", 0, 0);
         var figure2 = new Playingfigure("green", 0, 0);
-        player1 = new Player(figure1, figure2);
+        player1 = new Player(figure1, figure2, "P1");
         figure1.setOwner(player1);
         figure2.setOwner(player1);
         var figure3 = new Playingfigure("red", 0, 0);
         var figure4 = new Playingfigure("yellow", 0, 0);
-        player2 = new Player(figure3, figure4);
+        player2 = new Player(figure3, figure4, "P2");
         figure3.setOwner(player2);
         figure4.setOwner(player2);
         currentPlayer = player1;
+
+        for (var i = 0; i < 54; i++) {
+            cuboidList.add(new Cuboid(0, 0));
+        }
+
+        for (var i = 0; i < 18; i++) {
+            domeList.add(new Dome(0, 0));
+        }
+
+        isRunning = true;
+
     }
 
     public static Game getInstance() {
@@ -127,11 +141,49 @@ public class Game {
         return player == player1 ? player2 : player1;
     }
 
+    public void bag() {
+        System.out.println("C " + cuboidList.size());
+        System.out.println("D " + domeList.size());
+    }
+
+    public void cellPrint(int x, int y) {
+        try {
+            var field = playingField[y][x];
+            System.out.println(field.toString());
+        } catch (Exception e) {
+            System.out.println("ERROR: Invalid coordinates");
+        }
+    }
+
+    public void print() {
+
+        for (var row : playingField) {
+            var rowString = "";
+            for (var field : row) {
+                var lastCharacter = field.getTopCharacter();
+                rowString += lastCharacter + " ";
+            }
+            rowString = rowString.substring(0, rowString.length() - 1);
+            System.out.println(rowString);
+        }
+    }
+
+    public boolean quit(String command) {
+        if (!command.startsWith("quit"))
+            return false;
+        if (!command.equalsIgnoreCase("quit"))
+            throw new IllegalArgumentException("ERROR: Invalid command");
+
+        return true;
+    }
+
+
     //game is over when a player has reached a tower
     public boolean checkWinning() {
         for (var player : new Player[]{player1, player2}) {
             for (var figure : player.getFigures()) {
                 if (figure.getGameField().isOnTop()) {
+                    isRunning = false;
                     return true;
                 }
             }
@@ -174,11 +226,35 @@ public class Game {
         return player2;
     }
 
-    //if a player is
+    public boolean isRunning() {
+        return isRunning;
+    }
 
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
+    public void listGodCards() {
+        //print them like this: Name1,Name2,Name3,Name4
+        String stringBuilder = "";
+        for (Godcard godcard : godcards) {
+            stringBuilder += godcard.getName() + ",";
+        }
+        stringBuilder = stringBuilder.substring(0, stringBuilder.length() - 1);
+        System.out.println(stringBuilder);
+    }
 
     public List<Godcard> getGodcards() {
         return godcards;
+    }
+
+
+    public ArrayList<Cuboid> getCuboidList() {
+        return cuboidList;
+    }
+
+    public ArrayList<Dome> getDomeList() {
+        return domeList;
     }
 
     public Gamefield[][] getPlayingField() {
