@@ -73,7 +73,7 @@ public class Gamefield extends Gameobject {
     }
 
     public boolean isAdjecent(Gamefield where) {
-        var adj = Game.getInstance().adjecentFields(this);
+        var adj = Game.getInstance().adjacentFields(this);
         for (Gamefield[] gamefields : adj) {
             for (Gamefield gamefield : gamefields) {
                 if (gamefield == where) {

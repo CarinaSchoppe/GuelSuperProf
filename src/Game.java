@@ -51,7 +51,7 @@ public class Game {
 
 
     public boolean isClose(Gamefield currentField, Gamefield targetField) {
-        var adjecentFields = adjecentFields(currentField);
+        var adjecentFields = adjacentFields(currentField);
         for (Gamefield[] gamefields : adjecentFields) {
             for (Gamefield gamefield : gamefields) {
                 if (gamefield == targetField) {
@@ -94,46 +94,46 @@ public class Game {
          */
 
     //returns a 2d array of the adjecent fields of the given coordiantes
-    public Gamefield[][] adjecentFields(Gamefield field) {
+    public Gamefield[][] adjacentFields(Gamefield field) {
         var x = field.getX();
         var y = field.getY();
-        Gamefield[][] adjecentFields = new Gamefield[3][3];
+        Gamefield[][] adjacentFields = new Gamefield[3][3];
         if (playingField.length - 1 >= y - 1) {
             if (playingField[y - 1].length - 1 >= x - 1) {
-                adjecentFields[0][0] = playingField[y - 1][x - 1];
+                adjacentFields[0][0] = playingField[y - 1][x - 1];
             }
             if (playingField[y - 1].length - 1 >= x) {
-                adjecentFields[0][1] = playingField[y - 1][x];
+                adjacentFields[0][1] = playingField[y - 1][x];
             }
             if (playingField[y - 1].length - 1 >= x + 1) {
-                adjecentFields[0][2] = playingField[y - 1][x + 1];
+                adjacentFields[0][2] = playingField[y - 1][x + 1];
             }
         }
 
         if (playingField.length - 1 >= y) {
             if (playingField[y].length - 1 >= x - 1) {
-                adjecentFields[1][0] = playingField[y][x - 1];
+                adjacentFields[1][0] = playingField[y][x - 1];
             }
             if (playingField[y].length - 1 >= x) {
-                adjecentFields[1][1] = playingField[y][x];
+                adjacentFields[1][1] = playingField[y][x];
             }
             if (playingField[y].length - 1 >= x + 1) {
-                adjecentFields[1][2] = playingField[y][x + 1];
+                adjacentFields[1][2] = playingField[y][x + 1];
             }
         }
 
         if (playingField.length - 1 >= y + 1) {
             if (playingField[y + 1].length - 1 >= x - 1) {
-                adjecentFields[2][0] = playingField[y + 1][x - 1];
+                adjacentFields[2][0] = playingField[y + 1][x - 1];
             }
             if (playingField[y + 1].length - 1 >= x) {
-                adjecentFields[2][1] = playingField[y + 1][x];
+                adjacentFields[2][1] = playingField[y + 1][x];
             }
             if (playingField[y + 1].length - 1 >= x + 1) {
-                adjecentFields[2][2] = playingField[y + 1][x + 1];
+                adjacentFields[2][2] = playingField[y + 1][x + 1];
             }
         }
-        return adjecentFields;
+        return adjacentFields;
 
     }
 
@@ -195,7 +195,7 @@ public class Game {
 
     private boolean canBuildAnything(Player player) {
         for (var figure : player.getFigures()) {
-            var adjecent = adjecentFields(figure.getGameField());
+            var adjecent = adjacentFields(figure.getGameField());
             for (var gamefields : adjecent) {
                 for (var gamefield : gamefields) {
                     if (gamefield == null) continue;
