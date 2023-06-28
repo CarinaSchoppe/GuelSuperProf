@@ -3,7 +3,7 @@ public abstract class Gameobject {
     private int x;
     private int y;
 
-    public Gameobject(int x, int y) {
+    protected Gameobject(int x, int y) {
         this.x = x;
         this.y = y;
     }

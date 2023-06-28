@@ -13,7 +13,7 @@ public class Gamefield extends Gameobject {
 
     public boolean isBuildable() {
         //if the height is not 4 and it has no player on it
-        return getHeightSquares() != 4 && !isPlayerOnIt();
+        return !isPlayerOnIt() && !isPillar();
     }
 
 
@@ -21,7 +21,7 @@ public class Gamefield extends Gameobject {
         return getHeightSquares() == 3 && isPlayerOnIt();
     }
 
-    public boolean isRoofable() {
+    public boolean isDomeable() {
         //if the height is 4 and it has no player on it
         return isBuildable() && getHeightSquares() == 3;
     }
@@ -29,7 +29,7 @@ public class Gamefield extends Gameobject {
     public int getHeightSquares() {
         int height = 0;
         for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Square) {
+            if (gameobject instanceof Cuboid) {
                 height++;
             }
         }
@@ -37,7 +37,10 @@ public class Gamefield extends Gameobject {
     }
 
     //it is is climable if there is not player on it and its not a pillar
-    public boolean isClimeable() {
+    public boolean isClimeable(boolean apolloMove) {
+        if (apolloMove) {
+            return !isPillar();
+        }
         return !isPillar() && !isPlayerOnIt();
     }
 
@@ -50,9 +53,14 @@ public class Gamefield extends Gameobject {
         return false;
     }
 
-    //it is a pillar when all gameobjects from 0-2 are square and the last is a roof like: square - square - square - roof
     public boolean isPillar() {
-        return gameobjects[0] instanceof Square && gameobjects[1] instanceof Square && gameobjects[2] instanceof Square && gameobjects[3] instanceof Roof;
+        //if last gameobject is a pillar
+        for (var object : gameobjects) {
+            if (object instanceof Dome) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isOccupied() {
@@ -62,5 +70,35 @@ public class Gamefield extends Gameobject {
             }
         }
         return false;
+    }
+
+    public boolean isAdjecent(Gamefield where) {
+        var adj = Game.getInstance().adjecentFields(this);
+        for (Gamefield[] gamefields : adj) {
+            for (Gamefield gamefield : gamefields) {
+                if (gamefield == where) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Playingfigure getPlayingFigure() {
+        for (Gameobject gameobject : gameobjects) {
+            if (gameobject instanceof Playingfigure) {
+                return (Playingfigure) gameobject;
+            }
+        }
+        return null;
+    }
+
+    public void setFigure(Playingfigure figure) {
+        for (int i = 0; i < gameobjects.length; i++) {
+            if (gameobjects[i] == null || gameobjects[i] instanceof Playingfigure) {
+                gameobjects[i] = figure;
+                return;
+            }
+        }
     }
 }

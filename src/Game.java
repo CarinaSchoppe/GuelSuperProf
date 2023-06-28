@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 
 
@@ -6,12 +9,22 @@ public class Game {
     private final Player player2;
     private final Gamefield[][] playingField = new Gamefield[5][5];
 
+    private final List<Godcard> godcards = new ArrayList<>(List.of(Godcard.values()));
+
     private Player currentPlayer;
 
     private Game() {
         instance = this;
-        player1 = new Player(new Playingfigure("blue", 0, 0), new Playingfigure("green", 0, 0));
-        player2 = new Player(new Playingfigure("red", 0, 0), new Playingfigure("yellow", 0, 0));
+        var figure1 = new Playingfigure("blue", 0, 0);
+        var figure2 = new Playingfigure("green", 0, 0);
+        player1 = new Player(figure1, figure2);
+        figure1.setOwner(player1);
+        figure2.setOwner(player1);
+        var figure3 = new Playingfigure("red", 0, 0);
+        var figure4 = new Playingfigure("yellow", 0, 0);
+        player2 = new Player(figure3, figure4);
+        figure3.setOwner(player2);
+        figure4.setOwner(player2);
         currentPlayer = player1;
     }
 
@@ -22,15 +35,10 @@ public class Game {
         return instance;
     }
 
-    public boolean isBuildable(Playingfigure figure, int x, int y) {
-        //check if the field is adjectend
-        return isClose(figure.getPlayingField(), getPlayingField()[y][x]) && playingField[y][x].isBuildable();
-    }
 
     public boolean isClose(Gamefield currentField, Gamefield targetField) {
         var adjecentFields = adjecentFields(currentField);
         for (Gamefield[] gamefields : adjecentFields) {
-            if (gamefields == null) continue;
             for (Gamefield gamefield : gamefields) {
                 if (gamefield == targetField) {
                     return true;
@@ -41,9 +49,9 @@ public class Game {
     }
 
     //its reachable if its not a pillar and if it is adjectent to the currentField
-    public boolean isReachable(Playingfigure figure, int x, int y) {
+    public boolean isReachable(Playingfigure figure, Gamefield where) {
         var currentField = playingField[figure.getY()][figure.getX()];
-        var targetField = playingField[y][x];
+        var targetField = where;
         if (targetField.isPillar()) {
             return false;
         }
@@ -51,11 +59,12 @@ public class Game {
             return false;
         }
 
-        if (targetField.isOccupied()) return false;
+        if (targetField.isOccupied() && !figure.getOwner().isApolloMove()) return false;
 
         if (!isClose(currentField, targetField)) return false;
 
-        return targetField.getHeightSquares() <= currentField.getHeightSquares() + 1;
+
+        return targetField.getHeightSquares() - 1 <= currentField.getHeightSquares() && !(targetField.getHeightSquares() > currentField.getHeightSquares() && figure.getOwner().isAthenaBlocked());
     }
 
     /*
@@ -85,7 +94,6 @@ public class Game {
             if (playingField[y - 1].length - 1 >= x + 1) {
                 adjecentFields[0][2] = playingField[y - 1][x + 1];
             }
-
         }
 
         if (playingField.length - 1 >= y) {
@@ -123,37 +131,32 @@ public class Game {
     public boolean checkWinning() {
         for (var player : new Player[]{player1, player2}) {
             for (var figure : player.getFigures()) {
-                if (figure.getPlayingField().isOnTop()) {
+                if (figure.getGameField().isOnTop()) {
                     return true;
                 }
             }
         }
         var opponent = getOpponent(currentPlayer);
         //if that opponent cant make any more build moves
-        return !canBuild(opponent);
+        return !canBuildAnything(opponent);
     }
 
-    private boolean canBuild(Player player) {
+    private boolean canBuildAnything(Player player) {
         for (var figure : player.getFigures()) {
-            var fields = adjecentFields(figure.getPlayingField());
-            for (var fieldRow : fields) {
-                for (var field : fieldRow) {
-                    if (field != null && field.isBuildable()) {
+            var adjecent = adjecentFields(figure.getGameField());
+            for (var gamefields : adjecent) {
+                for (var gamefield : gamefields) {
+                    if (gamefield == null) continue;
+                    if (gamefield.isBuildable()) {
                         return true;
                     }
                 }
             }
+
         }
-
-
         return false;
     }
 
-
-    public boolean isPillar(int x, int y) {
-        return playingField[y][x].isPillar();
-
-    }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -173,6 +176,10 @@ public class Game {
 
     //if a player is
 
+
+    public List<Godcard> getGodcards() {
+        return godcards;
+    }
 
     public Gamefield[][] getPlayingField() {
         return playingField;
