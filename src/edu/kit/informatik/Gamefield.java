@@ -5,9 +5,11 @@ public class Gamefield extends Gameobject {
     /**
      * This variable represents an array of edu.kit.informatik.Gameobject instances.
      * <p>
-     * The array has a fixed length of 4 and is marked as final, meaning that it cannot be reassigned or modified after initialization.
+     * The array has a fixed length of 4 and is marked as final, 
+     * meaning that it cannot be reassigned or modified after initialization.
      * <p>
-     * It is recommended to access this variable through the getter method to ensure encapsulation and maintain data integrity.
+     * It is recommended to access this variable through the getter method,
+     * to ensure encapsulation and maintain data integrity.
      */
     private final Gameobject[] gameobjects = new Gameobject[4];
 
@@ -123,7 +125,7 @@ public class Gamefield extends Gameobject {
     /**
      * This method checks if any edu.kit.informatik.Playingfigure objects are occupying the game board.
      *
-     * @return true if there is at least one edu.kit.informatik.Playingfigure object on the game board, otherwise false.
+     * @return true if there is at least one Playingfigure object on the game board, otherwise false.
      */
     public boolean isOccupied() {
         for (Gameobject gameobject : gameobjects) {

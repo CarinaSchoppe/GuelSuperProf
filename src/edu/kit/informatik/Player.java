@@ -41,7 +41,7 @@ public class Player {
     private boolean canMoveNow = true;
     /**
      * Determines whether the build can be started immediately.
-     *
+     * <p>
      * This variable represents whether the build can be initiated right away. A value of true indicates that the build
      * can be started immediately, while a value of false indicates that the build should be delayed.
      *
@@ -107,10 +107,10 @@ public class Player {
 
     /**
      * Represents the status of an Atlas build.
-     *
+     * <p>
      * This variable is used to determine whether an Atlas build is currently happening or not.
      * It is a boolean value that is true if an Atlas build is in progress, and false otherwise.
-     *
+     * <p>
      * The value of this variable can only be accessed within the class it is declared in.
      */
     private boolean atlasBuild;
@@ -129,10 +129,6 @@ public class Player {
     /**
      * Determines whether the current turn can be ended.
      *
-     * <p>
-     * The default value of the variable is set to <code>false</code>. This means that by default, the current turn cannot be ended.
-     * </p>
-     *
      * @return <code>true</code> if the current turn can be ended, <code>false</code> otherwise.
      */
     private boolean canEndTurn = false;
@@ -145,7 +141,7 @@ public class Player {
      * Indicates whether an object has moved.
      *
      * <p>
-     * The hasMoved variable is used to track the movement state of an object. 
+     * The hasMoved variable is used to track the movement state of an object.
      * It is set to true when the object has moved, and false otherwise.
      *
      * <p>
@@ -163,7 +159,7 @@ public class Player {
      *
      * @param playingfigure1 the first playing figure for the player
      * @param playingfigure2 the second playing figure for the player
-     * @param name the name of the player
+     * @param name           the name of the player
      */
     public Player(Playingfigure playingfigure1, Playingfigure playingfigure2, String name) {
         figures = new Playingfigure[]{playingfigure1, playingfigure2};
@@ -177,7 +173,7 @@ public class Player {
      * Draws a edu.kit.informatik.Godcard for the player.
      *
      * @param godcard the edu.kit.informatik.Godcard to be drawn
-     * @throws IllegalStateException if it is not currently allowed to draw a edu.kit.informatik.Godcard or if the edu.kit.informatik.Godcard is already drawn
+     * @throws IllegalStateException if it is not currently allowed to draw a edu.kit.informatik.Godcard
      */
     public void drawGodCard(Godcard godcard) {
 
@@ -220,7 +216,10 @@ public class Player {
         for (var figure : figures) {
             for (var fields : Game.getInstance().getPlayingField()) {
                 for (var field : fields) {
-                    if (Game.getInstance().isReachable(figure, field) && field.getHeightSquares() == figure.getGameField().getHeightSquares()) return false;
+                    if (Game.getInstance().isReachable(figure, field))
+                        if (field.getHeightSquares() == figure.getGameField().getHeightSquares()) {
+                            return false;
+                        }
                 }
             }
         }
@@ -232,10 +231,9 @@ public class Player {
      * Builds a specified object on a game field.
      * Throws exceptions if the build conditions are not met.
      *
-     * @param whatToBuild The object to build (either edu.kit.informatik.BuildObject.DOME or edu.kit.informatik.BuildObject.CUBOID)
+     * @param whatToBuild  The object to build
      * @param whereToBuild The game field on which to build the object
-     *
-     * @throws IllegalStateException If the build cannot be performed at the current state
+     * @throws IllegalStateException    If the build cannot be performed at the current state
      * @throws IllegalArgumentException If the build conditions are not met
      */
     public void build(BuildObject whatToBuild, Gamefield whereToBuild) {
@@ -301,8 +299,8 @@ public class Player {
      * Moves the given playing figure to the specified game field.
      *
      * @param playingfigure The playing figure to be moved.
-     * @param where The game field to which the playing figure will be moved.
-     * @throws IllegalStateException If the move cannot be performed due to certain conditions.
+     * @param where         The game field to which the playing figure will be moved.
+     * @throws IllegalStateException    If the move cannot be performed due to certain conditions.
      * @throws IllegalArgumentException If the move is not valid.
      */
     public void moveFigure(Playingfigure playingfigure, Gamefield where) {
@@ -311,8 +309,9 @@ public class Player {
         var oldPosition = playingfigure.getGameField();
 
         //check if figure is part of this player
-        if (!playingfigure.getOwner().equals(this)) throw new IllegalStateException("ERROR: This figure is not part of this player");
-
+        if (!playingfigure.getOwner().equals(this)) {
+            throw new IllegalStateException("ERROR: This figure is not part of this player");
+        }
         if (where.equals(oldPosition)) throw new IllegalArgumentException("ERROR: Move to old Position");
 
         if (hasMoved && !artemisMove) {
@@ -326,7 +325,9 @@ public class Player {
             canBuildNow = true;
         }
 
-        if (!Game.getInstance().isReachable(playingfigure, where)) throw new IllegalStateException("ERROR: This field is not reachable");
+        if (!Game.getInstance().isReachable(playingfigure, where)) {
+            throw new IllegalStateException("ERROR: This field is not reachable");
+        }
         if (hermesTeleport && where.getHeightSquares() != playingfigure.getGameField().getHeightSquares())
             throw new IllegalStateException("ERROR: You can't teleport to a different height");
         if (where.isOccupied() && apolloMove) {
@@ -358,7 +359,7 @@ public class Player {
 
     /**
      * Ends the current player's turn.
-     *
+     * <p>
      * This method checks if the turn can be ended and throws an exception if not.
      * It then resets various flags and attributes related to the game state.
      * Finally, it sets the current player to the opponent of the current player.

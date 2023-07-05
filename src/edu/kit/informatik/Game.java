@@ -10,12 +10,13 @@ public class Game {
     /**
      * Represents the current instance of the edu.kit.informatik.Game class.
      * <p>
-     * This variable is used to keep track of the single instance of the edu.kit.informatik.Game class throughout the application.
+     * This variable is used to keep track of the single instance of the Game class throughout the application.
      * It is declared as private and static to ensure that only one instance is created and to allow access
      * to the instance from anywhere within the class.
      * <p>
      * The instance is initially set to null and should be initialized by calling the getInstance() method
-     * of the edu.kit.informatik.Game class. If the instance is null, a new instance of the edu.kit.informatik.Game class is created; otherwise,
+     * of the edu.kit.informatik.Game class. If the instance is null, a new instance of the Game class is created;
+     * otherwise,
      * the existing instance is returned.
      * <p>
      * Example usage:
@@ -38,31 +39,33 @@ public class Game {
      */
     private final ArrayList<Cuboid> cuboidList = new ArrayList<>();
     /**
-     * The playingField variable represents the game field, which stores a two-dimensional array of edu.kit.informatik.Gamefield objects.
-     * It is a private and final variable, indicating that it cannot be modified after initialization and can only be accessed within the class.
-     *
-     * The playingField variable is used to store and manipulate the game state, allowing the game logic to be applied on it.
+     * The playingField variable represents the game field,
+     * which stores a two-dimensional array of Gamefield objects.
+     * It is a private and final variable, indicating that it cannot be modified after initialization,
+     * and can only be accessed within the class.
+     * <p>
+     * The playingField variable is used to store and manipulate the game state,
+     * allowing the game logic to be applied on it.
      * It represents the layout and current state of the game board.
-     *
-     * The two-dimensional array consists of rows and columns, where each element represents a specific position on the game board.
-     * Each element is of type edu.kit.informatik.Gamefield, which encapsulates information about the state of that particular position on the game board.
-     *
-     * Note that edu.kit.informatik.Gamefield is not defined in this documentation and should be replaced with the appropriate class name in your implementation.
-     *
+     * <p>
+     * The two-dimensional array consists of rows and columns,
+     * where each element represents a specific position on the game board.
+     * Each element is of type edu.kit.informatik.Gamefield,
+     * which encapsulates information about the state of that particular position on the game board.
+     * <p>
+     * Note that edu.kit.informatik.Gamefield is not defined in this documentation,
+     * and should be replaced with the appropriate class name in your implementation.
+     * <p>
      * Examples of accessing and manipulating the playingField variable:
-     *   - Displaying the state of a specific position on the game board:
-     *     edu.kit.informatik.Gamefield field = playingField[row][column];
-     *     System.out.println(field.getState());
-     *
-     *   - Updating the state of a specific position on the game board:
-     *     playingField[row][column].setState(edu.kit.informatik.Gamefield.State.CROSSED);
-     *
-     *   - Getting the dimensions of the playingField:
-     *     int numRows = playingField.length;
-     *     int numColumns = playingField[0].length;
-     *
-     * It is important to note that when accessing or modifying the playingField variable, appropriate bounds-checking should be performed
-     * to prevent ArrayIndexOutOfBoundsExceptions when trying to access positions outside the valid range of the array.
+     * - Displaying the state of a specific position on the game board:
+     * edu.kit.informatik.Gamefield field = playingField[row][column];
+     * System.out.println(field.getState());
+     * <p>
+     * - Updating the state of a specific position on the game board:
+     * <p>
+     * - Getting the dimensions of the playingField:
+     * int numRows = playingField.length;
+     * int numColumns = playingField[0].length;
      */
     private final Gamefield[][] playingField;
     /**
@@ -90,27 +93,27 @@ public class Game {
     /**
      * The domeList variable represents a private, final ArrayList of type edu.kit.informatik.Dome.
      * It is used to store a collection of edu.kit.informatik.Dome objects.
-     *
+     * <p>
      * edu.kit.informatik.Dome objects stored in the domeList can be accessed and modified only within the scope
      * of the class where the variable is declared, due to its private access modifier.
-     *
+     * <p>
      * The domeList variable is declared as final, indicating that its reference cannot be
      * changed once initialized. However, the contents of the ArrayList can still be modified.
-     *
+     * <p>
      * edu.kit.informatik.Dome objects can be added to the domeList using the add() method provided by the
      * ArrayList class. Similarly, they can be removed using the remove() method.
-     *
+     * <p>
      * Example usage:
-     *
-     *      // Create a new edu.kit.informatik.Dome object
-     *      edu.kit.informatik.Dome dome1 = new edu.kit.informatik.Dome();
-     *
-     *      // Add the edu.kit.informatik.Dome object to the domeList
-     *      domeList.add(dome1);
-     *
-     *      // Remove the edu.kit.informatik.Dome object from the domeList
-     *      domeList.remove(dome1);
-     *
+     * <p>
+     * // Create a new edu.kit.informatik.Dome object
+     * edu.kit.informatik.Dome dome1 = new edu.kit.informatik.Dome();
+     * <p>
+     * // Add the edu.kit.informatik.Dome object to the domeList
+     * domeList.add(dome1);
+     * <p>
+     * // Remove the edu.kit.informatik.Dome object from the domeList
+     * domeList.remove(dome1);
+     * <p>
      * Note that the documentation does not provide implementation details, but focuses on the
      * purpose, behavior, and usage of the variable.
      *
@@ -126,14 +129,14 @@ public class Game {
      * This variable stores information about the second player in the program.
      * It is used to track and manage the state, actions, and attributes
      * of the player within the software.
-     *
+     * <p>
      * This variable is declared as private in order to restrict its
      * accessibility and ensure proper encapsulation. It can only be accessed
      * within the class in which it is declared.
-     *
+     * <p>
      * To manipulate the player2 variable or access its data, appropriate
      * getter and setter methods should be used.
-     *
+     * <p>
      * Please refer to the documentation of the edu.kit.informatik.Player class to understand
      * the structure and attributes of the edu.kit.informatik.Player object, as player2 is an
      * instance of the edu.kit.informatik.Player class.
@@ -141,10 +144,10 @@ public class Game {
     private Player player2;
     /**
      * The current player in the game.
-     *
+     * <p>
      * This variable represents the player who is currently playing the game.
      * It holds the instance of the edu.kit.informatik.Player class representing the current player.
-     *
+     * <p>
      * Please note that this variable is private and can only be accessed within
      * the scope of the class it belongs to.
      */
@@ -156,18 +159,21 @@ public class Game {
 
     /**
      * Initializes a new instance of the game.
-     *
+     * <p>
      * This method sets up the playing field, cuboidList, domeList, and sets the isRunning flag to true.
-     *
-     * The playing field is a 5x5 grid represented by a 2D array of edu.kit.informatik.Gamefield objects. Each edu.kit.informatik.Gamefield object represents
+     * <p>
+     * The playing field is a 5x5 grid represented by a 2D array of Gamefield objects.
+     * Each Gamefield object represents
      * a cell on the grid and is initialized with its x and y coordinates.
-     *
-     * The cuboidList is a list of edu.kit.informatik.Cuboid objects. The method creates 54 instances of edu.kit.informatik.Cuboid and adds them to the list.
-     *
-     * The domeList is a list of edu.kit.informatik.Dome objects. The method creates 18 instances of edu.kit.informatik.Dome and adds them to the list.
-     *
+     * <p>
+     * The cuboidList is a list of edu.kit.informatik.Cuboid objects.
+     * The method creates 54 instances of Cuboid and adds them to the list.
+     * <p>
+     * The domeList is a list of edu.kit.informatik.Dome objects.
+     * The method creates 18 instances of Dome and adds them to the list.
+     * <p>
      * The flag isRunning is set to true to indicate that the game is currently running.
-     *
+     * <p>
      * This method is private to ensure that the game can only be initialized internally.
      */
     private Game() {
@@ -192,7 +198,7 @@ public class Game {
 
     /**
      * Gets the instance of the edu.kit.informatik.Game class.
-     *
+     * <p>
      * This method is used to create an instance of the edu.kit.informatik.Game class if it does not already exist,
      * and return the instance to the caller.
      *
@@ -210,8 +216,10 @@ public class Game {
      * Checks if the target field is close to the current field.
      *
      * @param currentField The current game field.
-     * @param targetField The target game field.
-     * @return True if the target field is adjacent to the current field or if the current player has Hermes Teleport ability, false otherwise.
+     * @param targetField  The target game field.
+     * @return True if the target field is adjacent to the current field,
+     * or if the current player has Hermes Teleport ability,
+     * false otherwise.
      */
     public boolean isClose(Gamefield currentField, Gamefield targetField) {
         var adjecentFields = adjacentFields(currentField);
@@ -252,14 +260,18 @@ public class Game {
         }
 
         if (!isClose(currentField, targetField)) {
-            throw new IllegalArgumentException("ERROR: You can't move to a field that is not adjecent to you without hermesMove");
+            var msg = "ERROR: You can't move to a field that is not adjecent to you without hermesMove";
+            throw new IllegalArgumentException(msg);
         }
 
 
-        if (figure.getOwner().isHermesTeleport()) return targetField.getHeightSquares() == currentField.getHeightSquares();
-
-
-        return targetField.getHeightSquares() - 1 <= currentField.getHeightSquares() && !(targetField.getHeightSquares() > currentField.getHeightSquares() && figure.getOwner().isAthenaBlocked());
+        if (figure.getOwner().isHermesTeleport()) {
+            return targetField.getHeightSquares() == currentField.getHeightSquares();
+        }
+        var a = targetField.getHeightSquares() - 1 <= currentField.getHeightSquares();
+        var b = targetField.getHeightSquares() > currentField.getHeightSquares();
+        var c = figure.getOwner().isAthenaBlocked();
+        return a && !(b && c);
     }
 
     /*
@@ -279,8 +291,8 @@ public class Game {
      *
      * @param field the field whose adjacent fields are to be retrieved
      * @return a 2D array of the adjacent fields of the given field. The array contains a total of 9 elements
-     *         arranged in a 3x3 grid, where the given field occupies the center position.
-     *         If a field does not exist at any adjacent position, the corresponding element of the array will be null.
+     * arranged in a 3x3 grid, where the given field occupies the center position.
+     * If a field does not exist at any adjacent position, the corresponding element of the array will be null.
      */
     //returns a 2d array of the adjecent fields of the given coordiantes
     public Gamefield[][] adjacentFields(Gamefield field) {
@@ -340,7 +352,7 @@ public class Game {
 
     /**
      * Prints the count of cuboids and count of domes in the bag.
-     *
+     * <p>
      * The count of cuboids and the count of domes are printed to the console.
      */
     public void bag() {
