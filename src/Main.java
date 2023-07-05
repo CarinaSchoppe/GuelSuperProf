@@ -41,7 +41,7 @@ public class Main {
         if (name1.equals(name2) || name1.equals(name3) || name1.equals(name4) || name2.equals(name3) || name2.equals(name4) || name3.equals(name4)) {
             throw new RuntimeException("Names must be unique!");
         }
-        
+
     }
 
     public static void main(String[] args) {
@@ -52,7 +52,7 @@ public class Main {
         }
         var scanner = new Scanner(System.in);
         String line;
-        while (!(line = scanner.nextLine()).equalsIgnoreCase("quit")) {
+        while (!(line = scanner.nextLine()).equalsIgnoreCase("quit") && game.isRunning()) {
             if (line.startsWith("draw-card")) {
                 drawCard(line);
             } else if (line.startsWith("list-cards")) {

@@ -11,6 +11,7 @@ public class Game {
     private Player player2;
     private final Gamefield[][] playingField;
 
+
     private final List<Godcard> godcards = new ArrayList<>(List.of(Godcard.values()));
 
     private Player currentPlayer;

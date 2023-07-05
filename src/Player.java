@@ -15,7 +15,6 @@ public class Player {
     private boolean athenaBlockedMove;
 
     private boolean apolloMove;
-
     private boolean artemisMove;
 
     private boolean atlasBuild;
@@ -60,9 +59,25 @@ public class Player {
         }
         System.out.println("OK");
         canDrawNow = false;
+        if (canOnlySurrenderMove() && hermesTeleport) {
+            canMoveNow = false;
+            canBuildNow = false;
+        }
         godCardsDrawn++;
     }
 
+    private boolean canOnlySurrenderMove() {
+        //check if there is any move possible
+        for (var figure : figures) {
+            for (var fields : Game.getInstance().getPlayingField()) {
+                for (var field : fields) {
+                    if (Game.getInstance().isReachable(figure, field) && field.getHeightSquares() == figure.getGameField().getHeightSquares()) return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
     public void build(BuildObject whatToBuild, Gamefield whereToBuild) {
         if (!canBuildNow) throw new IllegalStateException("ERROR: You can't build now");
