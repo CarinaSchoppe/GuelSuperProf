@@ -125,7 +125,7 @@ public class Player {
 
     public void moveFigure(Playingfigure playingfigure, Gamefield where) {
         if (!canMoveNow) throw new IllegalStateException("ERROR: You can't move now");
-        
+
         var oldPosition = playingfigure.getGameField();
 
         //check if figure is part of this player
