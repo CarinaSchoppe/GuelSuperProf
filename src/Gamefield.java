@@ -77,7 +77,6 @@ public class Gamefield extends Gameobject {
         for (Gamefield[] gamefields : adj) {
             for (Gamefield gamefield : gamefields) {
                 if (gamefield == where) {
-                    System.out.println("is adjecent");
                     return true;
                 }
             }
