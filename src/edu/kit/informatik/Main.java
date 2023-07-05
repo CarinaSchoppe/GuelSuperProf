@@ -143,9 +143,12 @@ public class Main {
         }
         var scanner = new Scanner(System.in);
         String line;
-        while (!(line = scanner.nextLine()).equals("quit") && game.isRunning()) {
+        while (!(line = scanner.nextLine()).equals("quit")) {
+            if (!game.isRunning())
+                break;
             try {
-                if (line.equals("draw-card")) {
+                if (line.startsWith("draw-card")) {
+                    if (line.split(" ").length != 2) throw new IllegalArgumentException("ERROR: Invalid command");
                     drawCard(line);
                 } else if (line.equals("list-cards")) {
                     game.listCards();
@@ -165,6 +168,7 @@ public class Main {
                     game.getCurrentPlayer().endTurn();
                 } else if (line.equals("surrender")) {
                     game.getCurrentPlayer().surrender();
+                    break;
                 } else if (line.equals("bag")) {
                     game.bag();
                 } else if (line.startsWith("cellprint")) {

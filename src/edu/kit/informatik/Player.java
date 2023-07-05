@@ -180,7 +180,8 @@ public class Player {
         }
         System.out.println("OK");
         canDrawNow = false;
-        if (canOnlySurrenderMove() && hermesTeleport) {
+        if (hermesTeleport) {
+            if (!canOnlySurrenderMove()) return;
             canMoveNow = false;
             canBuildNow = false;
         }
