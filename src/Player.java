@@ -21,8 +21,12 @@ public class Player {
     private Godcard godcard;
     private boolean canEndTurn = false;
 
+    private boolean hasBuild = false;
+    private boolean hasMoved = false;
+
     public Player(Playingfigure playingfigure1, Playingfigure playingfigure2, String name) {
         figures[0] = playingfigure1;
+
         figures[1] = playingfigure2;
         this.name = name;
     }
@@ -44,7 +48,20 @@ public class Player {
     }
 
 
-    public void performBuild(BuildObject whatToBuild, Gamefield whereToBuild) {
+    public void build(BuildObject whatToBuild, Gamefield whereToBuild) {
+
+        if (hasBuild && !demeterBuild) {
+            return;
+        }
+
+
+        if (demeterBuild) {
+            demeterBuild = false;
+        } else {
+            hasBuild = true;
+        }
+
+
         //one figure needs to be adjecent to the field
         for (var figure : figures) {
             if (!figure.getGameField().isAdjecent(whereToBuild)) {
@@ -55,11 +72,9 @@ public class Player {
         if (!whereToBuild.isBuildable()) return;
 
         if (whatToBuild == BuildObject.DOME) {
-
             if (Game.getInstance().getDomeList().isEmpty()) {
                 throw new IllegalStateException("ERROR: No domes left");
             }
-
 
             var dome = Game.getInstance().getDomeList().get(0);
             Game.getInstance().getDomeList().remove(0);
@@ -83,12 +98,23 @@ public class Player {
             System.out.println(name + " wins!");
         }
 
-        canEndTurn = true;
 
     }
 
     public void moveFigure(Playingfigure playingfigure, Gamefield where) {
         var oldPosition = playingfigure.getGameField();
+
+        if (where.equals(oldPosition)) return;
+
+        if (hasMoved && !artemisMove) {
+            return;
+        }
+        if (artemisMove) {
+            artemisMove = false;
+        } else {
+            hasMoved = true;
+        }
+
         if (!Game.getInstance().isReachable(playingfigure, where)) return;
         if (hermesTeleport && where.getHeightSquares() != playingfigure.getGameField().getHeightSquares())
             return;
@@ -106,6 +132,7 @@ public class Player {
     }
 
     public void endTurn() {
+        checkEndTurn();
         if (!canEndTurn) return;
         athenaBlocked = false;
         apolloMove = false;
@@ -114,15 +141,22 @@ public class Player {
         demeterBuild = false;
         hermesTeleport = false;
         canEndTurn = false;
+        hasBuild = false;
+        hasMoved = false;
         Game.getInstance().setCurrentPlayer(Game.getInstance().getOpponent(this));
         System.out.println(Game.getInstance().getCurrentPlayer().name);
+    }
+
+    private void checkEndTurn() {
+        if (hasBuild && hasMoved) {
+            canEndTurn = true;
+        }
     }
 
     public void surrender() {
         Game.getInstance().setRunning(false);
         System.out.println(Game.getInstance().getOpponent(this).name + " wins!");
     }
-    
 
 
     public boolean isAthenaBlocked() {

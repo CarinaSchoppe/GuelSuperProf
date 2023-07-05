@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Game {
@@ -6,8 +7,8 @@ public class Game {
 
     private final ArrayList<Cuboid> cuboidList = new ArrayList<>();
     private static Game instance = null;
-    private final Player player1;
-    private final Player player2;
+    private Player player1;
+    private Player player2;
     private final Gamefield[][] playingField = new Gamefield[5][5];
 
     private final List<Godcard> godcards = new ArrayList<>(List.of(Godcard.values()));
@@ -18,18 +19,6 @@ public class Game {
 
     private Game() {
         instance = this;
-        var figure1 = new Playingfigure("blue", 0, 0);
-        var figure2 = new Playingfigure("green", 0, 0);
-        player1 = new Player(figure1, figure2, "P1");
-        figure1.setOwner(player1);
-        figure2.setOwner(player1);
-        var figure3 = new Playingfigure("red", 0, 0);
-        var figure4 = new Playingfigure("yellow", 0, 0);
-        player2 = new Player(figure3, figure4, "P2");
-        figure3.setOwner(player2);
-        figure4.setOwner(player2);
-        currentPlayer = player1;
-
         for (var i = 0; i < 54; i++) {
             cuboidList.add(new Cuboid(0, 0));
         }
@@ -37,9 +26,7 @@ public class Game {
         for (var i = 0; i < 18; i++) {
             domeList.add(new Dome(0, 0));
         }
-
         isRunning = true;
-
     }
 
     public static Game getInstance() {
@@ -210,6 +197,14 @@ public class Game {
     }
 
 
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -234,7 +229,12 @@ public class Game {
         isRunning = running;
     }
 
-    public void listGodCards() {
+    public void listCards() {
+
+        //sort godcards lexiographically by their name
+        godcards.sort(Comparator.comparing(Godcard::getName));
+
+
         //print them like this: Name1,Name2,Name3,Name4
         String stringBuilder = "";
         for (Godcard godcard : godcards) {
@@ -259,5 +259,17 @@ public class Game {
 
     public Gamefield[][] getPlayingField() {
         return playingField;
+    }
+
+
+    public Playingfigure getFigure(String figureName) {
+        for (var player : new Player[]{player1, player2}) {
+            for (var figure : player.getFigures()) {
+                if (figure.getName().equalsIgnoreCase(figureName)) {
+                    return figure;
+                }
+            }
+        }
+        throw new IllegalArgumentException("ERROR: Invalid figure name");
     }
 }

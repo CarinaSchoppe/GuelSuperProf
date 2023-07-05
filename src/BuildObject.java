@@ -11,4 +11,13 @@ public enum BuildObject {
     public char getSymbol() {
         return symbol;
     }
+
+    public static BuildObject findBuildObject(char symbol) {
+        for (BuildObject buildObject : BuildObject.values()) {
+            if (buildObject.getSymbol() == symbol) {
+                return buildObject;
+            }
+        }
+        return null;
+    }
 }

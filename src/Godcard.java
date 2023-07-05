@@ -16,4 +16,13 @@ public enum Godcard {
     public String getName() {
         return name;
     }
+
+    public static Godcard findGodcard(String name) {
+        for (Godcard godcard : Godcard.values()) {
+            if (godcard.getName().equals(name)) {
+                return godcard;
+            }
+        }
+        return null;
+    }
 }
