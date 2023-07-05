@@ -98,7 +98,7 @@ public class Gamefield extends Gameobject {
      */
     private boolean isPlayerOnIt() {
         for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Playingfigure) {
+            if (gameobject instanceof Figure) {
                 return true;
             }
         }
@@ -127,7 +127,7 @@ public class Gamefield extends Gameobject {
      */
     public boolean isOccupied() {
         for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Playingfigure) {
+            if (gameobject instanceof Figure) {
                 return true;
             }
         }
@@ -157,10 +157,10 @@ public class Gamefield extends Gameobject {
      *
      * @return the playing figure object if found in the list, otherwise null.
      */
-    public Playingfigure getPlayingFigure() {
+    public Figure getPlayingFigure() {
         for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Playingfigure) {
-                return (Playingfigure) gameobject;
+            if (gameobject instanceof Figure) {
+                return (Figure) gameobject;
             }
         }
         return null;
@@ -171,9 +171,9 @@ public class Gamefield extends Gameobject {
      *
      * @param figure the playing figure to be set
      */
-    public void setFigure(Playingfigure figure) {
+    public void setFigure(Figure figure) {
         for (int i = 0; i < gameobjects.length; i++) {
-            if (gameobjects[i] == null || gameobjects[i] instanceof Playingfigure) {
+            if (gameobjects[i] == null || gameobjects[i] instanceof Figure) {
                 gameobjects[i] = figure;
                 return;
             }
@@ -197,7 +197,7 @@ public class Gamefield extends Gameobject {
                 string += cube + ",";
             } else if (element instanceof Dome dome) {
                 string += dome + ",";
-            } else if (element instanceof Playingfigure figure) {
+            } else if (element instanceof Figure figure) {
                 string += figure.getName().charAt(0) + ",";
             }
 
@@ -220,7 +220,7 @@ public class Gamefield extends Gameobject {
             return 'C';
         } else if (topGameObject instanceof Dome) {
             return 'D';
-        } else if (topGameObject instanceof Playingfigure figure) {
+        } else if (topGameObject instanceof Figure figure) {
             //Return the first letter of the name
             return figure.getName().charAt(0);
         }
@@ -245,11 +245,11 @@ public class Gamefield extends Gameobject {
     /**
      * Removes the specified edu.kit.informatik.Playingfigure from the game.
      *
-     * @param playingfigure the edu.kit.informatik.Playingfigure to be removed
+     * @param figure the edu.kit.informatik.Playingfigure to be removed
      */
-    public void removeFigure(Playingfigure playingfigure) {
+    public void removeFigure(Figure figure) {
         for (int i = 0; i < gameobjects.length; i++) {
-            if (gameobjects[i] == playingfigure) {
+            if (gameobjects[i] == figure) {
                 gameobjects[i] = null;
                 return;
             }

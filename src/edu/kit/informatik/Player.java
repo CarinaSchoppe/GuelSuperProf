@@ -12,7 +12,7 @@ public class Player {
      * A class representing an array of playing figures.
      * This class provides a container for storing an array of edu.kit.informatik.Playingfigure objects.
      */
-    private final Playingfigure[] figures;
+    private final Figure[] figures;
     /**
      * The name of an object.
      * <p>
@@ -133,14 +133,14 @@ public class Player {
     /**
      * Creates a new player object with two playing figures and a name.
      *
-     * @param playingfigure1 the first playing figure for the player
-     * @param playingfigure2 the second playing figure for the player
+     * @param figure1 the first playing figure for the player
+     * @param figure2 the second playing figure for the player
      * @param name           the name of the player
      */
-    public Player(Playingfigure playingfigure1, Playingfigure playingfigure2, String name) {
-        figures = new Playingfigure[]{playingfigure1, playingfigure2};
-        Game.getInstance().getPlayingField()[playingfigure1.getY()][playingfigure1.getX()].setFigure(playingfigure1);
-        Game.getInstance().getPlayingField()[playingfigure2.getY()][playingfigure2.getX()].setFigure(playingfigure2);
+    public Player(Figure figure1, Figure figure2, String name) {
+        figures = new Figure[]{figure1, figure2};
+        Game.getInstance().getPlayingField()[figure1.getY()][figure1.getX()].setFigure(figure1);
+        Game.getInstance().getPlayingField()[figure2.getY()][figure2.getX()].setFigure(figure2);
         this.name = name;
     }
 
@@ -294,20 +294,20 @@ public class Player {
     /**
      * Moves the given playing figure to the specified game field.
      *
-     * @param playingfigure The playing figure to be moved.
+     * @param figure The playing figure to be moved.
      * @param where         The game field to which the playing figure will be moved.
      * @throws IllegalStateException    If the move cannot be performed due to certain conditions.
      * @throws IllegalArgumentException If the move is not valid.
      */
-    public void moveFigure(Playingfigure playingfigure, Gamefield where) {
+    public void moveFigure(Figure figure, Gamefield where) {
         if (!canMoveNow) {
             System.out.println("ERROR: You can't move now");
 
         }
-        var oldPosition = playingfigure.getGameField();
+        var oldPosition = figure.getGameField();
 
         //check if figure is part of this player
-        if (!playingfigure.getOwner().equals(this)) {
+        if (!figure.getOwner().equals(this)) {
             System.out.println("ERROR: This figure is not part of this player");
             return;
         }
@@ -327,20 +327,20 @@ public class Player {
             canBuildNow = true;
         }
 
-        if (!Game.getInstance().isReachable(playingfigure, where)) {
+        if (!Game.getInstance().isReachable(figure, where)) {
             System.out.println("ERROR: This field is not reachable");
             return;
         }
-        if (hermesTeleport && where.getHeightSquares() != playingfigure.getGameField().getHeightSquares()) {
+        if (hermesTeleport && where.getHeightSquares() != figure.getGameField().getHeightSquares()) {
             System.out.println("ERROR: You can't teleport to a different height");
             return;
         }
         if (where.isOccupied() && apolloMove) {
             var otherFigure = where.getPlayingFigure();
-            playingfigure.setGameField(where);
+            figure.setGameField(where);
             otherFigure.setGameField(oldPosition);
         } else {
-            playingfigure.setGameField(where);
+            figure.setGameField(where);
         }
         if (Game.getInstance().checkWinning()) {
             System.out.println(name + " wins!");
@@ -348,7 +348,7 @@ public class Player {
             System.out.println("OK");
         }
 
-        if (athenaBlockedMove && (playingfigure.getGameField().getHeightSquares() > oldPosition.getHeightSquares())) {
+        if (athenaBlockedMove && (figure.getGameField().getHeightSquares() > oldPosition.getHeightSquares())) {
             Game.getInstance().getOpponent(this).setAthenaBlocked(true);
         }
     }
@@ -452,7 +452,7 @@ public class Player {
      *
      * @return the array of edu.kit.informatik.Playingfigure objects
      */
-    public Playingfigure[] getFigures() {
+    public Figure[] getFigures() {
         return figures;
     }
 

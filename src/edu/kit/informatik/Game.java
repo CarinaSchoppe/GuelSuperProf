@@ -120,7 +120,7 @@ public class Game {
      *                                  to the current field without HermesMove.
      */
     //its reachable if its not a pillar and if it is adjectent to the currentField
-    public boolean isReachable(Playingfigure figure, Gamefield where) {
+    public boolean isReachable(Figure figure, Gamefield where) {
         var currentField = playingField[figure.getY()][figure.getX()];
         var targetField = where;
         if (targetField.isPillar()) {
@@ -417,7 +417,7 @@ public class Game {
     }
 
 
-    public Playingfigure getFigure(String figureName) {
+    public Figure getFigure(String figureName) {
         for (var player : new Player[]{player1, player2}) {
             for (var figure : player.getFigures()) {
                 if (figure.getName().equalsIgnoreCase(figureName)) {

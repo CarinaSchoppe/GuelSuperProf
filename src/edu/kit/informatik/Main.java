@@ -29,7 +29,6 @@ public class Main {
             System.out.println("ERROR: Invalid number of arguments!");
             return;
         }
-
         game = Game.getInstance();
         var name1 = args[0].split(",")[0];
         var pos1y = Integer.parseInt(args[0].split(",")[1]);
@@ -37,30 +36,25 @@ public class Main {
         var name2 = args[1].split(",")[0];
         var pos2y = Integer.parseInt(args[1].split(",")[1]);
         var pos2x = Integer.parseInt(args[1].split(",")[2]);
-
-        var figure1 = new Playingfigure(name1, pos1x, pos1y);
-        var figure2 = new Playingfigure(name2, pos2x, pos2y);
+        var figure1 = new Figure(name1, pos1x, pos1y);
+        var figure2 = new Figure(name2, pos2x, pos2y);
         var player1 = new Player(figure1, figure2, "P1");
         figure1.setOwner(player1);
         figure2.setOwner(player1);
-
         var name3 = args[2].split(",")[0];
         var pos3y = Integer.parseInt(args[2].split(",")[1]);
         var pos3x = Integer.parseInt(args[2].split(",")[2]);
         var name4 = args[3].split(",")[0];
         var pos4y = Integer.parseInt(args[3].split(",")[1]);
         var pos4x = Integer.parseInt(args[3].split(",")[2]);
-
-        var figure3 = new Playingfigure(name3, pos3x, pos3y);
-        var figure4 = new Playingfigure(name4, pos4x, pos4y);
+        var figure3 = new Figure(name3, pos3x, pos3y);
+        var figure4 = new Figure(name4, pos4x, pos4y);
         var player2 = new Player(figure3, figure4, "P2");
         figure3.setOwner(player2);
         figure4.setOwner(player2);
-
         game.setPlayer1(player1);
         game.setPlayer2(player2);
         game.setCurrentPlayer(player1);
-        //check if one name is equal
         var a = name1.equals(name2);
         var b = name1.equals(name3);
         var c = name1.equals(name4);
@@ -71,30 +65,27 @@ public class Main {
             System.out.println("ERROR: Names must be unique!");
             return;
         }
-
-
-        //regex [a-z]+
-
-        //check if name is valid
         if (!name1.matches("[a-z]+") || !name2.matches("[a-z]+")) {
             System.out.println("ERROR: Invalid name!");
             return;
         }
-
         if (!name3.matches("[a-z]+") || !name4.matches("[a-z]+")) {
             System.out.println("ERROR: Invalid name!");
             return;
         }
-
         if (pos3y > 4 || pos4x < 0 || pos4x > 4 || pos4y < 0 || pos4y > 4) {
             System.out.println("ERROR: Invalid position!");
             return;
         }
-
         if (pos2x < 0 || pos2x > 4 || pos2y < 0 || pos2y > 4) {
             System.out.println("ERROR: Invalid position!");
-            return;
         }
+        testIt(figure1, figure2, figure3, figure4);
+    }
+
+
+    private static void testIt(Figure figure1, Figure figure2, Figure figure3, Figure figure4) {
+     
 
         if (figure1.getX() == figure2.getX() && figure1.getY() == figure2.getY()) {
             System.out.println("ERROR: Invalid position!");
@@ -125,7 +116,6 @@ public class Main {
             System.out.println("ERROR: Invalid position!");
         }
     }
-
 
     /**
      * The main method of the program.

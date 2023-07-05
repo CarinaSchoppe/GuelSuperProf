@@ -1,6 +1,6 @@
 package edu.kit.informatik;
 
-public class Playingfigure extends Gameobject {
+public class Figure extends Gameobject {
 
 
     /**
@@ -35,7 +35,7 @@ public class Playingfigure extends Gameobject {
      * @param x    the x-coordinate of the playing figure's position
      * @param y    the y-coordinate of the playing figure's position
      */
-    public Playingfigure(String name, int x, int y) {
+    public Figure(String name, int x, int y) {
         super(x, y);
         this.name = name;
     }
