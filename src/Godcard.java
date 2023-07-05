@@ -19,7 +19,7 @@ public enum Godcard {
 
     public static Godcard findGodcard(String name) {
         for (Godcard godcard : Godcard.values()) {
-            if (godcard.getName().equals(name)) {
+            if (godcard.getName().equalsIgnoreCase(name)) {
                 return godcard;
             }
         }

@@ -77,6 +77,7 @@ public class Gamefield extends Gameobject {
         for (Gamefield[] gamefields : adj) {
             for (Gamefield gamefield : gamefields) {
                 if (gamefield == where) {
+                    System.out.println("is adjecent");
                     return true;
                 }
             }
@@ -108,8 +109,12 @@ public class Gamefield extends Gameobject {
             return "Empty";
         var string = "";
         for (var element : gameobjects) {
-            if (element instanceof Cuboid cube || element instanceof Dome dome) {
-                string += element + ",";
+            if (element instanceof Cuboid cube) {
+                string += cube + ",";
+            } else if (element instanceof Dome dome) {
+                string += dome + ",";
+            } else if (element instanceof Playingfigure figure) {
+                string += figure.getName() + ",";
             }
 
         }
@@ -122,9 +127,9 @@ public class Gamefield extends Gameobject {
         if (topGameObject == null)
             return '.';
 
-        if (topGameObject instanceof Cuboid cube) {
+        if (topGameObject instanceof Cuboid) {
             return 'C';
-        } else if (topGameObject instanceof Dome dome) {
+        } else if (topGameObject instanceof Dome) {
             return 'D';
         } else if (topGameObject instanceof Playingfigure figure) {
             //Return the first letter of the name
@@ -141,5 +146,14 @@ public class Gamefield extends Gameobject {
             }
         }
         return null;
+    }
+
+    public void removeFigure(Playingfigure playingfigure) {
+        for (int i = 0; i < gameobjects.length; i++) {
+            if (gameobjects[i] == playingfigure) {
+                gameobjects[i] = null;
+                return;
+            }
+        }
     }
 }

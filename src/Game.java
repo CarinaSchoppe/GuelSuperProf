@@ -47,14 +47,15 @@ public class Game {
 
     public boolean isClose(Gamefield currentField, Gamefield targetField) {
         var adjecentFields = adjacentFields(currentField);
-        for (Gamefield[] gamefields : adjecentFields) {
-            for (Gamefield gamefield : gamefields) {
+        for (var gamefields : adjecentFields) {
+            for (var gamefield : gamefields) {
                 if (gamefield == targetField) {
                     return true;
                 }
             }
         }
-        return false;
+
+        return currentPlayer.isHermesTeleport();
     }
 
     //its reachable if its not a pillar and if it is adjectent to the currentField
@@ -62,15 +63,22 @@ public class Game {
         var currentField = playingField[figure.getY()][figure.getX()];
         var targetField = where;
         if (targetField.isPillar()) {
-            return false;
+            throw new IllegalArgumentException("ERROR: You can't move to a pillar");
         }
         if (currentField == targetField) {
-            return false;
+            throw new IllegalArgumentException("ERROR: You can't move to the same field");
         }
 
-        if (targetField.isOccupied() && !figure.getOwner().isApolloMove()) return false;
+        if (targetField.isOccupied() && !figure.getOwner().isApolloMove()) {
+            throw new IllegalArgumentException("ERROR: You can't move to an occupied field without apolloMove");
+        }
 
-        if (!isClose(currentField, targetField)) return false;
+        if (!isClose(currentField, targetField)) {
+            throw new IllegalArgumentException("ERROR: You can't move to a field that is not adjecent to you without hermesMove");
+        }
+
+
+        if (figure.getOwner().isHermesTeleport()) return targetField.getHeightSquares() == currentField.getHeightSquares();
 
 
         return targetField.getHeightSquares() - 1 <= currentField.getHeightSquares() && !(targetField.getHeightSquares() > currentField.getHeightSquares() && figure.getOwner().isAthenaBlocked());
@@ -93,41 +101,43 @@ public class Game {
         var x = field.getX();
         var y = field.getY();
         Gamefield[][] adjacentFields = new Gamefield[3][3];
-        if (playingField.length - 1 >= y - 1) {
-            if (playingField[y - 1].length - 1 >= x - 1) {
-                adjacentFields[0][0] = playingField[y - 1][x - 1];
-            }
-            if (playingField[y - 1].length - 1 >= x) {
-                adjacentFields[0][1] = playingField[y - 1][x];
-            }
-            if (playingField[y - 1].length - 1 >= x + 1) {
-                adjacentFields[0][2] = playingField[y - 1][x + 1];
-            }
-        }
 
-        if (playingField.length - 1 >= y) {
-            if (playingField[y].length - 1 >= x - 1) {
-                adjacentFields[1][0] = playingField[y][x - 1];
-            }
-            if (playingField[y].length - 1 >= x) {
-                adjacentFields[1][1] = playingField[y][x];
-            }
-            if (playingField[y].length - 1 >= x + 1) {
-                adjacentFields[1][2] = playingField[y][x + 1];
-            }
+        //top left
+        //check if the field exists
+        if (x - 1 >= 0 && y - 1 >= 0) {
+            adjacentFields[0][0] = playingField[y - 1][x - 1];
         }
+        //top middle
+        if (y - 1 >= 0) {
+            adjacentFields[0][1] = playingField[y - 1][x];
+        }
+        //top right
+        if (x + 1 < 5 && y - 1 >= 0) {
+            adjacentFields[0][2] = playingField[y - 1][x + 1];
+        }
+        //middle left
+        if (x - 1 >= 0) {
+            adjacentFields[1][0] = playingField[y][x - 1];
+        }
+        //middle right
+        if (x + 1 < 5) {
+            adjacentFields[1][2] = playingField[y][x + 1];
+        }
+        //bottom left
+        if (x - 1 >= 0 && y + 1 < 5) {
+            adjacentFields[2][0] = playingField[y + 1][x - 1];
+        }
+        //bottom middle
+        if (y + 1 < 5) {
+            adjacentFields[2][1] = playingField[y + 1][x];
+        }
+        //bottom right
+        if (x + 1 < 5 && y + 1 < 5) {
+            adjacentFields[2][2] = playingField[y + 1][x + 1];
+        }
+        adjacentFields[1][1] = field;
 
-        if (playingField.length - 1 >= y + 1) {
-            if (playingField[y + 1].length - 1 >= x - 1) {
-                adjacentFields[2][0] = playingField[y + 1][x - 1];
-            }
-            if (playingField[y + 1].length - 1 >= x) {
-                adjacentFields[2][1] = playingField[y + 1][x];
-            }
-            if (playingField[y + 1].length - 1 >= x + 1) {
-                adjacentFields[2][2] = playingField[y + 1][x + 1];
-            }
-        }
+
         return adjacentFields;
 
     }
@@ -146,12 +156,11 @@ public class Game {
             var field = playingField[y][x];
             System.out.println(field.toString());
         } catch (Exception e) {
-            System.out.println("ERROR: Invalid coordinates");
+            throw new IllegalArgumentException("ERROR: Invalid coordinates: " + x + ", " + y);
         }
     }
 
     public void print() {
-
         for (var row : playingField) {
             var rowString = "";
             for (var field : row) {
@@ -162,6 +171,7 @@ public class Game {
             System.out.println(rowString);
         }
     }
+
 
     public boolean quit(String command) {
         if (!command.startsWith("quit"))
@@ -219,6 +229,8 @@ public class Game {
 
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
+
+
     }
 
     public Player getPlayer1() {

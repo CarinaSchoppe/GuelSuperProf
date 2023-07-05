@@ -7,11 +7,11 @@ public class Main {
     private static void initSetup(String[] args) {
         game = Game.getInstance();
         var name1 = args[0].split(",")[0];
-        var pos1x = Integer.parseInt(args[0].split(",")[1]);
-        var pos1y = Integer.parseInt(args[0].split(",")[2]);
+        var pos1y = Integer.parseInt(args[0].split(",")[1]);
+        var pos1x = Integer.parseInt(args[0].split(",")[2]);
         var name2 = args[1].split(",")[0];
-        var pos2x = Integer.parseInt(args[1].split(",")[1]);
-        var pos2y = Integer.parseInt(args[1].split(",")[2]);
+        var pos2y = Integer.parseInt(args[1].split(",")[1]);
+        var pos2x = Integer.parseInt(args[1].split(",")[2]);
 
         var figure1 = new Playingfigure(name1, pos1x, pos1y);
         var figure2 = new Playingfigure(name2, pos2x, pos2y);
@@ -20,11 +20,11 @@ public class Main {
         figure2.setOwner(player1);
 
         var name3 = args[2].split(",")[0];
-        var pos3x = Integer.parseInt(args[2].split(",")[1]);
-        var pos3y = Integer.parseInt(args[2].split(",")[2]);
+        var pos3y = Integer.parseInt(args[2].split(",")[1]);
+        var pos3x = Integer.parseInt(args[2].split(",")[2]);
         var name4 = args[3].split(",")[0];
-        var pos4x = Integer.parseInt(args[3].split(",")[1]);
-        var pos4y = Integer.parseInt(args[3].split(",")[2]);
+        var pos4y = Integer.parseInt(args[3].split(",")[1]);
+        var pos4x = Integer.parseInt(args[3].split(",")[2]);
 
         var figure3 = new Playingfigure(name3, pos3x, pos3y);
         var figure4 = new Playingfigure(name4, pos4x, pos4y);
@@ -32,7 +32,16 @@ public class Main {
         figure3.setOwner(player2);
         figure4.setOwner(player2);
 
+        game.setPlayer1(player1);
+        game.setPlayer2(player2);
         game.setCurrentPlayer(player1);
+
+
+        //check if one name is equal
+        if (name1.equals(name2) || name1.equals(name3) || name1.equals(name4) || name2.equals(name3) || name2.equals(name4) || name3.equals(name4)) {
+            throw new RuntimeException("Names must be unique!");
+        }
+        
     }
 
     public static void main(String[] args) {
@@ -52,12 +61,12 @@ public class Main {
                 var figureName = line.split(" ")[1];
                 var x = Integer.parseInt(line.split(" ")[2]);
                 var y = Integer.parseInt(line.split(" ")[3]);
-                move(figureName, x, y);
+                move(figureName, y, x);
             } else if (line.startsWith("build")) {
                 var type = BuildObject.findBuildObject(line.split(" ")[1].charAt(0));
                 var x = Integer.parseInt(line.split(" ")[2]);
                 var y = Integer.parseInt(line.split(" ")[3]);
-                build(type, x, y);
+                build(type, y, x);
             } else if (line.startsWith("end-turn")) {
                 game.getCurrentPlayer().endTurn();
             } else if (line.startsWith("surrender")) {
@@ -67,7 +76,7 @@ public class Main {
             } else if (line.startsWith("cellprint")) {
                 var x = Integer.parseInt(line.split(" ")[1]);
                 var y = Integer.parseInt(line.split(" ")[2]);
-                game.cellPrint(x, y);
+                game.cellPrint(y, x);
             } else if (line.startsWith("print")) {
                 game.print();
             } else {

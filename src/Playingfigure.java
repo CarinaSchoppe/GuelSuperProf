@@ -20,7 +20,7 @@ public class Playingfigure extends Gameobject {
     public void setGameField(Gamefield where) {
         oldField = getGameField();
         var game = Game.getInstance();
-        var field = game.getPlayingField()[getY()][getX()];
+        oldField.removeFigure(this);
         where.setFigure(this);
         setX(where.getX());
         setY(where.getY());
