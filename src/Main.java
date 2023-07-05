@@ -32,7 +32,6 @@ public class Main {
         figure3.setOwner(player2);
         figure4.setOwner(player2);
 
-
         game.setCurrentPlayer(player1);
     }
 
@@ -40,7 +39,7 @@ public class Main {
         try {
             initSetup(args);
         } catch (Exception e) {
-            throw new RuntimeException("ERROR: Invalid setup");
+            throw new RuntimeException(e);
         }
         var scanner = new Scanner(System.in);
         String line;

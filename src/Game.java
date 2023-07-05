@@ -9,7 +9,7 @@ public class Game {
     private static Game instance = null;
     private Player player1;
     private Player player2;
-    private final Gamefield[][] playingField = new Gamefield[5][5];
+    private final Gamefield[][] playingField;
 
     private final List<Godcard> godcards = new ArrayList<>(List.of(Godcard.values()));
 
@@ -19,6 +19,14 @@ public class Game {
 
     private Game() {
         instance = this;
+        playingField = new Gamefield[5][5];
+        for (var x = 0; x < 5; x++) {
+            for (var y = 0; y < 5; y++) {
+                playingField[y][x] = new Gamefield(x, y);
+            }
+        }
+
+
         for (var i = 0; i < 54; i++) {
             cuboidList.add(new Cuboid(0, 0));
         }

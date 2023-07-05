@@ -18,7 +18,6 @@ public class Player {
     private boolean demeterBuild;
 
     private boolean hermesTeleport;
-    private Godcard godcard;
     private boolean canEndTurn = false;
 
     private boolean hasBuild = false;
@@ -26,8 +25,9 @@ public class Player {
 
     public Player(Playingfigure playingfigure1, Playingfigure playingfigure2, String name) {
         figures[0] = playingfigure1;
-
         figures[1] = playingfigure2;
+        Game.getInstance().getPlayingField()[playingfigure1.getY()][playingfigure1.getX()].setFigure(playingfigure1);
+        Game.getInstance().getPlayingField()[playingfigure2.getY()][playingfigure2.getX()].setFigure(playingfigure2);
         this.name = name;
     }
 
@@ -43,7 +43,16 @@ public class Player {
         }
         Game.getInstance().getGodcards().remove(godcard);
         System.out.println("OK");
-        this.godcard = godcard;
+
+        switch (godcard) {
+            case APOLLO -> apolloMove = true;
+            case ARTEMIS -> artemisMove = true;
+            case ATLAS -> atlasBuild = true;
+            case DEMETER -> demeterBuild = true;
+            case HERMES -> hermesTeleport = true;
+            case ATHENA -> athenaBlocked = true;
+        }
+
         godCardsDrawn++;
     }
 
