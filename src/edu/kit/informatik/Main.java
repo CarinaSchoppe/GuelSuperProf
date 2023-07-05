@@ -63,7 +63,7 @@ public class Main {
         var e = name2.equals(name4);
         var f = name3.equals(name4);
         if (a || b || c || d || e || f) {
-            throw new RuntimeException("ERROR: Names must be unique!");
+            System.out.println("ERROR: Names must be unique!");
         }
 
     }
@@ -80,7 +80,7 @@ public class Main {
         try {
             initSetup(args);
         } catch (Exception e) {
-            throw new RuntimeException("ERROR: While setup");
+            System.out.println("ERROR: While setup");
         }
         var scanner = new Scanner(System.in);
         String line;
@@ -112,7 +112,7 @@ public class Main {
             } else if (line.startsWith("print")) {
                 game.print();
             } else {
-                throw new IllegalArgumentException("ERROR: Invalid command");
+                System.out.println("ERROR: Invalid command");
             }
         }
     }

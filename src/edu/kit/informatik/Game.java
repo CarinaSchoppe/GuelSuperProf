@@ -124,20 +124,24 @@ public class Game {
         var currentField = playingField[figure.getY()][figure.getX()];
         var targetField = where;
         if (targetField.isPillar()) {
-            throw new IllegalArgumentException("ERROR: You can't move to a pillar");
+            System.out.println("ERROR: You can't move to a pillar");
+            return false;
         }
         if (currentField == targetField) {
-            throw new IllegalArgumentException("ERROR: You can't move to the same field");
+            System.out.println("ERROR: You can't move to the same field");
+            return false;
         }
 
         if (targetField.isOccupied() && !figure.getOwner().isApolloMove()) {
             var msg = "ERROR: You can't move to an occupied field without apolloMove";
-            throw new IllegalArgumentException(msg);
+            System.out.println(msg);
+            return false;
         }
 
         if (!isClose(currentField, targetField)) {
             var msg = "ERROR: You can't move to a field that is not adjacent to you without hermesMove";
-            throw new IllegalArgumentException(msg);
+            System.out.println(msg);
+            return false;
         }
 
 
@@ -235,7 +239,7 @@ public class Game {
             var field = playingField[y][x];
             System.out.println(field.toString());
         } catch (Exception e) {
-            throw new IllegalArgumentException("ERROR: Invalid coordinates: " + x + ", " + y);
+            System.out.println("ERROR: Invalid coordinates: " + x + ", " + y);
         }
     }
 
@@ -265,9 +269,11 @@ public class Game {
     public boolean quit(String command) {
         if (!command.startsWith("quit"))
             return false;
-        if (!command.equalsIgnoreCase("quit"))
-            throw new IllegalArgumentException("ERROR: Invalid command");
+        if (!command.equalsIgnoreCase("quit")) {
 
+            System.out.println("ERROR: Invalid command");
+            return false;
+        }
         return true;
     }
 
@@ -419,6 +425,7 @@ public class Game {
                 }
             }
         }
-        throw new IllegalArgumentException("ERROR: Invalid figure name");
+        System.out.println("ERROR: Invalid figure name");
+        return null;
     }
 }

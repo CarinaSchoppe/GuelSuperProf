@@ -15,7 +15,7 @@ public class Player {
     private final Playingfigure[] figures;
     /**
      * The name of an object.
-     *
+     * <p>
      * This variable represents the name of an object. It is a constant value and cannot be modified once initialized.
      *
      * @since 1.0
@@ -50,10 +50,10 @@ public class Player {
 
     /**
      * Indicates whether Athena is blocked or not.
-     *
+     * <p>
      * The value of this variable determines if Athena, the virtual assistant, is currently blocked or not.
      * When Athena is blocked, it means that the user has restricted or disabled its functionality.
-     *
+     * <p>
      * This variable should only be accessed and modified by the relevant logic handling Athena's blocking status.
      * The default value of {@code athenaBlocked} is {@code false}, indicating that Athena is initially not blocked.
      *
@@ -71,7 +71,7 @@ public class Player {
 
     /**
      * Represents the status of the Apollo move.
-     *
+     * <p>
      * The variable is used to determine whether an Apollo move is in progress or not.
      * It is used as a flag to control the flow of the program when interacting with the Apollo move.
      *
@@ -80,7 +80,7 @@ public class Player {
     private boolean apolloMove;
     /**
      * Represents the status of Artemis movement.
-     *
+     * <p>
      * This variable indicates whether Artemis is currently in motion or not.
      * When the value is set to true, it means Artemis is moving. On the other hand,
      * when the value is set to false, it means Artemis is not moving.
@@ -121,7 +121,7 @@ public class Player {
     private boolean hasBuild = false;
     /**
      * Indicates whether an object has moved.
-     *
+     * <p>
      * The hasMoved variable is used to track the movement state of an object.
      * It is set to true when the object has moved, and false otherwise.
      * Example usage:
@@ -153,14 +153,19 @@ public class Player {
      */
     public void drawGodCard(Godcard godcard) {
 
-        if (!canDrawNow) throw new IllegalStateException("ERROR: You can't draw a godcard now");
+        if (!canDrawNow) {
+            System.out.println("ERROR: You can't draw a godcard now");
+            return;
+        }
         //check if godcard is already drawn
         if (!Game.getInstance().getGodcards().contains(godcard)) {
-            throw new IllegalStateException("ERROR: This godcard is already drawn");
+            System.out.println("ERROR: This godcard is already drawn");
+            return;
         }
 
         if (godCardsDrawn > 3) {
-            throw new IllegalStateException("ERROR: You can only draw 2 godcards");
+            System.out.println("ERROR: You can only draw 2 godcards");
+            return;
         }
         Game.getInstance().getGodcards().remove(godcard);
 
@@ -213,9 +218,13 @@ public class Player {
      * @throws IllegalArgumentException If the build conditions are not met
      */
     public void build(BuildObject whatToBuild, Gamefield whereToBuild) {
-        if (!canBuildNow) throw new IllegalStateException("ERROR: You can't build now");
+        if (!canBuildNow) {
+            System.out.println("ERROR: You can't build now");
+            return;
+        }
         if (hasBuild && !demeterBuild) {
-            throw new IllegalArgumentException("ERROR: Allready build!");
+            System.out.println("ERROR: Allready build!");
+            return;
         }
         if (demeterBuild) {
             demeterBuild = false;
@@ -236,13 +245,19 @@ public class Player {
             }
         }
 
-        if (!adj) throw new IllegalArgumentException("ERROR: No figure adjecent to this field");
+        if (!adj) {
+            System.out.println("ERROR: No figure adjecent to this field");
+            return;
+        }
 
-        if (!whereToBuild.isBuildable()) throw new IllegalArgumentException("ERROR: Not Buildable");
-
+        if (!whereToBuild.isBuildable()) {
+            System.out.println("ERROR: Not Buildable");
+            return;
+        }
         if (whatToBuild == BuildObject.DOME) {
             if (Game.getInstance().getDomeList().isEmpty()) {
-                throw new IllegalStateException("ERROR: No domes left");
+                System.out.println("ERROR: No domes left");
+                return;
             }
 
             var dome = Game.getInstance().getDomeList().get(0);
@@ -254,7 +269,8 @@ public class Player {
         } else if (whatToBuild == BuildObject.CUBOID) {
             //check if enough cuboids are left
             if (Game.getInstance().getCuboidList().isEmpty()) {
-                throw new IllegalStateException("ERROR: No cuboids left");
+                System.out.println("ERROR: No cuboids left");
+                return;
             }
 
             var cube = Game.getInstance().getCuboidList().get(0);
@@ -280,18 +296,24 @@ public class Player {
      * @throws IllegalArgumentException If the move is not valid.
      */
     public void moveFigure(Playingfigure playingfigure, Gamefield where) {
-        if (!canMoveNow) throw new IllegalStateException("ERROR: You can't move now");
+        if (!canMoveNow) {
+            System.out.println("ERROR: You can't move now");
 
+        }
         var oldPosition = playingfigure.getGameField();
 
         //check if figure is part of this player
         if (!playingfigure.getOwner().equals(this)) {
-            throw new IllegalStateException("ERROR: This figure is not part of this player");
+            System.out.println("ERROR: This figure is not part of this player");
+            return;
         }
-        if (where.equals(oldPosition)) throw new IllegalArgumentException("ERROR: Move to old Position");
-
+        if (where.equals(oldPosition)) {
+            System.out.println("ERROR: Move to old Position");
+            return;
+        }
         if (hasMoved && !artemisMove) {
-            throw new IllegalArgumentException("ERROR: Already moved");
+            System.out.println("ERROR: Already moved");
+            return;
         }
         if (artemisMove) {
             artemisMove = false;
@@ -302,10 +324,13 @@ public class Player {
         }
 
         if (!Game.getInstance().isReachable(playingfigure, where)) {
-            throw new IllegalStateException("ERROR: This field is not reachable");
+            System.out.println("ERROR: This field is not reachable");
+            return;
         }
-        if (hermesTeleport && where.getHeightSquares() != playingfigure.getGameField().getHeightSquares())
-            throw new IllegalStateException("ERROR: You can't teleport to a different height");
+        if (hermesTeleport && where.getHeightSquares() != playingfigure.getGameField().getHeightSquares()) {
+            System.out.println("ERROR: You can't teleport to a different height");
+            return;
+        }
         if (where.isOccupied() && apolloMove) {
             var otherFigure = where.getPlayingFigure();
             playingfigure.setGameField(where);
@@ -343,7 +368,10 @@ public class Player {
      */
     public void endTurn() {
         checkEndTurn();
-        if (!canEndTurn) throw new IllegalStateException("ERROR: You can't end your turn yet");
+        if (!canEndTurn) {
+            System.out.println("ERROR: You can't end your turn yet");
+            return;
+        }
         athenaBlocked = false;
         apolloMove = false;
         artemisMove = false;
