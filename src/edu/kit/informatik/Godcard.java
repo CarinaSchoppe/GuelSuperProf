@@ -50,7 +50,7 @@ public enum Godcard {
      * Finds a edu.kit.informatik.Godcard based on its name.
      *
      * @param name the name of the edu.kit.informatik.Godcard to find
-     * @return the edu.kit.informatik.Godcard matching the given name, or null if no matching edu.kit.informatik.Godcard is found
+     * @return the Godcard matching the given name, or null if no matching edu.kit.informatik.Godcard is found
      */
     public static Godcard findGodcard(String name) {
         for (Godcard godcard : Godcard.values()) {
