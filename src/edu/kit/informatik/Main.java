@@ -202,6 +202,8 @@ public class Main {
     private static void move(String figureName, int x, int y) {
         var field = game.getPlayingField()[y][x];
         var figure = game.getFigure(figureName);
+        if (figure == null)
+            return;
         game.getCurrentPlayer().moveFigure(figure, field);
     }
 
