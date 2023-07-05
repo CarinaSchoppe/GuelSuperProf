@@ -25,6 +25,11 @@ public class Main {
      * @throws IllegalArgumentException If the command is invalid.
      */
     private static void initSetup(String[] args) {
+        if (args.length != 4) {
+            System.out.println("ERROR: Invalid number of arguments!");
+            return;
+        }
+
         game = Game.getInstance();
         var name1 = args[0].split(",")[0];
         var pos1y = Integer.parseInt(args[0].split(",")[1]);
@@ -67,16 +72,60 @@ public class Main {
             return;
         }
 
-        if (name1.equals("") || name2.equals("") || name3.equals("") || name4.equals("")) {
-            System.out.println("ERROR: Names must not be empty!");
+
+        //regex [a-z]+
+
+        //check if name is valid
+        if (!name1.matches("[a-z]+") || !name2.matches("[a-z]+")) {
+            System.out.println("ERROR: Invalid name!");
             return;
         }
-        if (name1.equals(" ") || name2.equals(" ") || name3.equals(" ") || name4.equals(" ")) {
-            System.out.println("ERROR: Names must not be empty!");
+
+        if (!name3.matches("[a-z]+") || !name4.matches("[a-z]+")) {
+            System.out.println("ERROR: Invalid name!");
+            return;
         }
 
+        if (pos3y > 4 || pos4x < 0 || pos4x > 4 || pos4y < 0 || pos4y > 4) {
+            System.out.println("ERROR: Invalid position!");
+            return;
+        }
 
+        if (pos2x < 0 || pos2x > 4 || pos2y < 0 || pos2y > 4) {
+            System.out.println("ERROR: Invalid position!");
+            return;
+        }
+
+        if (figure1.getX() == figure2.getX() && figure1.getY() == figure2.getY()) {
+            System.out.println("ERROR: Invalid position!");
+            return;
+        }
+
+        if (figure3.getX() == figure4.getX() && figure3.getY() == figure4.getY()) {
+            System.out.println("ERROR: Invalid position!");
+            return;
+        }
+
+        if (figure1.getX() == figure3.getX() && figure1.getY() == figure3.getY()) {
+            System.out.println("ERROR: Invalid position!");
+            return;
+        }
+
+        if (figure1.getX() == figure4.getX() && figure1.getY() == figure4.getY()) {
+            System.out.println("ERROR: Invalid position!");
+            return;
+        }
+
+        if (figure2.getX() == figure3.getX() && figure2.getY() == figure3.getY()) {
+            System.out.println("ERROR: Invalid position!");
+            return;
+        }
+
+        if (figure2.getX() == figure4.getX() && figure2.getY() == figure4.getY()) {
+            System.out.println("ERROR: Invalid position!");
+        }
     }
+
 
     /**
      * The main method of the program.
@@ -95,34 +144,38 @@ public class Main {
         var scanner = new Scanner(System.in);
         String line;
         while (!(line = scanner.nextLine()).equalsIgnoreCase("quit") && game.isRunning()) {
-            if (line.startsWith("draw-card")) {
-                drawCard(line);
-            } else if (line.startsWith("list-cards")) {
-                game.listCards();
-            } else if (line.startsWith("move")) {
-                var figureName = line.split(" ")[1];
-                var x = Integer.parseInt(line.split(" ")[2]);
-                var y = Integer.parseInt(line.split(" ")[3]);
-                move(figureName, y, x);
-            } else if (line.startsWith("build")) {
-                var type = BuildObject.findBuildObject(line.split(" ")[1].charAt(0));
-                var x = Integer.parseInt(line.split(" ")[2]);
-                var y = Integer.parseInt(line.split(" ")[3]);
-                build(type, y, x);
-            } else if (line.startsWith("end-turn")) {
-                game.getCurrentPlayer().endTurn();
-            } else if (line.startsWith("surrender")) {
-                game.getCurrentPlayer().surrender();
-            } else if (line.startsWith("bag")) {
-                game.bag();
-            } else if (line.startsWith("cellprint")) {
-                var x = Integer.parseInt(line.split(" ")[1]);
-                var y = Integer.parseInt(line.split(" ")[2]);
-                game.cellPrint(y, x);
-            } else if (line.startsWith("print")) {
-                game.print();
-            } else {
-                System.out.println("ERROR: Invalid command");
+            try {
+                if (line.startsWith("draw-card")) {
+                    drawCard(line);
+                } else if (line.startsWith("list-cards")) {
+                    game.listCards();
+                } else if (line.startsWith("move")) {
+                    var figureName = line.split(" ")[1];
+                    var x = Integer.parseInt(line.split(" ")[2]);
+                    var y = Integer.parseInt(line.split(" ")[3]);
+                    move(figureName, y, x);
+                } else if (line.startsWith("build")) {
+                    var type = BuildObject.findBuildObject(line.split(" ")[1].charAt(0));
+                    var x = Integer.parseInt(line.split(" ")[2]);
+                    var y = Integer.parseInt(line.split(" ")[3]);
+                    build(type, y, x);
+                } else if (line.startsWith("end-turn")) {
+                    game.getCurrentPlayer().endTurn();
+                } else if (line.startsWith("surrender")) {
+                    game.getCurrentPlayer().surrender();
+                } else if (line.startsWith("bag")) {
+                    game.bag();
+                } else if (line.startsWith("cellprint")) {
+                    var x = Integer.parseInt(line.split(" ")[1]);
+                    var y = Integer.parseInt(line.split(" ")[2]);
+                    game.cellPrint(y, x);
+                } else if (line.startsWith("print")) {
+                    game.print();
+                } else {
+                    System.out.println("ERROR: Invalid command");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: Unexpected error");
             }
         }
     }
