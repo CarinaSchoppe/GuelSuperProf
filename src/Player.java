@@ -1,32 +1,168 @@
+/**
+ * The Player class represents a player of the game. Each player has a name and two playing figures.
+ * The player can draw god cards, move figures, and build objects on the game field.
+ */
+
 public class Player {
 
 
+    /**
+     * A class representing an array of playing figures.
+     * This class provides a container for storing an array of Playingfigure objects.
+     */
     private final Playingfigure[] figures;
-
-
-    private boolean canDrawNow = true;
-    private boolean canMoveNow = true;
-    private boolean canBuildNow;
+    /**
+     * The name of an object.
+     *
+     * <p>
+     * This variable represents the name of an object. It is a constant value and cannot be modified once initialized.
+     * </p>
+     *
+     * @since 1.0
+     */
     private final String name;
+    /**
+     * Represents the current status of whether drawing is permitted or not.
+     * <p>
+     * The value of this variable determines whether the drawing operation can be performed or not.
+     * If this variable is set to 'true', it indicates that drawing is allowed. On the other hand, if
+     * it is set to 'false', drawing is not permitted.
+     * <p>
+     * This variable is private and can only be accessed within the class it is defined in.
+     */
+    private boolean canDrawNow = true;
+    /**
+     * Determines if the object can move at the current time.
+     *
+     * @return true if the object can move now, false otherwise.
+     */
+    private boolean canMoveNow = true;
+    /**
+     * Determines whether the build can be started immediately.
+     *
+     * This variable represents whether the build can be initiated right away. A value of true indicates that the build
+     * can be started immediately, while a value of false indicates that the build should be delayed.
+     *
+     * @return true if the build can be started now, false otherwise.
+     */
+    private boolean canBuildNow;
+    /**
+     * Keeps track of the number of god cards drawn.
+     */
     private int godCardsDrawn = 0;
 
+    /**
+     * Indicates whether Athena is blocked or not.
+     *
+     * <p>
+     * The value of this variable determines if Athena, the virtual assistant, is currently blocked or not.
+     * When Athena is blocked, it means that the user has restricted or disabled its functionality.
+     * </p>
+     *
+     * <p>
+     * This variable should only be accessed and modified by the relevant logic handling Athena's blocking status.
+     * </p>
+     *
+     * <p>
+     * The default value of {@code athenaBlocked} is {@code false}, indicating that Athena is initially not blocked.
+     * </p>
+     *
+     * @see #isAthenaBlocked()
+     * @see #setAthenaBlocked(boolean)
+     */
     private boolean athenaBlocked;
 
+    /**
+     * Determines if the movement of Athena is currently blocked.
+     *
+     * @return {@code true} if Athena's movement is blocked, {@code false} otherwise.
+     */
     private boolean athenaBlockedMove;
 
+    /**
+     * Represents the status of the Apollo move.
+     *
+     * <p>
+     * The variable is used to determine whether an Apollo move is in progress or not.
+     * It is used as a flag to control the flow of the program when interacting with the Apollo move.
+     * </p>
+     *
+     * @since No specific version
+     */
     private boolean apolloMove;
+    /**
+     * Represents the status of Artemis movement.
+     *
+     * <p>
+     * This variable indicates whether Artemis is currently in motion or not.
+     * When the value is set to true, it means Artemis is moving. On the other hand,
+     * when the value is set to false, it means Artemis is not moving.
+     * </p>
+     *
+     * @since 1.0
+     */
     private boolean artemisMove;
 
+    /**
+     * Represents the status of an Atlas build.
+     *
+     * This variable is used to determine whether an Atlas build is currently happening or not.
+     * It is a boolean value that is true if an Atlas build is in progress, and false otherwise.
+     *
+     * The value of this variable can only be accessed within the class it is declared in.
+     */
     private boolean atlasBuild;
 
+    /**
+     * Determines if the Demeter build is enabled or disabled.
+     *
+     * @return true if the Demeter build is enabled, false otherwise
+     */
     private boolean demeterBuild;
 
+    /**
+     * Indicates if the Hermes Teleport is active or not.
+     */
     private boolean hermesTeleport;
+    /**
+     * Determines whether the current turn can be ended.
+     *
+     * <p>
+     * The default value of the variable is set to <code>false</code>. This means that by default, the current turn cannot be ended.
+     * </p>
+     *
+     * @return <code>true</code> if the current turn can be ended, <code>false</code> otherwise.
+     */
     private boolean canEndTurn = false;
 
+    /**
+     * Represents a variable indicating whether a build has been performed.
+     */
     private boolean hasBuild = false;
+    /**
+     * Indicates whether an object has moved.
+     *
+     * <p>
+     * The hasMoved variable is used to track the movement state of an object. 
+     * It is set to true when the object has moved, and false otherwise.
+     *
+     * <p>
+     * Example usage:
+     * <pre>{@code
+     *   private boolean hasMoved = false;
+     * }</pre>
+     *
+     * @return true if the object has moved, false otherwise
+     */
     private boolean hasMoved = false;
 
+    /**
+     * Creates a new player object with two playing figures and a name.
+     *
+     * @param playingfigure1 the first playing figure for the player
+     * @param playingfigure2 the second playing figure for the player
+     * @param name the name of the player
+     */
     public Player(Playingfigure playingfigure1, Playingfigure playingfigure2, String name) {
         figures = new Playingfigure[]{playingfigure1, playingfigure2};
         Game.getInstance().getPlayingField()[playingfigure1.getY()][playingfigure1.getX()].setFigure(playingfigure1);
@@ -35,6 +171,12 @@ public class Player {
     }
 
 
+    /**
+     * Draws a Godcard for the player.
+     *
+     * @param godcard the Godcard to be drawn
+     * @throws IllegalStateException if it is not currently allowed to draw a Godcard or if the Godcard is already drawn
+     */
     public void drawGodCard(Godcard godcard) {
 
         if (!canDrawNow) throw new IllegalStateException("ERROR: You can't draw a godcard now");
@@ -66,6 +208,11 @@ public class Player {
         godCardsDrawn++;
     }
 
+    /**
+     * Checks if the current player can only make a surrender move.
+     *
+     * @return true if the current player can only make a surrender move, false otherwise
+     */
     private boolean canOnlySurrenderMove() {
         //check if there is any move possible
         for (var figure : figures) {
@@ -79,6 +226,16 @@ public class Player {
         return true;
     }
 
+    /**
+     * Builds a specified object on a game field.
+     * Throws exceptions if the build conditions are not met.
+     *
+     * @param whatToBuild The object to build (either BuildObject.DOME or BuildObject.CUBOID)
+     * @param whereToBuild The game field on which to build the object
+     *
+     * @throws IllegalStateException If the build cannot be performed at the current state
+     * @throws IllegalArgumentException If the build conditions are not met
+     */
     public void build(BuildObject whatToBuild, Gamefield whereToBuild) {
         if (!canBuildNow) throw new IllegalStateException("ERROR: You can't build now");
         if (hasBuild && !demeterBuild) {
@@ -138,6 +295,14 @@ public class Player {
 
     }
 
+    /**
+     * Moves the given playing figure to the specified game field.
+     *
+     * @param playingfigure The playing figure to be moved.
+     * @param where The game field to which the playing figure will be moved.
+     * @throws IllegalStateException If the move cannot be performed due to certain conditions.
+     * @throws IllegalArgumentException If the move is not valid.
+     */
     public void moveFigure(Playingfigure playingfigure, Gamefield where) {
         if (!canMoveNow) throw new IllegalStateException("ERROR: You can't move now");
 
@@ -180,14 +345,24 @@ public class Player {
         }
     }
 
+    /**
+     * Checks if the teleport ability of Hermes is active.
+     *
+     * @return true if Hermes teleport ability is active, false otherwise.
+     */
     public boolean isHermesTeleport() {
         return hermesTeleport;
     }
 
-    public void setAthenaBlocked(boolean athenaBlocked) {
-        this.athenaBlocked = athenaBlocked;
-    }
-
+    /**
+     * Ends the current player's turn.
+     *
+     * This method checks if the turn can be ended and throws an exception if not.
+     * It then resets various flags and attributes related to the game state.
+     * Finally, it sets the current player to the opponent of the current player.
+     *
+     * @throws IllegalStateException if the turn cannot be ended
+     */
     public void endTurn() {
         checkEndTurn();
         if (!canEndTurn) throw new IllegalStateException("ERROR: You can't end your turn yet");
@@ -207,42 +382,85 @@ public class Player {
         System.out.println(Game.getInstance().getCurrentPlayer().name);
     }
 
+    /**
+     * Checks if the turn can be ended based on whether the player has performed
+     * both a build and a move action.
+     */
     private void checkEndTurn() {
         if (hasBuild && hasMoved) {
             canEndTurn = true;
         }
     }
 
-
+    /**
+     * Stops the current game and declares the opponent as the winner.
+     */
     public void surrender() {
         Game.getInstance().setRunning(false);
         System.out.println(Game.getInstance().getOpponent(this).name + " wins!");
     }
 
-
+    /**
+     * Returns whether Athena is blocked or not.
+     *
+     * @return true if Athena is blocked, false otherwise
+     */
     public boolean isAthenaBlocked() {
         return athenaBlocked;
     }
 
+    /**
+     * Sets the block status of Athena.
+     *
+     * @param athenaBlocked {@code true} to block Athena, {@code false} otherwise
+     */
+    public void setAthenaBlocked(boolean athenaBlocked) {
+        this.athenaBlocked = athenaBlocked;
+    }
 
+    /**
+     * Checks if the move is related to Apollo.
+     *
+     * @return true if the move is an Apollo move, false otherwise.
+     */
     public boolean isApolloMove() {
         return apolloMove;
     }
 
 
+    /**
+     * Sets the flag indicating whether an Atlas build is enabled or not.
+     *
+     * @param atlasBuild true to enable Atlas build, false otherwise
+     */
     public void setAtlasBuild(boolean atlasBuild) {
         this.atlasBuild = atlasBuild;
     }
 
+    /**
+     * Returns the array of Playingfigure objects.
+     *
+     * @return the array of Playingfigure objects
+     */
     public Playingfigure[] getFigures() {
         return figures;
     }
 
 
+    /**
+     * Sets the Demeter build flag to enable or disable Demeter build.
+     *
+     * @param demeterBuild the flag to enable or disable Demeter build
+     */
     public void setDemeterBuild(boolean demeterBuild) {
         this.demeterBuild = demeterBuild;
     }
 
+    /**
+     * Returns the name associated with this object.
+     *
+     * @return the name of the object as a String.
+     */
     public String getName() {
         return name;
     }

@@ -2,8 +2,34 @@ import java.util.Scanner;
 
 public class Main {
 
+    /**
+     * Represents a static variable that holds the current game instance.
+     * This variable is used to access and manipulate the game state across different parts of the code.
+     * <p>
+     * Note: This variable should only be accessed and modified by authorized classes within the application.
+     * <p>
+     * Example usage:
+     * <p>
+     * // Access the game instance
+     * Game currentGame = GameInstance.getInstance();
+     * <p>
+     * // Modify game properties or invoke game methods
+     * currentGame.start();
+     * currentGame.pause();
+     * currentGame.resume();
+     * currentGame.end();
+     *
+     * @see Game
+     */
     private static Game game;
 
+    /**
+     * Initializes the setup of the game.
+     *
+     * @param args The command line arguments.
+     * @throws RuntimeException If an error occurs during setup.
+     * @throws IllegalArgumentException If the command is invalid.
+     */
     private static void initSetup(String[] args) {
         game = Game.getInstance();
         var name1 = args[0].split(",")[0];
@@ -42,6 +68,14 @@ public class Main {
 
     }
 
+    /**
+     * The main method of the program.
+     * It handles user input and executes corresponding game actions.
+     *
+     * @param args The command line arguments.
+     * @throws RuntimeException If an error occurs during setup.
+     * @throws IllegalArgumentException If the command is invalid.
+     */
     public static void main(String[] args) {
         try {
             initSetup(args);
@@ -83,11 +117,25 @@ public class Main {
         }
     }
 
+    /**
+     * The build method is used to build a specific type of object on the playing field at a specified position.
+     *
+     * @param type The type of the object to be built.
+     * @param x The x coordinate of the position where the object should be built.
+     * @param y The y coordinate of the position where the object should be built.
+     */
     private static void build(BuildObject type, int x, int y) {
         var field = game.getPlayingField()[y][x];
         game.getCurrentPlayer().build(type, field);
     }
 
+    /**
+     * Moves the specified figure to the given coordinates on the playing field.
+     *
+     * @param figureName The name of the figure to move.
+     * @param x The x-coordinate of the target position.
+     * @param y The y-coordinate of the target position.
+     */
     private static void move(String figureName, int x, int y) {
         var field = game.getPlayingField()[y][x];
         var figure = game.getFigure(figureName);
@@ -95,6 +143,11 @@ public class Main {
     }
 
 
+    /**
+     * Draws a card for the current player based on the specified card symbol.
+     *
+     * @param line The input line containing the command and card symbol.
+     */
     private static void drawCard(String line) {
         var cardSymbol = line.split(" ")[1];
         Game.getInstance().getCurrentPlayer().drawGodCard(Godcard.findGodcard(cardSymbol));
