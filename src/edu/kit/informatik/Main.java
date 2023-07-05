@@ -64,7 +64,17 @@ public class Main {
         var f = name3.equals(name4);
         if (a || b || c || d || e || f) {
             System.out.println("ERROR: Names must be unique!");
+            return;
         }
+
+        if (name1.equals("") || name2.equals("") || name3.equals("") || name4.equals("")) {
+            System.out.println("ERROR: Names must not be empty!");
+            return;
+        }
+        if (name1.equals(" ") || name2.equals(" ") || name3.equals(" ") || name4.equals(" ")) {
+            System.out.println("ERROR: Names must not be empty!");
+        }
+
 
     }
 
