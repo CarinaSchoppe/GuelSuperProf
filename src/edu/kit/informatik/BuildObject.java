@@ -1,19 +1,8 @@
 package edu.kit.informatik;
 
-/**
- * @author uyjam
- * @version 1.0
- */
 public enum BuildObject {
 
-    /**
-     * Cuboid as object for playing game.
-     */
-    CUBOID('C'),
-    /**
-     * Dome as object for playing game.
-     */
-    DOME('D'); //Dome
+    CUBOID('C'), DOME('D');
 
     private final char symbol;
 
@@ -25,6 +14,12 @@ public enum BuildObject {
         return symbol;
     }
 
+    /**
+     * Finds a edu.kit.informatik.BuildObject based on a given symbol.
+     *
+     * @param symbol The symbol used to identify the edu.kit.informatik.BuildObject.
+     * @return The corresponding edu.kit.informatik.BuildObject, or null if no matching symbol is found.
+     */
     public static BuildObject findBuildObject(char symbol) {
         for (BuildObject buildObject : BuildObject.values()) {
             if (buildObject.getSymbol() == symbol) {
