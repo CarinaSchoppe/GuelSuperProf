@@ -5,8 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Game {
-
-
     /**
      * The {@code instance} variable is a private static variable that represents the singleton instance
      *
