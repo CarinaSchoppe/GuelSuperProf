@@ -4,10 +4,8 @@ public class Gamefield extends Gameobject {
 
     /**
      * This variable represents an array of edu.kit.informatik.Gameobject instances.
-     * <p>
      * The array has a fixed length of 4 and is marked as final, 
      * meaning that it cannot be reassigned or modified after initialization.
-     * <p>
      * It is recommended to access this variable through the getter method,
      * to ensure encapsulation and maintain data integrity.
      */

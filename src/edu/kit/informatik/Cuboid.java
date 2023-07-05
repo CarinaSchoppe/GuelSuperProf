@@ -4,15 +4,12 @@ public class Cuboid extends Gameobject {
 
     /**
      * Represents the type of a build object.
-     * <p>
      * The possible types that can be assigned are:
      * - edu.kit.informatik.BuildObject.CUBOID
      * - edu.kit.informatik.BuildObject.SPHERE
      * - edu.kit.informatik.BuildObject.CYLINDER
-     * <p>
      * This variable is declared as a private static final, ensuring that its value
      * cannot be modified after initialization.
-     * <p>
      * Example usage:
      * ```
      * if (TYPE == edu.kit.informatik.BuildObject.CUBOID) {

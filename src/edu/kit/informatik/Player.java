@@ -16,20 +16,16 @@ public class Player {
     /**
      * The name of an object.
      *
-     * <p>
      * This variable represents the name of an object. It is a constant value and cannot be modified once initialized.
-     * </p>
      *
      * @since 1.0
      */
     private final String name;
     /**
      * Represents the current status of whether drawing is permitted or not.
-     * <p>
      * The value of this variable determines whether the drawing operation can be performed or not.
      * If this variable is set to 'true', it indicates that drawing is allowed. On the other hand, if
      * it is set to 'false', drawing is not permitted.
-     * <p>
      * This variable is private and can only be accessed within the class it is defined in.
      */
     private boolean canDrawNow = true;
@@ -41,7 +37,6 @@ public class Player {
     private boolean canMoveNow = true;
     /**
      * Determines whether the build can be started immediately.
-     * <p>
      * This variable represents whether the build can be initiated right away. A value of true indicates that the build
      * can be started immediately, while a value of false indicates that the build should be delayed.
      *
@@ -56,18 +51,11 @@ public class Player {
     /**
      * Indicates whether Athena is blocked or not.
      *
-     * <p>
      * The value of this variable determines if Athena, the virtual assistant, is currently blocked or not.
      * When Athena is blocked, it means that the user has restricted or disabled its functionality.
-     * </p>
      *
-     * <p>
      * This variable should only be accessed and modified by the relevant logic handling Athena's blocking status.
-     * </p>
-     *
-     * <p>
      * The default value of {@code athenaBlocked} is {@code false}, indicating that Athena is initially not blocked.
-     * </p>
      *
      * @see #isAthenaBlocked()
      * @see #setAthenaBlocked(boolean)
@@ -84,10 +72,8 @@ public class Player {
     /**
      * Represents the status of the Apollo move.
      *
-     * <p>
      * The variable is used to determine whether an Apollo move is in progress or not.
      * It is used as a flag to control the flow of the program when interacting with the Apollo move.
-     * </p>
      *
      * @since No specific version
      */
@@ -95,11 +81,9 @@ public class Player {
     /**
      * Represents the status of Artemis movement.
      *
-     * <p>
      * This variable indicates whether Artemis is currently in motion or not.
      * When the value is set to true, it means Artemis is moving. On the other hand,
      * when the value is set to false, it means Artemis is not moving.
-     * </p>
      *
      * @since 1.0
      */
@@ -107,10 +91,8 @@ public class Player {
 
     /**
      * Represents the status of an Atlas build.
-     * <p>
      * This variable is used to determine whether an Atlas build is currently happening or not.
      * It is a boolean value that is true if an Atlas build is in progress, and false otherwise.
-     * <p>
      * The value of this variable can only be accessed within the class it is declared in.
      */
     private boolean atlasBuild;
@@ -140,15 +122,9 @@ public class Player {
     /**
      * Indicates whether an object has moved.
      *
-     * <p>
      * The hasMoved variable is used to track the movement state of an object.
      * It is set to true when the object has moved, and false otherwise.
-     *
-     * <p>
      * Example usage:
-     * <pre>{@code
-     *   private boolean hasMoved = false;
-     * }</pre>
      *
      * @return true if the object has moved, false otherwise
      */
@@ -170,7 +146,7 @@ public class Player {
 
 
     /**
-     * Draws a edu.kit.informatik.Godcard for the player.
+     * Draws a Godcard for the player.
      *
      * @param godcard the edu.kit.informatik.Godcard to be drawn
      * @throws IllegalStateException if it is not currently allowed to draw a edu.kit.informatik.Godcard
@@ -359,7 +335,6 @@ public class Player {
 
     /**
      * Ends the current player's turn.
-     * <p>
      * This method checks if the turn can be ended and throws an exception if not.
      * It then resets various flags and attributes related to the game state.
      * Finally, it sets the current player to the opponent of the current player.

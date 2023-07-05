@@ -7,19 +7,11 @@ public class Main {
     /**
      * Represents a static variable that holds the current game instance.
      * This variable is used to access and manipulate the game state across different parts of the code.
-     * <p>
      * Note: This variable should only be accessed and modified by authorized classes within the application.
-     * <p>
      * Example usage:
-     * <p>
      * // Access the game instance
      * edu.kit.informatik.Game currentGame = GameInstance.getInstance();
-     * <p>
      * // Modify game properties or invoke game methods
-     * currentGame.start();
-     * currentGame.pause();
-     * currentGame.resume();
-     * currentGame.end();
      *
      * @see Game
      */

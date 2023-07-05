@@ -15,7 +15,6 @@ public class Game {
     private static Game instance = null;
     /**
      * A private final instance variable representing a list of edu.kit.informatik.Cuboid objects.
-     * </p>
      *
      * @see Cuboid
      * @since Insert the version number or date when the variable was first introduced
@@ -218,7 +217,6 @@ public class Game {
 
     /**
      * Prints the count of cuboids and count of domes in the bag.
-     * <p>
      * The count of cuboids and the count of domes are printed to the console.
      */
     public void bag() {
