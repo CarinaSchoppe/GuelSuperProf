@@ -35,11 +35,9 @@ public class Main {
         game.setPlayer1(player1);
         game.setPlayer2(player2);
         game.setCurrentPlayer(player1);
-
-
         //check if one name is equal
         if (name1.equals(name2) || name1.equals(name3) || name1.equals(name4) || name2.equals(name3) || name2.equals(name4) || name3.equals(name4)) {
-            throw new RuntimeException("Names must be unique!");
+            throw new RuntimeException("ERROR: Names must be unique!");
         }
 
     }
@@ -48,7 +46,7 @@ public class Main {
         try {
             initSetup(args);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("ERROR: While setup");
         }
         var scanner = new Scanner(System.in);
         String line;

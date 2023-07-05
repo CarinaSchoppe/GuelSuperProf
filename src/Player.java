@@ -149,7 +149,7 @@ public class Player {
         if (where.equals(oldPosition)) throw new IllegalArgumentException("ERROR: Move to old Position");
 
         if (hasMoved && !artemisMove) {
-            throw new IllegalArgumentException("ERROR: Allready moved");
+            throw new IllegalArgumentException("ERROR: Already moved");
         }
         if (artemisMove) {
             artemisMove = false;
