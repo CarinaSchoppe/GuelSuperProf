@@ -136,7 +136,7 @@ public class Game {
         }
 
         if (!isClose(currentField, targetField)) {
-            var msg = "ERROR: You can't move to a field that is not adjecent to you without hermesMove";
+            var msg = "ERROR: You can't move to a field that is not adjacent to you without hermesMove";
             throw new IllegalArgumentException(msg);
         }
 
