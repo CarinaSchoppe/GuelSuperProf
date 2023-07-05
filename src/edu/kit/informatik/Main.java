@@ -29,7 +29,7 @@ public class Main {
      * Initializes the setup of the game.
      *
      * @param args The command line arguments.
-     * @throws RuntimeException If an error occurs during setup.
+     * @throws RuntimeException         If an error occurs during setup.
      * @throws IllegalArgumentException If the command is invalid.
      */
     private static void initSetup(String[] args) {
@@ -64,7 +64,13 @@ public class Main {
         game.setPlayer2(player2);
         game.setCurrentPlayer(player1);
         //check if one name is equal
-        if (name1.equals(name2) || name1.equals(name3) || name1.equals(name4) || name2.equals(name3) || name2.equals(name4) || name3.equals(name4)) {
+        var a = name1.equals(name2);
+        var b = name1.equals(name3);
+        var c = name1.equals(name4);
+        var d = name2.equals(name3);
+        var e = name2.equals(name4);
+        var f = name3.equals(name4);
+        if (a || b || c || d || e || f) {
             throw new RuntimeException("ERROR: Names must be unique!");
         }
 
@@ -75,7 +81,7 @@ public class Main {
      * It handles user input and executes corresponding game actions.
      *
      * @param args The command line arguments.
-     * @throws RuntimeException If an error occurs during setup.
+     * @throws RuntimeException         If an error occurs during setup.
      * @throws IllegalArgumentException If the command is invalid.
      */
     public static void main(String[] args) {
@@ -123,8 +129,8 @@ public class Main {
      * The build method is used to build a specific type of object on the playing field at a specified position.
      *
      * @param type The type of the object to be built.
-     * @param x The x coordinate of the position where the object should be built.
-     * @param y The y coordinate of the position where the object should be built.
+     * @param x    The x coordinate of the position where the object should be built.
+     * @param y    The y coordinate of the position where the object should be built.
      */
     private static void build(BuildObject type, int x, int y) {
         var field = game.getPlayingField()[y][x];
@@ -135,8 +141,8 @@ public class Main {
      * Moves the specified figure to the given coordinates on the playing field.
      *
      * @param figureName The name of the figure to move.
-     * @param x The x-coordinate of the target position.
-     * @param y The y-coordinate of the target position.
+     * @param x          The x-coordinate of the target position.
+     * @param y          The y-coordinate of the target position.
      */
     private static void move(String figureName, int x, int y) {
         var field = game.getPlayingField()[y][x];

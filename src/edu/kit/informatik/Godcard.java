@@ -7,15 +7,41 @@ package edu.kit.informatik;
 
 public enum Godcard {
 
+    /**
+     * Apollo card for playing rules.
+     */
     APOLLO("Apollo"),
+    /**
+     * Artemis card for playing rules.
+     */
     ARTEMIS("Artemis"),
+    /**
+     * Athena card for playing rules.
+     */
     ATHENA("Athena"),
+    /**
+     * Atlas card for playing rules.
+     */
     ATLAS("Atlas"),
+    /**
+     * Demeter card for playing rules.
+     */
     DEMETER("Demeter"),
+    /**
+     * Hermes card for playing rules.
+     */
     HERMES("Hermes");
 
+    /**
+     * The name of the edu.kit.informatik.Godcard.
+     */
     private final String name;
 
+    /**
+     * Constructs a new edu.kit.informatik.Godcard with the given name.
+     *
+     * @param name the name of the edu.kit.informatik.Godcard
+     */
     Godcard(String name) {
         this.name = name;
     }
