@@ -131,7 +131,8 @@ public class Game {
         }
 
         if (targetField.isOccupied() && !figure.getOwner().isApolloMove()) {
-            throw new IllegalArgumentException("ERROR: You can't move to an occupied field without apolloMove");
+            var msg = "ERROR: You can't move to an occupied field without apolloMove";
+            throw new IllegalArgumentException(msg);
         }
 
         if (!isClose(currentField, targetField)) {
