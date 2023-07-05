@@ -198,7 +198,7 @@ public class Gamefield extends Gameobject {
             } else if (element instanceof Dome dome) {
                 string += dome + ",";
             } else if (element instanceof Playingfigure figure) {
-                string += figure.getName() + ",";
+                string += figure.getName().charAt(0) + ",";
             }
 
         }
