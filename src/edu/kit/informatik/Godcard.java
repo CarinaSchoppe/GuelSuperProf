@@ -1,15 +1,35 @@
-/**
- * Enumeration representing the available God cards in the game.
- * Each God card has a name associated with it.
- */
+package edu.kit.informatik;
 
+/**
+ * @author uyjam
+ *
+ * @version 1.0
+ */
 public enum Godcard {
 
+    /**
+     * Apollo card for playing rules.
+     */
     APOLLO("Apollo"),
+    /**
+     * Artemis card for playing rules.
+     */
     ARTEMIS("Artemis"),
+    /**
+     * Athena card for playing rules.
+     */
     ATHENA("Athena"),
+    /**
+     * Atlas card for playing rules.
+     */
     ATLAS("Atlas"),
+    /**
+     * Demeter card for playing rules.
+     */
     DEMETER("Demeter"),
+    /**
+     * Hermes card for playing rules.
+     */
     HERMES("Hermes");
 
     private final String name;
@@ -18,12 +38,10 @@ public enum Godcard {
         this.name = name;
     }
 
-    /**
-     * Finds a Godcard based on its name.
-     *
-     * @param name the name of the Godcard to find
-     * @return the Godcard matching the given name, or null if no matching Godcard is found
-     */
+    public String getName() {
+        return name;
+    }
+
     public static Godcard findGodcard(String name) {
         for (Godcard godcard : Godcard.values()) {
             if (godcard.getName().equalsIgnoreCase(name)) {
@@ -31,14 +49,5 @@ public enum Godcard {
             }
         }
         return null;
-    }
-
-    /**
-     * Returns the name of the Godcard.
-     *
-     * @return the name of the Godcard
-     */
-    public String getName() {
-        return name;
     }
 }
