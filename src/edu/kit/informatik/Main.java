@@ -143,33 +143,36 @@ public class Main {
         }
         var scanner = new Scanner(System.in);
         String line;
-        while (!(line = scanner.nextLine()).equalsIgnoreCase("quit") && game.isRunning()) {
+        while (!(line = scanner.nextLine()).equals("quit") && game.isRunning()) {
             try {
-                if (line.startsWith("draw-card")) {
+                if (line.equals("draw-card")) {
                     drawCard(line);
-                } else if (line.startsWith("list-cards")) {
+                } else if (line.equals("list-cards")) {
                     game.listCards();
                 } else if (line.startsWith("move")) {
+                    if (line.split(" ").length != 4) throw new IllegalArgumentException("ERROR: Invalid command");
                     var figureName = line.split(" ")[1];
                     var x = Integer.parseInt(line.split(" ")[2]);
                     var y = Integer.parseInt(line.split(" ")[3]);
                     move(figureName, y, x);
                 } else if (line.startsWith("build")) {
+                    if (line.split(" ").length != 4) throw new IllegalArgumentException("ERROR: Invalid command");
                     var type = BuildObject.findBuildObject(line.split(" ")[1].charAt(0));
                     var x = Integer.parseInt(line.split(" ")[2]);
                     var y = Integer.parseInt(line.split(" ")[3]);
                     build(type, y, x);
-                } else if (line.startsWith("end-turn")) {
+                } else if (line.equals("end-turn")) {
                     game.getCurrentPlayer().endTurn();
-                } else if (line.startsWith("surrender")) {
+                } else if (line.equals("surrender")) {
                     game.getCurrentPlayer().surrender();
-                } else if (line.startsWith("bag")) {
+                } else if (line.equals("bag")) {
                     game.bag();
                 } else if (line.startsWith("cellprint")) {
+                    if (line.split(" ").length != 3) throw new IllegalArgumentException("ERROR: Invalid command");
                     var x = Integer.parseInt(line.split(" ")[1]);
                     var y = Integer.parseInt(line.split(" ")[2]);
                     game.cellPrint(y, x);
-                } else if (line.startsWith("print")) {
+                } else if (line.equals("print")) {
                     game.print();
                 } else {
                     System.out.println("ERROR: Invalid command");

@@ -68,7 +68,7 @@ public class Gamefield extends Gameobject {
      * @return the number of edu.kit.informatik.Cuboid objects in the gameobjects list.
      */
     public int getHeightSquares() {
-        int height = 0;
+        var height = 0;
         for (Gameobject gameobject : gameobjects) {
             if (gameobject instanceof Cuboid) {
                 height++;

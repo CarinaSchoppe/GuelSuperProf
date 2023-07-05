@@ -42,7 +42,7 @@ public class Player {
      *
      * @return true if the build can be started now, false otherwise.
      */
-    private boolean canBuildNow;
+    private boolean canBuildNow = false;
     /**
      * Keeps track of the number of god cards drawn.
      */
@@ -60,14 +60,14 @@ public class Player {
      * @see #isAthenaBlocked()
      * @see #setAthenaBlocked(boolean)
      */
-    private boolean athenaBlocked;
+    private boolean athenaBlocked = false;
 
     /**
      * Determines if the movement of Athena is currently blocked.
      *
      * @return {@code true} if Athena's movement is blocked, {@code false} otherwise.
      */
-    private boolean athenaBlockedMove;
+    private boolean athenaBlockedMove = false;
 
     /**
      * Represents the status of the Apollo move.
@@ -77,7 +77,7 @@ public class Player {
      *
      * @since No specific version
      */
-    private boolean apolloMove;
+    private boolean apolloMove = false;
     /**
      * Represents the status of Artemis movement.
      * <p>
@@ -87,7 +87,7 @@ public class Player {
      *
      * @since 1.0
      */
-    private boolean artemisMove;
+    private boolean artemisMove = false;
 
     /**
      * Represents the status of an Atlas build.
@@ -95,19 +95,19 @@ public class Player {
      * It is a boolean value that is true if an Atlas build is in progress, and false otherwise.
      * The value of this variable can only be accessed within the class it is declared in.
      */
-    private boolean atlasBuild;
+    private boolean atlasBuild = false;
 
     /**
      * Determines if the Demeter build is enabled or disabled.
      *
      * @return true if the Demeter build is enabled, false otherwise
      */
-    private boolean demeterBuild;
+    private boolean demeterBuild = false;
 
     /**
      * Indicates if the Hermes Teleport is active or not.
      */
-    private boolean hermesTeleport;
+    private boolean hermesTeleport = false;
     /**
      * Determines whether the current turn can be ended.
      *
@@ -265,6 +265,9 @@ public class Player {
             //player wants to build a dome: if atlas is active can build at any height
             if (atlasBuild || whereToBuild.isDomeable()) {
                 whereToBuild.getGameobjects()[whereToBuild.getHeightSquares()] = dome;
+            } else {
+                System.out.println("ERROR: Not domeable");
+                return;
             }
         } else if (whatToBuild == BuildObject.CUBOID) {
             //check if enough cuboids are left
