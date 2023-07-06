@@ -23,7 +23,6 @@ public class Game {
      */
     private final Gamefield[][] playingField;
     /**
-     *
      * @see Godcard
      * @see List
      * @see ArrayList
@@ -41,17 +40,22 @@ public class Game {
     private Player player1;
     /**
      * Represents the player2 variable in the context of the software.
-
      */
     private Player player2;
-    /**
-
-     */
-    private Player currentPlayer;
+    private static final int FIFTY_FOUR = 54;
     /**
      * This variable represents the state of a program or system indicating whether it is currently running or not.
      */
     private boolean isRunning;
+    private static final int EIGHTEEN = 18;
+    private static final int SIX = 6;
+    private static final int FIVE = 5;
+    private static final int FOUR = 4;
+    private static final int THREE = 3;
+    /**
+     *
+     */
+    private Player currentPlayer;
 
     /**
      * Initializes a new instance of the game.
@@ -59,19 +63,19 @@ public class Game {
      */
     private Game() {
         instance = this;
-        playingField = new Gamefield[5][5];
-        for (var x = 0; x < 5; x++) {
-            for (var y = 0; y < 5; y++) {
+        playingField = new Gamefield[FIVE][FIVE];
+        for (var x = 0; x < FIVE; x++) {
+            for (var y = 0; y < FIVE; y++) {
                 playingField[y][x] = new Gamefield(x, y);
             }
         }
 
 
-        for (var i = 0; i < 54; i++) {
+        for (var i = 0; i < FIFTY_FOUR; i++) {
             cuboidList.add(new Cuboid(0, 0));
         }
 
-        for (var i = 0; i < 18; i++) {
+        for (var i = 0; i < EIGHTEEN; i++) {
             domeList.add(new Dome(0, 0));
         }
         isRunning = true;
@@ -79,6 +83,7 @@ public class Game {
 
     /**
      * Gets the instance of the edu.kit.informatik.Game class.
+     *
      * @return The instance of the edu.kit.informatik.Game class.
      */
     public static Game getInstance() {
@@ -87,7 +92,6 @@ public class Game {
         }
         return instance;
     }
-
 
     /**
      * Checks if the target field is close to the current field.
@@ -117,30 +121,24 @@ public class Game {
      * @param figure The playing figure from which the reachability is checked.
      * @param where  The target game field to check for reachability.
      * @return {@code true} if the target field is reachable, {@code false} otherwise.
-     *                                  to the current field without HermesMove.
+     * to the current field without HermesMove.
      */
     //its reachable if its not a pillar and if it is adjectent to the currentField
     public boolean isReachable(Figure figure, Gamefield where) {
         var currentField = playingField[figure.getY()][figure.getX()];
         var targetField = where;
         if (targetField.isPillar()) {
-            System.out.println("ERROR: You can't move to a pillar");
             return false;
         }
         if (currentField == targetField) {
-            System.out.println("ERROR: You can't move to the same field");
             return false;
         }
 
         if (targetField.isOccupied() && !figure.getOwner().isApolloMove()) {
-            var msg = "ERROR: You can't move to an occupied field without apolloMove";
-            System.out.println(msg);
             return false;
         }
 
         if (!isClose(currentField, targetField)) {
-            var msg = "ERROR: You can't move to a field that is not adjacent to you without hermesMove";
-            System.out.println(msg);
             return false;
         }
 
@@ -178,7 +176,7 @@ public class Game {
             adjacentFields[0][1] = playingField[y - 1][x];
         }
         //top right
-        if (x + 1 < 5 && y - 1 >= 0) {
+        if (x + 1 < FIVE && y - 1 >= 0) {
             adjacentFields[0][2] = playingField[y - 1][x + 1];
         }
         //middle left
@@ -186,19 +184,19 @@ public class Game {
             adjacentFields[1][0] = playingField[y][x - 1];
         }
         //middle right
-        if (x + 1 < 5) {
+        if (x + 1 < FIVE) {
             adjacentFields[1][2] = playingField[y][x + 1];
         }
         //bottom left
-        if (x - 1 >= 0 && y + 1 < 5) {
+        if (x - 1 >= 0 && y + 1 < FIVE) {
             adjacentFields[2][0] = playingField[y + 1][x - 1];
         }
         //bottom middle
-        if (y + 1 < 5) {
+        if (y + 1 < FIVE) {
             adjacentFields[2][1] = playingField[y + 1][x];
         }
         //bottom right
-        if (x + 1 < 5 && y + 1 < 5) {
+        if (x + 1 < FIVE && y + 1 < FIVE) {
             adjacentFields[2][2] = playingField[y + 1][x + 1];
         }
         adjacentFields[1][1] = field;
@@ -390,7 +388,7 @@ public class Game {
         godcards.sort(Comparator.comparing(Godcard::getName));
 
 
-        //print them like this: Name1,Name2,Name3,Name4
+        //print them like this: Name1,Name2,Name3,NameFOUR
         String stringBuilder = "";
         for (Godcard godcard : godcards) {
             stringBuilder += godcard.getName() + ",";

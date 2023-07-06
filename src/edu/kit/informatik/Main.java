@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class Main {
 
+    private static final int FOUR = 4;
+    private static final int THREE = 3;
+    private static final String A_TO_Z = "[a-z]+";
     /**
      * Represents a static variable that holds the current game instance.
      * This variable is used to access and manipulate the game state across different parts of the code.
@@ -16,18 +19,21 @@ public class Main {
      * @see Game
      */
     private static Game game;
+    private static final String INVALID_NAME = "ERROR: Invalid name!";
+    private static final String INVALID_POSITION = "ERROR: Invalid position!";
 
     /**
      * Initializes the setup of the game.
      *
      * @param args The command line arguments.
+     * @return
      * @throws RuntimeException         If an error occurs during setup.
      * @throws IllegalArgumentException If the command is invalid.
      */
-    private static void initSetup(String[] args) {
-        if (args.length != 4) {
+    private static boolean initSetup(String[] args) {
+        if (args.length != FOUR) {
             System.out.println("ERROR: Invalid number of arguments!");
-            return;
+            return false;
         }
         game = Game.getInstance();
         var name1 = args[0].split(",")[0];
@@ -44,77 +50,80 @@ public class Main {
         var name3 = args[2].split(",")[0];
         var pos3y = Integer.parseInt(args[2].split(",")[1]);
         var pos3x = Integer.parseInt(args[2].split(",")[2]);
-        var name4 = args[3].split(",")[0];
-        var pos4y = Integer.parseInt(args[3].split(",")[1]);
-        var pos4x = Integer.parseInt(args[3].split(",")[2]);
+        var nameFOUR = args[3].split(",")[0];
+        var posFOURy = Integer.parseInt(args[3].split(",")[1]);
+        var posFOURx = Integer.parseInt(args[3].split(",")[2]);
         var figure3 = new Figure(name3, pos3x, pos3y);
-        var figure4 = new Figure(name4, pos4x, pos4y);
-        var player2 = new Player(figure3, figure4, "P2");
+        var figureFOUR = new Figure(nameFOUR, posFOURx, posFOURy);
+        var player2 = new Player(figure3, figureFOUR, "P2");
         figure3.setOwner(player2);
-        figure4.setOwner(player2);
+        figureFOUR.setOwner(player2);
         game.setPlayer1(player1);
         game.setPlayer2(player2);
         game.setCurrentPlayer(player1);
         var a = name1.equals(name2);
         var b = name1.equals(name3);
-        var c = name1.equals(name4);
+        var c = name1.equals(nameFOUR);
         var d = name2.equals(name3);
-        var e = name2.equals(name4);
-        var f = name3.equals(name4);
+        var e = name2.equals(nameFOUR);
+        var f = name3.equals(nameFOUR);
         if (a || b || c || d || e || f) {
             System.out.println("ERROR: Names must be unique!");
-            return;
+            return false;
         }
-        if (!name1.matches("[a-z]+") || !name2.matches("[a-z]+")) {
-            System.out.println("ERROR: Invalid name!");
-            return;
+        if (!name1.matches(A_TO_Z) || !name2.matches(A_TO_Z)) {
+            System.out.println(INVALID_NAME);
+            return false;
         }
-        if (!name3.matches("[a-z]+") || !name4.matches("[a-z]+")) {
-            System.out.println("ERROR: Invalid name!");
-            return;
+        if (!name3.matches(A_TO_Z) || !nameFOUR.matches(A_TO_Z)) {
+            System.out.println(INVALID_NAME);
+            return false;
         }
-        if (pos3y > 4 || pos4x < 0 || pos4x > 4 || pos4y < 0 || pos4y > 4) {
-            System.out.println("ERROR: Invalid position!");
-            return;
+        if (pos3y > FOUR || posFOURx < 0 || posFOURx > FOUR || posFOURy < 0 || posFOURy > FOUR) {
+            System.out.println(INVALID_POSITION);
+            return false;
         }
-        if (pos2x < 0 || pos2x > 4 || pos2y < 0 || pos2y > 4) {
-            System.out.println("ERROR: Invalid position!");
+        if (pos2x < 0 || pos2x > FOUR || pos2y < 0 || pos2y > FOUR) {
+            System.out.println(INVALID_POSITION);
+            return false;
         }
-        testIt(figure1, figure2, figure3, figure4);
+        return testIt(figure1, figure2, figure3, figureFOUR);
+
     }
 
+    private static boolean testIt(Figure figure1, Figure figure2, Figure figure3, Figure figureFOUR) {
 
-    private static void testIt(Figure figure1, Figure figure2, Figure figure3, Figure figure4) {
-     
 
         if (figure1.getX() == figure2.getX() && figure1.getY() == figure2.getY()) {
             System.out.println("ERROR: Invalid position!");
-            return;
+            return false;
         }
 
-        if (figure3.getX() == figure4.getX() && figure3.getY() == figure4.getY()) {
+        if (figure3.getX() == figureFOUR.getX() && figure3.getY() == figureFOUR.getY()) {
             System.out.println("ERROR: Invalid position!");
-            return;
+            return false;
         }
 
         if (figure1.getX() == figure3.getX() && figure1.getY() == figure3.getY()) {
             System.out.println("ERROR: Invalid position!");
-            return;
+            return false;
         }
 
-        if (figure1.getX() == figure4.getX() && figure1.getY() == figure4.getY()) {
+        if (figure1.getX() == figureFOUR.getX() && figure1.getY() == figureFOUR.getY()) {
             System.out.println("ERROR: Invalid position!");
-            return;
+            return false;
         }
 
         if (figure2.getX() == figure3.getX() && figure2.getY() == figure3.getY()) {
             System.out.println("ERROR: Invalid position!");
-            return;
+            return false;
         }
 
-        if (figure2.getX() == figure4.getX() && figure2.getY() == figure4.getY()) {
+        if (figure2.getX() == figureFOUR.getX() && figure2.getY() == figureFOUR.getY()) {
             System.out.println("ERROR: Invalid position!");
+            return false;
         }
+        return true;
     }
 
     /**
@@ -127,9 +136,10 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            initSetup(args);
+            if (!initSetup(args)) return;
         } catch (Exception e) {
             System.out.println("ERROR: While setup");
+            return;
         }
         var scanner = new Scanner(System.in);
         String line;
@@ -143,13 +153,13 @@ public class Main {
                 } else if (line.equals("list-cards")) {
                     game.listCards();
                 } else if (line.startsWith("move")) {
-                    if (line.split(" ").length != 4) throw new IllegalArgumentException("ERROR: Invalid command");
+                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException("ERROR: Invalid command");
                     var figureName = line.split(" ")[1];
                     var x = Integer.parseInt(line.split(" ")[2]);
                     var y = Integer.parseInt(line.split(" ")[3]);
                     move(figureName, y, x);
                 } else if (line.startsWith("build")) {
-                    if (line.split(" ").length != 4) throw new IllegalArgumentException("ERROR: Invalid command");
+                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException("ERROR: Invalid command");
                     var type = BuildObject.findBuildObject(line.split(" ")[1].charAt(0));
                     var x = Integer.parseInt(line.split(" ")[2]);
                     var y = Integer.parseInt(line.split(" ")[3]);
@@ -171,7 +181,7 @@ public class Main {
                 } else {
                     System.out.println("ERROR: Invalid command");
                 }
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 System.out.println("ERROR: Unexpected error");
             }
         }
@@ -185,6 +195,10 @@ public class Main {
      * @param y    The y coordinate of the position where the object should be built.
      */
     private static void build(BuildObject type, int x, int y) {
+        if (type == null) {
+            throw new IllegalArgumentException("ERROR: Invalid command");
+
+        }
         var field = game.getPlayingField()[y][x];
         game.getCurrentPlayer().build(type, field);
     }

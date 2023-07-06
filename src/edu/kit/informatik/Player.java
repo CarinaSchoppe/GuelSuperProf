@@ -130,12 +130,18 @@ public class Player {
      */
     private boolean hasMoved = false;
 
+    private static final int THREE = 3;
+    /**
+     * Represents a string constant indicating that someone wins.
+     */
+    private static final String WINS = " wins!";
+
     /**
      * Creates a new player object with two playing figures and a name.
      *
      * @param figure1 the first playing figure for the player
      * @param figure2 the second playing figure for the player
-     * @param name           the name of the player
+     * @param name    the name of the player
      */
     public Player(Figure figure1, Figure figure2, String name) {
         figures = new Figure[]{figure1, figure2};
@@ -143,7 +149,6 @@ public class Player {
         Game.getInstance().getPlayingField()[figure2.getY()][figure2.getX()].setFigure(figure2);
         this.name = name;
     }
-
 
     /**
      * Draws a Godcard for the player.
@@ -163,7 +168,7 @@ public class Player {
             return;
         }
 
-        if (godCardsDrawn > 3) {
+        if (godCardsDrawn > THREE) {
             System.out.println("ERROR: You can only draw 2 godcards");
             return;
         }
@@ -198,10 +203,12 @@ public class Player {
         for (var figure : figures) {
             for (var fields : Game.getInstance().getPlayingField()) {
                 for (var field : fields) {
-                    if (Game.getInstance().isReachable(figure, field))
-                        if (field.getHeightSquares() == figure.getGameField().getHeightSquares()) {
-                            return false;
-                        }
+                    if (!Game.getInstance().isReachable(figure, field)) {
+                        continue;
+                    }
+                    if (field.getHeightSquares() == figure.getGameField().getHeightSquares()) {
+                        return false;
+                    }
                 }
             }
         }
@@ -283,7 +290,7 @@ public class Player {
         }
 
         if (Game.getInstance().checkWinning()) {
-            System.out.println(name + " wins!");
+            System.out.println(name + WINS);
         } else {
             System.out.println("OK");
         }
@@ -295,14 +302,14 @@ public class Player {
      * Moves the given playing figure to the specified game field.
      *
      * @param figure The playing figure to be moved.
-     * @param where         The game field to which the playing figure will be moved.
+     * @param where  The game field to which the playing figure will be moved.
      * @throws IllegalStateException    If the move cannot be performed due to certain conditions.
      * @throws IllegalArgumentException If the move is not valid.
      */
     public void moveFigure(Figure figure, Gamefield where) {
         if (!canMoveNow) {
             System.out.println("ERROR: You can't move now");
-
+            return;
         }
         var oldPosition = figure.getGameField();
 
@@ -343,7 +350,7 @@ public class Player {
             figure.setGameField(where);
         }
         if (Game.getInstance().checkWinning()) {
-            System.out.println(name + " wins!");
+            System.out.println(name + WINS);
         } else {
             System.out.println("OK");
         }
@@ -407,7 +414,7 @@ public class Player {
      */
     public void surrender() {
         Game.getInstance().setRunning(false);
-        System.out.println(Game.getInstance().getOpponent(this).name + " wins!");
+        System.out.println(Game.getInstance().getOpponent(this).name + WINS);
     }
 
     /**
