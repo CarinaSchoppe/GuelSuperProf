@@ -441,15 +441,6 @@ public class Player {
 
 
     /**
-     * Sets the Demeter build flag to enable or disable Demeter build.
-     *
-     * @param demeterBuild the flag to enable or disable Demeter build
-     */
-    public void setDemeterBuild(boolean demeterBuild) {
-        this.demeterBuild = demeterBuild;
-    }
-
-    /**
      * Returns the name associated with this object.
      *
      * @return the name of the object as a String.

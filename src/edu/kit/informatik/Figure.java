@@ -12,7 +12,7 @@ public class Figure extends Gameobject {
     /**
      * The name of the object.
      */
-    private String name;
+    private final String name;
 
     /**
      * The oldField variable represents the previous state of the game field.
@@ -94,23 +94,5 @@ public class Figure extends Gameobject {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Sets the name of the object.
-     *
-     * @param name the new name for the object
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Retrieves the old game field.
-     *
-     * @return The old game field.
-     */
-    public Gamefield getOldField() {
-        return oldField;
     }
 }

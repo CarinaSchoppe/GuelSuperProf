@@ -359,14 +359,6 @@ public class Game {
         this.player1 = player1;
     }
 
-    /**
-     * Retrieves the edu.kit.informatik.Player 2 object.
-     *
-     * @return the edu.kit.informatik.Player 2 object.
-     */
-    public Player getPlayer2() {
-        return player2;
-    }
 
     /**
      * Sets the player 2 for the game.
