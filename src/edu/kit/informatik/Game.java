@@ -15,7 +15,6 @@ public class Game {
      * A private final instance variable representing a list of edu.kit.informatik.Cuboid objects.
      *
      * @see Cuboid
-     * @since Insert the version number or date when the variable was first introduced
      */
     private final ArrayList<Cuboid> cuboidList = new ArrayList<>();
     /**
@@ -42,18 +41,37 @@ public class Game {
      * Represents the player2 variable in the context of the software.
      */
     private Player player2;
+    /**
+     * Represents the constant value of fifty-four.
+     */
     private static final int FIFTY_FOUR = 54;
     /**
      * This variable represents the state of a program or system indicating whether it is currently running or not.
      */
     private boolean isRunning;
+    /**
+     * Represents the constant value of eighteen.
+     * This variable is a private static final int.
+     */
     private static final int EIGHTEEN = 18;
+    /**
+     * Represents the constant integer value 6.
+     */
     private static final int SIX = 6;
+    /**
+     * Represents a constant variable with the value 5.
+     */
     private static final int FIVE = 5;
+    /**
+     * Represents the number four.
+     */
     private static final int FOUR = 4;
+    /**
+     * The value of THREE is 3.
+     */
     private static final int THREE = 3;
     /**
-     *
+     * the current Player
      */
     private Player currentPlayer;
 
@@ -304,8 +322,8 @@ public class Game {
      */
     private boolean canBuildAnything(Player player) {
         for (var figure : player.getFigures()) {
-            var adjecent = adjacentFields(figure.getGameField());
-            for (var gamefields : adjecent) {
+            var adjacent = adjacentFields(figure.getGameField());
+            for (var gamefields : adjacent) {
                 for (var gamefield : gamefields) {
                     if (gamefield == null) continue;
                     if (gamefield.isBuildable()) {
@@ -386,8 +404,6 @@ public class Game {
 
         //sort godcards lexiographically by their name
         godcards.sort(Comparator.comparing(Godcard::getName));
-
-
         //print them like this: Name1,Name2,Name3,NameFOUR
         String stringBuilder = "";
         for (Godcard godcard : godcards) {

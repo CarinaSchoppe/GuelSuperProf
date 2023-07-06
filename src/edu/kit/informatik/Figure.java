@@ -24,7 +24,6 @@ public class Figure extends Gameobject {
      * This variable is typically used in a class to track the owner of a particular instance.
      * This variable is marked as private to restrict direct access from outside the class.
      * To interact with or access the owner, appropriate getter and setter methods should be used.
-     * @since (insert version here)
      */
     private Player owner;
 

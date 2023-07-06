@@ -16,10 +16,7 @@ public class Player {
     private final Figure[] figures;
     /**
      * The name of an object.
-     * <p>
      * This variable represents the name of an object. It is a constant value and cannot be modified once initialized.
-     *
-     * @since 1.0
      */
     private final String name;
     /**
@@ -51,10 +48,6 @@ public class Player {
 
     /**
      * Indicates whether Athena is blocked or not.
-     * <p>
-     * The value of this variable determines if Athena, the virtual assistant, is currently blocked or not.
-     * When Athena is blocked, it means that the user has restricted or disabled its functionality.
-     * <p>
      * This variable should only be accessed and modified by the relevant logic handling Athena's blocking status.
      * The default value of {@code athenaBlocked} is {@code false}, indicating that Athena is initially not blocked.
      *
@@ -72,21 +65,17 @@ public class Player {
 
     /**
      * Represents the status of the Apollo move.
-     * <p>
      * The variable is used to determine whether an Apollo move is in progress or not.
      * It is used as a flag to control the flow of the program when interacting with the Apollo move.
      *
-     * @since No specific version
      */
     private boolean apolloMove = false;
     /**
      * Represents the status of Artemis movement.
-     * <p>
      * This variable indicates whether Artemis is currently in motion or not.
      * When the value is set to true, it means Artemis is moving. On the other hand,
      * when the value is set to false, it means Artemis is not moving.
      *
-     * @since 1.0
      */
     private boolean artemisMove = false;
 
@@ -122,7 +111,6 @@ public class Player {
     private boolean hasBuild = false;
     /**
      * Indicates whether an object has moved.
-     * <p>
      * The hasMoved variable is used to track the movement state of an object.
      * It is set to true when the object has moved, and false otherwise.
      * Example usage:
@@ -174,8 +162,6 @@ public class Player {
             return;
         }
         Game.getInstance().getGodcards().remove(godcard);
-
-
         switch (godcard) {
             case APOLLO -> apolloMove = true;
             case ARTEMIS -> artemisMove = true;
@@ -244,14 +230,10 @@ public class Player {
             canBuildNow = false;
             hasBuild = true;
         }
-
-
         //one figure needs to be adjecent to the field
-
         var adj = false;
-
         for (var figure : figures) {
-            if (figure.getGameField().isAdjecent(whereToBuild)) {
+            if (figure.getGameField().isAdjacent(whereToBuild)) {
                 adj = true;
                 break;
             }
@@ -445,16 +427,6 @@ public class Player {
      */
     public boolean isApolloMove() {
         return apolloMove;
-    }
-
-
-    /**
-     * Sets the flag indicating whether an Atlas build is enabled or not.
-     *
-     * @param atlasBuild true to enable Atlas build, false otherwise
-     */
-    public void setAtlasBuild(boolean atlasBuild) {
-        this.atlasBuild = atlasBuild;
     }
 
     /**

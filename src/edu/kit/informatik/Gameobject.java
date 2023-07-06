@@ -8,7 +8,6 @@ public abstract class Gameobject {
      * This private integer variable is used to store a value. The value can be accessed and modified
      * through getter and setter methods.
      *
-     * @since 1.0
      */
     private int x;
     /**

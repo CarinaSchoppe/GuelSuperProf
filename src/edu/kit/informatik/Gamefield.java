@@ -2,7 +2,13 @@ package edu.kit.informatik;
 
 public class Gamefield extends Gameobject {
 
+    /**
+     * The constant variable representing the value 3.
+     */
     private static final int THREE = 3;
+    /**
+     * A constant variable representing a comma character ','.
+     */
     private static final String COMMA = ",";
 
     /**
@@ -116,7 +122,7 @@ public class Gamefield extends Gameobject {
      * @param where the gamefield to check adjacency with
      * @return true if the gamefield is adjacent, false otherwise
      */
-    public boolean isAdjecent(Gamefield where) {
+    public boolean isAdjacent(Gamefield where) {
         var adj = Game.getInstance().adjacentFields(this);
         for (Gamefield[] gamefields : adj) {
             for (Gamefield gamefield : gamefields) {

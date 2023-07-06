@@ -63,7 +63,6 @@ public enum Godcard {
 
     /**
      * Returns the name of the edu.kit.informatik.Godcard.
-     *
      * @return the name of the edu.kit.informatik.Godcard
      */
     public String getName() {

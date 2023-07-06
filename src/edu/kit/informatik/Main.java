@@ -4,27 +4,51 @@ import java.util.Scanner;
 
 public class Main {
 
+    /**
+     * String constant that represents the "OK" status.
+     * It is a final variable, hence its value cannot be modified.
+     */
+    public static final String OK = "OK";
+    /**
+     * Represents the constant value of four.
+     * This variable is declared as private and static, and it is final to ensure that
+     * its value cannot be modified once assigned.
+     */
     private static final int FOUR = 4;
+    /**
+     * Represents the constant value 3.
+     */
     private static final int THREE = 3;
-    private static final String A_TO_Z = "[a-z]+";
     /**
      * Represents a static variable that holds the current game instance.
-     * This variable is used to access and manipulate the game state across different parts of the code.
-     * Note: This variable should only be accessed and modified by authorized classes within the application.
-     * Example usage:
-     * // Access the game instance
-     * edu.kit.informatik.Game currentGame = GameInstance.getInstance();
-     * // Modify game properties or invoke game methods
-     *
      * @see Game
      */
     private static Game game;
+    /**
+     * Regular expression pattern for matching lowercase alphabets from 'a' to 'z'.
+     * The pattern is represented as a string.
+     */
+    private static final String A_TO_Z = "[a-z]+";
+    /**
+     * Represents the constant variable INVALID_NAME which holds the error message for an invalid name.
+     * This constant is used to notify when a name entered is considered invalid.
+     */
     private static final String INVALID_NAME = "ERROR: Invalid name!";
+    /**
+     * Represents the error message for an invalid position.
+     * This error message is used to indicate that a position is not valid.
+     * It is a constant string that can be easily accessed throughout the codebase.
+     */
     private static final String INVALID_POSITION = "ERROR: Invalid position!";
-
-
-    public static final String OK = "OK";
+    /**
+     * Represents a constant string value for comma (",").
+     */
     private static final String COMMA = ",";
+    /**
+     * A constant representing an invalid command error message.
+     * This message is used to indicate that a provided command is not recognized
+     * or is invalid.
+     */
     private static final String INVALID_COMMAND = "ERROR: Invalid command";
 
     /**
@@ -96,34 +120,38 @@ public class Main {
 
     }
 
+    /**
+     * Checks if the given figures have valid positions.
+     *
+     * @param figure1 The first figure.
+     * @param figure2 The second figure.
+     * @param figureTHREE The third figure.
+     * @param figureFOUR The fourth figure.
+     * @return true if all figures have valid positions, false otherwise.
+     * @throws RuntimeException         If an error occurs during the position checking.
+     * @throws IllegalArgumentException If the figures have invalid positions.
+     */
     private static boolean testIt(Figure figure1, Figure figure2, Figure figureTHREE, Figure figureFOUR) {
-
-
         if (figure1.getX() == figure2.getX() && figure1.getY() == figure2.getY()) {
             System.out.println(INVALID_POSITION);
             return false;
         }
-
         if (figureTHREE.getX() == figureFOUR.getX() && figureTHREE.getY() == figureFOUR.getY()) {
             System.out.println(INVALID_POSITION);
             return false;
         }
-
         if (figure1.getX() == figureTHREE.getX() && figure1.getY() == figureTHREE.getY()) {
             System.out.println(INVALID_POSITION);
             return false;
         }
-
         if (figure1.getX() == figureFOUR.getX() && figure1.getY() == figureFOUR.getY()) {
             System.out.println(INVALID_POSITION);
             return false;
         }
-
         if (figure2.getX() == figureTHREE.getX() && figure2.getY() == figureTHREE.getY()) {
             System.out.println(INVALID_POSITION);
             return false;
         }
-
         if (figure2.getX() == figureFOUR.getX() && figure2.getY() == figureFOUR.getY()) {
             System.out.println(INVALID_POSITION);
             return false;
@@ -134,7 +162,6 @@ public class Main {
     /**
      * The main method of the program.
      * It handles user input and executes corresponding game actions.
-     *
      * @param args The command line arguments.
      * @throws RuntimeException         If an error occurs during setup.
      * @throws IllegalArgumentException If the command is invalid.
@@ -210,7 +237,6 @@ public class Main {
         var field = game.getPlayingField()[y][x];
         game.getCurrentPlayer().build(type, field);
     }
-
     /**
      * Moves the specified figure to the given coordinates on the playing field.
      *
@@ -225,8 +251,6 @@ public class Main {
             return;
         game.getCurrentPlayer().moveFigure(figure, field);
     }
-
-
     /**
      * Draws a card for the current player based on the specified card symbol.
      *
