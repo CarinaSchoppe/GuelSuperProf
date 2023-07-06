@@ -3,7 +3,8 @@ package edu.kit.informatik;
 /**
  * The edu.kit.informatik.Player class represents a player of the game. Each player has a name and two playing figures.
  * The player can draw god cards, move figures, and build objects on the game field.
- @author Sedef
+ *
+ * @author uyjam
  */
 public class Player {
 
@@ -183,7 +184,7 @@ public class Player {
             case HERMES -> hermesTeleport = true;
             case ATHENA -> athenaBlockedMove = true;
         }
-        System.out.println("OK");
+        System.out.println(Main.OK);
         canDrawNow = false;
         if (hermesTeleport) {
             if (!canOnlySurrenderMove()) return;
@@ -234,7 +235,10 @@ public class Player {
             System.out.println("ERROR: Allready build!");
             return;
         }
+        canMoveNow = false;
+        hasMoved = true;
         if (demeterBuild) {
+            canEndTurn = true;
             demeterBuild = false;
         } else {
             canBuildNow = false;
@@ -293,7 +297,7 @@ public class Player {
             System.out.println(name + WINS);
             Game.getInstance().setRunning(false);
         } else {
-            System.out.println("OK");
+            System.out.println(Main.OK);
         }
 
 
@@ -313,7 +317,6 @@ public class Player {
             return;
         }
         var oldPosition = figure.getGameField();
-
         //check if figure is part of this player
         if (!figure.getOwner().equals(this)) {
             System.out.println("ERROR: This figure is not part of this player");
@@ -328,13 +331,13 @@ public class Player {
             return;
         }
         if (artemisMove) {
+            canBuildNow = true;
             artemisMove = false;
         } else {
             hasMoved = true;
             canMoveNow = false;
             canBuildNow = true;
         }
-
         if (!Game.getInstance().isReachable(figure, where)) {
             System.out.println("ERROR: This field is not reachable");
             return;
@@ -353,9 +356,8 @@ public class Player {
         if (Game.getInstance().checkWinning()) {
             System.out.println(name + WINS);
         } else {
-            System.out.println("OK");
+            System.out.println(Main.OK);
         }
-
         if (athenaBlockedMove && (figure.getGameField().getHeightSquares() > oldPosition.getHeightSquares())) {
             Game.getInstance().getOpponent(this).setAthenaBlocked(true);
         }

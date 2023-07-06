@@ -2,14 +2,8 @@ package edu.kit.informatik;
 
 public class Gamefield extends Gameobject {
 
-    /**
-     * This variable represents an array of edu.kit.informatik.Gameobject instances.
-     * The array has a fixed length of 4 and is marked as final, 
-     * meaning that it cannot be reassigned or modified after initialization.
-     * It is recommended to access this variable through the getter method,
-     * to ensure encapsulation and maintain data integrity.
-     */
-    private final Gameobject[] gameobjects = new Gameobject[4];
+    private static final int THREE = 3;
+    private static final String COMMA = ",";
 
     /**
      * Creates a new instance of the edu.kit.informatik.Gamefield class.
@@ -40,16 +34,23 @@ public class Gamefield extends Gameobject {
         //if the height is not 4 and it has no player on it
         return !isPlayerOnIt() && !isPillar();
     }
-
+    /**
+     * This variable represents an array of edu.kit.informatik.Gameobject instances.
+     * The array has a fixed length of 4 and is marked as final,
+     * meaning that it cannot be reassigned or modified after initialization.
+     * It is recommended to access this variable through the getter method,
+     * to ensure encapsulation and maintain data integrity.
+     */
+    private final Gameobject[] gameobjects = new Gameobject[4];
 
     /**
      * Returns whether or not the object is on top.
      *
-     * @return true if the object's height squares equal 3 and the player is on it,
-     *         false otherwise.
+     * @return true if the object's height squares equal THREE and the player is on it,
+     * false otherwise.
      */
     public boolean isOnTop() {
-        return getHeightSquares() == 3 && isPlayerOnIt();
+        return getHeightSquares() == THREE && isPlayerOnIt();
     }
 
     /**
@@ -59,7 +60,7 @@ public class Gamefield extends Gameobject {
      */
     public boolean isDomeable() {
         //if the height is 4 and it has no player on it
-        return isBuildable() && getHeightSquares() == 3;
+        return isBuildable() && getHeightSquares() == THREE;
     }
 
     /**
@@ -69,26 +70,13 @@ public class Gamefield extends Gameobject {
      */
     public int getHeightSquares() {
         var height = 0;
-        for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Cuboid) {
+        for (var gameobject : gameobjects) {
+            if (gameobject == null) continue;
+            if (gameobject.getClass().equals(Cuboid.class)) {
                 height++;
             }
         }
         return height;
-    }
-
-    /**
-     * Checks if the object is climable.
-     *
-     * @param apolloMove a boolean representing if Apollo is making the move
-     * @return true if the object is climable, false otherwise
-     */
-    //it is is climable if there is not player on it and its not a pillar
-    public boolean isClimeable(boolean apolloMove) {
-        if (apolloMove) {
-            return !isPillar();
-        }
-        return !isPillar() && !isPlayerOnIt();
     }
 
     /**
@@ -97,8 +85,9 @@ public class Gamefield extends Gameobject {
      * @return true if a playing figure object is found on the game board, false otherwise
      */
     private boolean isPlayerOnIt() {
-        for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Figure) {
+        for (var gameobject : gameobjects) {
+            if (gameobject == null) continue;
+            if (gameobject.getClass().equals(Figure.class)) {
                 return true;
             }
         }
@@ -113,21 +102,8 @@ public class Gamefield extends Gameobject {
     public boolean isPillar() {
         //if last gameobject is a pillar
         for (var object : gameobjects) {
-            if (object instanceof Dome) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * This method checks if any edu.kit.informatik.Playingfigure objects are occupying the game board.
-     *
-     * @return true if there is at least one Playingfigure object on the game board, otherwise false.
-     */
-    public boolean isOccupied() {
-        for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Figure) {
+            if (object == null) continue;
+            if (object.getClass().equals(Dome.class)) {
                 return true;
             }
         }
@@ -153,13 +129,28 @@ public class Gamefield extends Gameobject {
     }
 
     /**
+     * This method checks if any edu.kit.informatik.Playingfigure objects are occupying the game board.
+     *
+     * @return true if there is at least one Playingfigure object on the game board, otherwise false.
+     */
+    public boolean isOccupied() {
+        for (var gameobject : gameobjects) {
+            if (gameobject == null) continue;
+            if (gameobject.getClass().equals(Figure.class)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Retrieves the playing figure from the list of game objects.
      *
      * @return the playing figure object if found in the list, otherwise null.
      */
     public Figure getPlayingFigure() {
         for (Gameobject gameobject : gameobjects) {
-            if (gameobject instanceof Figure) {
+            if (gameobject.getClass().equals(Figure.class)) {
                 return (Figure) gameobject;
             }
         }
@@ -173,7 +164,7 @@ public class Gamefield extends Gameobject {
      */
     public void setFigure(Figure figure) {
         for (int i = 0; i < gameobjects.length; i++) {
-            if (gameobjects[i] == null || gameobjects[i] instanceof Figure) {
+            if (gameobjects[i] == null || gameobjects[i].getClass().equals(Figure.class)) {
                 gameobjects[i] = figure;
                 return;
             }
@@ -193,12 +184,15 @@ public class Gamefield extends Gameobject {
             return "Empty";
         var string = "";
         for (var element : gameobjects) {
-            if (element instanceof Cuboid cube) {
-                string += cube + ",";
-            } else if (element instanceof Dome dome) {
-                string += dome + ",";
-            } else if (element instanceof Figure figure) {
-                string += figure.getName().charAt(0) + ",";
+            if (element.getClass().equals(Cuboid.class)) {
+                Cuboid cube = (Cuboid) element;
+                string += cube + COMMA;
+            } else if (element.getClass().equals(Dome.class)) {
+                Dome dome = (Dome) element;
+                string += dome + COMMA;
+            } else if (element.getClass().equals(Figure.class)) {
+                Figure figure = (Figure) element;
+                string += figure.getName().charAt(0) + COMMA;
             }
 
         }
@@ -216,13 +210,13 @@ public class Gamefield extends Gameobject {
         if (topGameObject == null)
             return '.';
 
-        if (topGameObject instanceof Cuboid) {
+        if (topGameObject.getClass().equals(Cuboid.class)) {
             return 'C';
-        } else if (topGameObject instanceof Dome) {
+        } else if (topGameObject.getClass().equals(Dome.class)) {
             return 'D';
-        } else if (topGameObject instanceof Figure figure) {
+        } else if (topGameObject.getClass().equals(Figure.class)) {
             //Return the first letter of the name
-            return figure.getName().charAt(0);
+            return ((Figure) topGameObject).getName().charAt(0);
         }
 
         return '.';

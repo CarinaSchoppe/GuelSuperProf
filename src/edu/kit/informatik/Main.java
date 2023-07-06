@@ -22,6 +22,11 @@ public class Main {
     private static final String INVALID_NAME = "ERROR: Invalid name!";
     private static final String INVALID_POSITION = "ERROR: Invalid position!";
 
+
+    public static final String OK = "OK";
+    private static final String COMMA = ",";
+    private static final String INVALID_COMMAND = "ERROR: Invalid command";
+
     /**
      * Initializes the setup of the game.
      *
@@ -36,37 +41,37 @@ public class Main {
             return false;
         }
         game = Game.getInstance();
-        var name1 = args[0].split(",")[0];
-        var pos1y = Integer.parseInt(args[0].split(",")[1]);
-        var pos1x = Integer.parseInt(args[0].split(",")[2]);
-        var name2 = args[1].split(",")[0];
-        var pos2y = Integer.parseInt(args[1].split(",")[1]);
-        var pos2x = Integer.parseInt(args[1].split(",")[2]);
+        var name1 = args[0].split(COMMA)[0];
+        var pos1y = Integer.parseInt(args[0].split(COMMA)[1]);
+        var pos1x = Integer.parseInt(args[0].split(COMMA)[2]);
+        var name2 = args[1].split(COMMA)[0];
+        var pos2y = Integer.parseInt(args[1].split(COMMA)[1]);
+        var pos2x = Integer.parseInt(args[1].split(COMMA)[2]);
         var figure1 = new Figure(name1, pos1x, pos1y);
         var figure2 = new Figure(name2, pos2x, pos2y);
         var player1 = new Player(figure1, figure2, "P1");
         figure1.setOwner(player1);
         figure2.setOwner(player1);
-        var name3 = args[2].split(",")[0];
-        var pos3y = Integer.parseInt(args[2].split(",")[1]);
-        var pos3x = Integer.parseInt(args[2].split(",")[2]);
-        var nameFOUR = args[3].split(",")[0];
-        var posFOURy = Integer.parseInt(args[3].split(",")[1]);
-        var posFOURx = Integer.parseInt(args[3].split(",")[2]);
-        var figure3 = new Figure(name3, pos3x, pos3y);
+        var nameTHREE = args[2].split(COMMA)[0];
+        var posTHREEy = Integer.parseInt(args[2].split(COMMA)[1]);
+        var posTHREEx = Integer.parseInt(args[2].split(COMMA)[2]);
+        var nameFOUR = args[THREE].split(COMMA)[0];
+        var posFOURy = Integer.parseInt(args[THREE].split(COMMA)[1]);
+        var posFOURx = Integer.parseInt(args[THREE].split(COMMA)[2]);
+        var figureTHREE = new Figure(nameTHREE, posTHREEx, posTHREEy);
         var figureFOUR = new Figure(nameFOUR, posFOURx, posFOURy);
-        var player2 = new Player(figure3, figureFOUR, "P2");
-        figure3.setOwner(player2);
+        var player2 = new Player(figureTHREE, figureFOUR, "P2");
+        figureTHREE.setOwner(player2);
         figureFOUR.setOwner(player2);
         game.setPlayer1(player1);
         game.setPlayer2(player2);
         game.setCurrentPlayer(player1);
         var a = name1.equals(name2);
-        var b = name1.equals(name3);
+        var b = name1.equals(nameTHREE);
         var c = name1.equals(nameFOUR);
-        var d = name2.equals(name3);
+        var d = name2.equals(nameTHREE);
         var e = name2.equals(nameFOUR);
-        var f = name3.equals(nameFOUR);
+        var f = nameTHREE.equals(nameFOUR);
         if (a || b || c || d || e || f) {
             System.out.println("ERROR: Names must be unique!");
             return false;
@@ -75,11 +80,11 @@ public class Main {
             System.out.println(INVALID_NAME);
             return false;
         }
-        if (!name3.matches(A_TO_Z) || !nameFOUR.matches(A_TO_Z)) {
+        if (!nameTHREE.matches(A_TO_Z) || !nameFOUR.matches(A_TO_Z)) {
             System.out.println(INVALID_NAME);
             return false;
         }
-        if (pos3y > FOUR || posFOURx < 0 || posFOURx > FOUR || posFOURy < 0 || posFOURy > FOUR) {
+        if (posTHREEy > FOUR || posFOURx < 0 || posFOURx > FOUR || posFOURy < 0 || posFOURy > FOUR) {
             System.out.println(INVALID_POSITION);
             return false;
         }
@@ -87,40 +92,40 @@ public class Main {
             System.out.println(INVALID_POSITION);
             return false;
         }
-        return testIt(figure1, figure2, figure3, figureFOUR);
+        return testIt(figure1, figure2, figureTHREE, figureFOUR);
 
     }
 
-    private static boolean testIt(Figure figure1, Figure figure2, Figure figure3, Figure figureFOUR) {
+    private static boolean testIt(Figure figure1, Figure figure2, Figure figureTHREE, Figure figureFOUR) {
 
 
         if (figure1.getX() == figure2.getX() && figure1.getY() == figure2.getY()) {
-            System.out.println("ERROR: Invalid position!");
+            System.out.println(INVALID_POSITION);
             return false;
         }
 
-        if (figure3.getX() == figureFOUR.getX() && figure3.getY() == figureFOUR.getY()) {
-            System.out.println("ERROR: Invalid position!");
+        if (figureTHREE.getX() == figureFOUR.getX() && figureTHREE.getY() == figureFOUR.getY()) {
+            System.out.println(INVALID_POSITION);
             return false;
         }
 
-        if (figure1.getX() == figure3.getX() && figure1.getY() == figure3.getY()) {
-            System.out.println("ERROR: Invalid position!");
+        if (figure1.getX() == figureTHREE.getX() && figure1.getY() == figureTHREE.getY()) {
+            System.out.println(INVALID_POSITION);
             return false;
         }
 
         if (figure1.getX() == figureFOUR.getX() && figure1.getY() == figureFOUR.getY()) {
-            System.out.println("ERROR: Invalid position!");
+            System.out.println(INVALID_POSITION);
             return false;
         }
 
-        if (figure2.getX() == figure3.getX() && figure2.getY() == figure3.getY()) {
-            System.out.println("ERROR: Invalid position!");
+        if (figure2.getX() == figureTHREE.getX() && figure2.getY() == figureTHREE.getY()) {
+            System.out.println(INVALID_POSITION);
             return false;
         }
 
         if (figure2.getX() == figureFOUR.getX() && figure2.getY() == figureFOUR.getY()) {
-            System.out.println("ERROR: Invalid position!");
+            System.out.println(INVALID_POSITION);
             return false;
         }
         return true;
@@ -148,21 +153,22 @@ public class Main {
                 break;
             try {
                 if (line.startsWith("draw-card")) {
-                    if (line.split(" ").length != 2) throw new IllegalArgumentException("ERROR: Invalid command");
+                    if (line.split(" ").length != 2) throw new IllegalArgumentException(INVALID_COMMAND);
                     drawCard(line);
                 } else if (line.equals("list-cards")) {
                     game.listCards();
                 } else if (line.startsWith("move")) {
-                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException("ERROR: Invalid command");
+                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException(INVALID_COMMAND);
                     var figureName = line.split(" ")[1];
                     var x = Integer.parseInt(line.split(" ")[2]);
-                    var y = Integer.parseInt(line.split(" ")[3]);
+                    var y = Integer.parseInt(line.split(" ")[THREE]);
                     move(figureName, y, x);
                 } else if (line.startsWith("build")) {
-                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException("ERROR: Invalid command");
+                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException(INVALID_COMMAND);
+                    if (line.split(" ")[1].length() != 1) throw new IllegalArgumentException(INVALID_COMMAND);
                     var type = BuildObject.findBuildObject(line.split(" ")[1].charAt(0));
                     var x = Integer.parseInt(line.split(" ")[2]);
-                    var y = Integer.parseInt(line.split(" ")[3]);
+                    var y = Integer.parseInt(line.split(" ")[THREE]);
                     build(type, y, x);
                 } else if (line.equals("end-turn")) {
                     game.getCurrentPlayer().endTurn();
@@ -172,15 +178,17 @@ public class Main {
                 } else if (line.equals("bag")) {
                     game.bag();
                 } else if (line.startsWith("cellprint")) {
-                    if (line.split(" ").length != 3) throw new IllegalArgumentException("ERROR: Invalid command");
+                    if (line.split(" ").length != THREE) throw new IllegalArgumentException(INVALID_COMMAND);
                     var x = Integer.parseInt(line.split(" ")[1]);
                     var y = Integer.parseInt(line.split(" ")[2]);
                     game.cellPrint(y, x);
                 } else if (line.equals("print")) {
                     game.print();
                 } else {
-                    System.out.println("ERROR: Invalid command");
+                    System.out.println(INVALID_COMMAND);
                 }
+                if (!Game.getInstance().isRunning()) return;
+
             } catch (Exception e) {
                 System.out.println("ERROR: Unexpected error");
             }
@@ -196,7 +204,7 @@ public class Main {
      */
     private static void build(BuildObject type, int x, int y) {
         if (type == null) {
-            throw new IllegalArgumentException("ERROR: Invalid command");
+            throw new IllegalArgumentException(INVALID_COMMAND);
 
         }
         var field = game.getPlayingField()[y][x];
