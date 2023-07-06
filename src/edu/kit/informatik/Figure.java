@@ -1,5 +1,11 @@
 package edu.kit.informatik;
 
+/**
+ * The edu.kit.informatik.Figure class represents a playing figure in the game.
+ *
+ * @author uyjam
+ * @version 1.0
+ */
 public class Figure extends Gameobject {
 
 

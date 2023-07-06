@@ -1,5 +1,11 @@
 package edu.kit.informatik;
 
+/**
+ * Represents a game object.
+ *
+ * @author uyjam
+ * @version 1.0
+ */
 public abstract class Gameobject {
 
     /**

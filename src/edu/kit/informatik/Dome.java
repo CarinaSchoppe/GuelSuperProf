@@ -1,5 +1,11 @@
 package edu.kit.informatik;
 
+/**
+ * Represents a dome object.
+ *
+ * @author uyjam
+ * @version 1.0
+ */
 public class Dome extends Gameobject {
 
     /**

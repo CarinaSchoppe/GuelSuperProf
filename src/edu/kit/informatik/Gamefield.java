@@ -1,5 +1,11 @@
 package edu.kit.informatik;
 
+/**
+ * This class represents a game field.
+ *
+ * @author uyjam
+ * @version 1.0
+ */
 public class Gamefield extends Gameobject {
 
     /**
@@ -32,22 +38,28 @@ public class Gamefield extends Gameobject {
     }
 
     /**
+     * The FOUR constant represents the value Four.
+     * It is a private static final integer variable.
+     */
+    private static final int FOUR = 4;
+    /**
+     * This variable represents an array of edu.kit.informatik.Gameobject instances.
+     * The array has a fixed length of FOUR and is marked as final,
+     * meaning that it cannot be reassigned or modified after initialization.
+     * It is recommended to access this variable through the getter method,
+     * to ensure encapsulation and maintain data integrity.
+     */
+    private final Gameobject[] gameobjects = new Gameobject[FOUR];
+
+    /**
      * Checks if the tile is buildable.
      *
      * @return true if the tile is buildable, false otherwise.
      */
     public boolean isBuildable() {
-        //if the height is not 4 and it has no player on it
+        //if the height is not FOUR and it has no player on it
         return !isPlayerOnIt() && !isPillar();
     }
-    /**
-     * This variable represents an array of edu.kit.informatik.Gameobject instances.
-     * The array has a fixed length of 4 and is marked as final,
-     * meaning that it cannot be reassigned or modified after initialization.
-     * It is recommended to access this variable through the getter method,
-     * to ensure encapsulation and maintain data integrity.
-     */
-    private final Gameobject[] gameobjects = new Gameobject[4];
 
     /**
      * Returns whether or not the object is on top.
@@ -65,7 +77,7 @@ public class Gamefield extends Gameobject {
      * @return {@code true} if the object is doable, otherwise {@code false}.
      */
     public boolean isDomeable() {
-        //if the height is 4 and it has no player on it
+        //if the height is FOUR and it has no player on it
         return isBuildable() && getHeightSquares() == THREE;
     }
 

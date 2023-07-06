@@ -1,10 +1,12 @@
 package edu.kit.informatik;
 
 /**
- * The edu.kit.informatik.Player class represents a player of the game. Each player has a name and two playing figures.
+ * The edu.kit.informatik.Player class represents a player of the game. 
+ * Each player has a name and two playing figures.
  * The player can draw god cards, move figures, and build objects on the game field.
  *
  * @author uyjam
+ * @version 1.0
  */
 public class Player {
 
@@ -146,7 +148,6 @@ public class Player {
      * @throws IllegalStateException if it is not currently allowed to draw a edu.kit.informatik.Godcard
      */
     public void drawGodCard(Godcard godcard) {
-
         if (!canDrawNow) {
             System.out.println("ERROR: You can't draw a godcard now");
             return;

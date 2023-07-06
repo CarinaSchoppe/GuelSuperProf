@@ -1,5 +1,11 @@
 package edu.kit.informatik;
 
+/**
+ * Represents a build object type.
+ *
+ * @author uyjam
+ * @version 1.0
+ */
 public enum BuildObject {
     /**
      * Cuboid as object for playing game.

@@ -3,6 +3,8 @@ package edu.kit.informatik;
 /**
  * Enumeration representing the available God cards in the game.
  * Each God card has a name associated with it.
+ * @author uyjam
+ * @version 1.0
  */
 
 public enum Godcard {

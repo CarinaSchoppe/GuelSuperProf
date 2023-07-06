@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * The {@code Game} class represents the game object.
+ *
+ * @author uyjam
+ * @version 1.0
+ */
 public class Game {
     /**
      * The {@code instance} variable is a private static variable that represents the singleton instance
@@ -67,7 +73,7 @@ public class Game {
      */
     private static final int FOUR = 4;
     /**
-     * The value of THREE is 3.
+     * The value of THREE is THREE.
      */
     private static final int THREE = 3;
     /**
@@ -175,14 +181,14 @@ public class Game {
      *
      * @param field the field whose adjacent fields are to be retrieved
      * @return a 2D array of the adjacent fields of the given field. The array contains a total of 9 elements
-     * arranged in a 3x3 grid, where the given field occupies the center position.
+     * arranged in a THREExTHREE grid, where the given field occupies the center position.
      * If a field does not exist at any adjacent position, the corresponding element of the array will be null.
      */
     //returns a 2d array of the adjecent fields of the given coordiantes
     public Gamefield[][] adjacentFields(Gamefield field) {
         var x = field.getX();
         var y = field.getY();
-        Gamefield[][] adjacentFields = new Gamefield[3][3];
+        Gamefield[][] adjacentFields = new Gamefield[THREE][THREE];
 
         //top left
         //check if the field exists
@@ -404,7 +410,7 @@ public class Game {
 
         //sort godcards lexiographically by their name
         godcards.sort(Comparator.comparing(Godcard::getName));
-        //print them like this: Name1,Name2,Name3,NameFOUR
+        //print them like this: Name1,Name2,NameTHREE,NameFOUR
         String stringBuilder = "";
         for (Godcard godcard : godcards) {
             stringBuilder += godcard.getName() + ",";

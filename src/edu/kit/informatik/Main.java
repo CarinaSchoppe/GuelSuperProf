@@ -2,6 +2,12 @@ package edu.kit.informatik;
 
 import java.util.Scanner;
 
+/**
+ * This class represents the main class of the game.
+ *
+ * @author uyjam
+ * @version 1.0
+ */
 public class Main {
 
     /**
