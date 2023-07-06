@@ -149,7 +149,8 @@ public class Gamefield extends Gameobject {
      * @return the playing figure object if found in the list, otherwise null.
      */
     public Figure getPlayingFigure() {
-        for (Gameobject gameobject : gameobjects) {
+        for (var gameobject : gameobjects) {
+            if (gameobject == null) continue;
             if (gameobject.getClass().equals(Figure.class)) {
                 return (Figure) gameobject;
             }
@@ -184,6 +185,7 @@ public class Gamefield extends Gameobject {
             return "Empty";
         var string = "";
         for (var element : gameobjects) {
+            if (element == null) continue;
             if (element.getClass().equals(Cuboid.class)) {
                 Cuboid cube = (Cuboid) element;
                 string += cube + COMMA;
@@ -209,13 +211,11 @@ public class Gamefield extends Gameobject {
         var topGameObject = getTopGameObject();
         if (topGameObject == null)
             return '.';
-
         if (topGameObject.getClass().equals(Cuboid.class)) {
             return 'C';
         } else if (topGameObject.getClass().equals(Dome.class)) {
             return 'D';
         } else if (topGameObject.getClass().equals(Figure.class)) {
-            //Return the first letter of the name
             return ((Figure) topGameObject).getName().charAt(0);
         }
 
