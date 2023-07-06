@@ -3,8 +3,8 @@ package edu.kit.informatik;
 /**
  * The edu.kit.informatik.Player class represents a player of the game. Each player has a name and two playing figures.
  * The player can draw god cards, move figures, and build objects on the game field.
+ @author Sedef
  */
-
 public class Player {
 
 
