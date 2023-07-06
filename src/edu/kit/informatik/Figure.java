@@ -1,7 +1,7 @@
-package edu.kit;
+package edu.kit.informatik;
 
 /**
- * The edu.kit.Figure class represents a playing figure in the game.
+ * The edu.kit.informatik.Figure class represents a playing figure in the game.
  *
  * @author uyjam
  * @version 1.0
@@ -72,7 +72,7 @@ public class Figure extends Gameobject {
     /**
      * Retrieves the owner of the object.
      *
-     * @return The owner of the object as a edu.kit.Player.
+     * @return The owner of the object as a edu.kit.informatik.Player.
      */
     public Player getOwner() {
         return owner;
