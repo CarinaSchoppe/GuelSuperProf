@@ -1,4 +1,4 @@
-package edu.kit.informatik;
+package edu.kit;
 
 /**
  * Represents a build object type.
@@ -16,14 +16,14 @@ public enum BuildObject {
      */
     DOME('D');
     /**
-     * The symbol used to identify the edu.kit.informatik.BuildObject.
+     * The symbol used to identify the edu.kit.BuildObject.
      */
     private final char symbol;
 
     /**
-     * Constructs a new edu.kit.informatik.BuildObject with the specified symbol.
+     * Constructs a new edu.kit.BuildObject with the specified symbol.
      *
-     * @param symbol The symbol used to identify the edu.kit.informatik.BuildObject.
+     * @param symbol The symbol used to identify the edu.kit.BuildObject.
      */
 
     BuildObject(char symbol) {
@@ -31,10 +31,10 @@ public enum BuildObject {
     }
 
     /**
-     * Finds a edu.kit.informatik.BuildObject based on a given symbol.
+     * Finds a edu.kit.BuildObject based on a given symbol.
      *
-     * @param symbol The symbol used to identify the edu.kit.informatik.BuildObject.
-     * @return The corresponding edu.kit.informatik.BuildObject, or null if no matching symbol is found.
+     * @param symbol The symbol used to identify the edu.kit.BuildObject.
+     * @return The corresponding edu.kit.BuildObject, or null if no matching symbol is found.
      */
     public static BuildObject findBuildObject(char symbol) {
         for (BuildObject buildObject : BuildObject.values()) {
@@ -46,9 +46,9 @@ public enum BuildObject {
     }
 
     /**
-     * Returns the symbol used to identify the edu.kit.informatik.BuildObject.
+     * Returns the symbol used to identify the edu.kit.BuildObject.
      *
-     * @return The symbol used to identify the edu.kit.informatik.BuildObject.
+     * @return The symbol used to identify the edu.kit.BuildObject.
      */
     public char getSymbol() {
         return symbol;
