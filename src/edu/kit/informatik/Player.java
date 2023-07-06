@@ -158,8 +158,8 @@ public class Player {
             return;
         }
 
-        if (godCardsDrawn > THREE) {
-            System.out.println("ERROR: You can only draw 2 godcards");
+        if (godCardsDrawn >= THREE) {
+            System.out.println("ERROR: You can only draw 3 godcards");
             return;
         }
         Game.getInstance().getGodcards().remove(godcard);
