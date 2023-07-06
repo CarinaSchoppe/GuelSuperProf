@@ -291,6 +291,7 @@ public class Player {
 
         if (Game.getInstance().checkWinning()) {
             System.out.println(name + WINS);
+            Game.getInstance().setRunning(false);
         } else {
             System.out.println("OK");
         }
