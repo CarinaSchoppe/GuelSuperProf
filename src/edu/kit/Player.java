@@ -1,7 +1,7 @@
-package edu.kit.informatik;
+package edu.kit;
 
 /**
- * The edu.kit.informatik.Player class represents a player of the game. 
+ * The edu.kit.Player class represents a player of the game. 
  * Each player has a name and two playing figures.
  * The player can draw god cards, move figures, and build objects on the game field.
  *
@@ -144,8 +144,8 @@ public class Player {
     /**
      * Draws a Godcard for the player.
      *
-     * @param godcard the edu.kit.informatik.Godcard to be drawn
-     * @throws IllegalStateException if it is not currently allowed to draw a edu.kit.informatik.Godcard
+     * @param godcard the edu.kit.Godcard to be drawn
+     * @throws IllegalStateException if it is not currently allowed to draw a edu.kit.Godcard
      */
     public void drawGodCard(Godcard godcard) {
         if (!canDrawNow) {

@@ -1,4 +1,4 @@
-package edu.kit.informatik;
+package edu.kit;
 
 /**
  * This class represents a game field.
@@ -18,14 +18,13 @@ public class Gamefield extends Gameobject {
     private static final String COMMA = ",";
 
     /**
-     * Creates a new instance of the edu.kit.informatik.Gamefield class.
-     *
-     * @param x the width of the game field
-     * @param y the height of the game field
+     * This variable represents an array of edu.kit.Gameobject instances.
+     * The array has a fixed length of FOUR and is marked as final,
+     * meaning that it cannot be reassigned or modified after initialization.
+     * It is recommended to access this variable through the getter method,
+     * to ensure encapsulation and maintain data integrity.
      */
-    public Gamefield(int x, int y) {
-        super(x, y);
-    }
+    private final Gameobject[] gameobjects = new Gameobject[FOUR];
 
 
     /**
@@ -43,13 +42,14 @@ public class Gamefield extends Gameobject {
      */
     private static final int FOUR = 4;
     /**
-     * This variable represents an array of edu.kit.informatik.Gameobject instances.
-     * The array has a fixed length of FOUR and is marked as final,
-     * meaning that it cannot be reassigned or modified after initialization.
-     * It is recommended to access this variable through the getter method,
-     * to ensure encapsulation and maintain data integrity.
+     * Creates a new instance of the edu.kit.Gamefield class.
+     *
+     * @param x the width of the game field
+     * @param y the height of the game field
      */
-    private final Gameobject[] gameobjects = new Gameobject[FOUR];
+    public Gamefield(int x, int y) {
+        super(x, y);
+    }
 
     /**
      * Checks if the tile is buildable.
@@ -82,9 +82,9 @@ public class Gamefield extends Gameobject {
     }
 
     /**
-     * Returns the number of edu.kit.informatik.Cuboid objects in the gameobjects list.
+     * Returns the number of edu.kit.Cuboid objects in the gameobjects list.
      *
-     * @return the number of edu.kit.informatik.Cuboid objects in the gameobjects list.
+     * @return the number of edu.kit.Cuboid objects in the gameobjects list.
      */
     public int getHeightSquares() {
         var height = 0;
