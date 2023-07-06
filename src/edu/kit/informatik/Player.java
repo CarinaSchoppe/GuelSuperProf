@@ -171,13 +171,13 @@ public class Player {
             case HERMES -> hermesTeleport = true;
             case ATHENA -> athenaBlockedMove = true;
         }
-        System.out.println(Main.OK);
         canDrawNow = false;
         if (hermesTeleport) {
             if (!canOnlySurrenderMove()) return;
             canMoveNow = false;
             canBuildNow = false;
         }
+        System.out.println(Main.OK);
         godCardsDrawn++;
     }
 

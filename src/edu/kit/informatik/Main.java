@@ -166,6 +166,12 @@ public class Main {
     }
 
     /**
+     * The WHITESPACE variable represents a single whitespace character.
+     * It is a private static final String and its value is " ".
+     */
+    private static final String WHITESPACE = " ";
+
+    /**
      * The main method of the program.
      * It handles user input and executes corresponding game actions.
      * @param args The command line arguments.
@@ -186,22 +192,22 @@ public class Main {
                 break;
             try {
                 if (line.startsWith("draw-card")) {
-                    if (line.split(" ").length != 2) throw new IllegalArgumentException(INVALID_COMMAND);
+                    if (line.split(WHITESPACE).length != 2) throw new IllegalArgumentException(INVALID_COMMAND);
                     drawCard(line);
                 } else if (line.equals("list-cards")) {
                     game.listCards();
                 } else if (line.startsWith("move")) {
-                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException(INVALID_COMMAND);
-                    var figureName = line.split(" ")[1];
-                    var x = Integer.parseInt(line.split(" ")[2]);
-                    var y = Integer.parseInt(line.split(" ")[THREE]);
+                    if (line.split(WHITESPACE).length != FOUR) throw new IllegalArgumentException(INVALID_COMMAND);
+                    var figureName = line.split(WHITESPACE)[1];
+                    var x = Integer.parseInt(line.split(WHITESPACE)[2]);
+                    var y = Integer.parseInt(line.split(WHITESPACE)[THREE]);
                     move(figureName, y, x);
                 } else if (line.startsWith("build")) {
-                    if (line.split(" ").length != FOUR) throw new IllegalArgumentException(INVALID_COMMAND);
-                    if (line.split(" ")[1].length() != 1) throw new IllegalArgumentException(INVALID_COMMAND);
-                    var type = BuildObject.findBuildObject(line.split(" ")[1].charAt(0));
-                    var x = Integer.parseInt(line.split(" ")[2]);
-                    var y = Integer.parseInt(line.split(" ")[THREE]);
+                    if (line.split(WHITESPACE).length != FOUR) throw new IllegalArgumentException(INVALID_COMMAND);
+                    if (line.split(WHITESPACE)[1].length() != 1) throw new IllegalArgumentException(INVALID_COMMAND);
+                    var type = BuildObject.findBuildObject(line.split(WHITESPACE)[1].charAt(0));
+                    var x = Integer.parseInt(line.split(WHITESPACE)[2]);
+                    var y = Integer.parseInt(line.split(WHITESPACE)[THREE]);
                     build(type, y, x);
                 } else if (line.equals("end-turn")) {
                     game.getCurrentPlayer().endTurn();
@@ -211,9 +217,9 @@ public class Main {
                 } else if (line.equals("bag")) {
                     game.bag();
                 } else if (line.startsWith("cellprint")) {
-                    if (line.split(" ").length != THREE) throw new IllegalArgumentException(INVALID_COMMAND);
-                    var x = Integer.parseInt(line.split(" ")[1]);
-                    var y = Integer.parseInt(line.split(" ")[2]);
+                    if (line.split(WHITESPACE).length != THREE) throw new IllegalArgumentException(INVALID_COMMAND);
+                    var x = Integer.parseInt(line.split(WHITESPACE)[1]);
+                    var y = Integer.parseInt(line.split(WHITESPACE)[2]);
                     game.cellPrint(y, x);
                 } else if (line.equals("print")) {
                     game.print();
@@ -263,7 +269,7 @@ public class Main {
      * @param line The input line containing the command and card symbol.
      */
     private static void drawCard(String line) {
-        var cardSymbol = line.split(" ")[1];
+        var cardSymbol = line.split(WHITESPACE)[1];
         Game.getInstance().getCurrentPlayer().drawGodCard(Godcard.findGodcard(cardSymbol));
     }
 }

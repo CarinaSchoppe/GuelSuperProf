@@ -266,6 +266,13 @@ public class Game {
     }
 
     /**
+     * Represents a whitespace character.
+     *
+     * @see java.lang.String
+     */
+    private static final String WHITESPACE = " ";
+    
+    /**
      * Prints the playing field.
      */
     public void print() {
@@ -273,32 +280,12 @@ public class Game {
             var rowString = "";
             for (var field : row) {
                 var lastCharacter = field.getTopCharacter();
-                rowString += lastCharacter + " ";
+                rowString += lastCharacter + WHITESPACE;
             }
             rowString = rowString.substring(0, rowString.length() - 1);
             System.out.println(rowString);
         }
     }
-
-
-    /**
-     * Checks if the given command is "quit".
-     *
-     * @param command the command to check
-     * @return true if the command is "quit", otherwise false.
-     * @throws IllegalArgumentException if the command is not exactly "quit"
-     */
-    public boolean quit(String command) {
-        if (!command.startsWith("quit"))
-            return false;
-        if (!command.equalsIgnoreCase("quit")) {
-
-            System.out.println("ERROR: Invalid command");
-            return false;
-        }
-        return true;
-    }
-
 
     /**
      * Checks if a player has won the game.
@@ -362,14 +349,6 @@ public class Game {
 
     }
 
-    /**
-     * Retrieves the player1 object.
-     *
-     * @return the player1 object.
-     */
-    public Player getPlayer1() {
-        return player1;
-    }
 
     /**
      * Sets the value of player1.
@@ -398,45 +377,74 @@ public class Game {
         this.player2 = player2;
     }
 
+    /**
+     * Returns the current running state of the game.
+     *
+     * @return true if the game is currently running, false otherwise
+     */
     public boolean isRunning() {
         return isRunning;
     }
 
+    /**
+     * Sets the running state of the game.
+     *
+     * @param running the new running state (true if the game is running, false if it is not)
+     */
     public void setRunning(boolean running) {
         isRunning = running;
     }
 
+    /**
+     * Lists the names of all the god cards in the game.
+     */
     public void listCards() {
-
-        //sort godcards lexiographically by their name
         godcards.sort(Comparator.comparing(Godcard::getName));
-        //print them like this: Name1,Name2,NameTHREE,NameFOUR
-        String stringBuilder = "";
+        String stringCreation = "";
         for (Godcard godcard : godcards) {
-            stringBuilder += godcard.getName() + ",";
+            stringCreation += godcard.getName() + ",";
         }
-        stringBuilder = stringBuilder.substring(0, stringBuilder.length() - 1);
-        System.out.println(stringBuilder);
+        stringCreation = stringCreation.substring(0, stringCreation.length() - 1);
+        System.out.println(stringCreation);
     }
 
+    /**
+     * Returns the list of god cards in the game.
+     * @return the list of god cards
+     */
     public List<Godcard> getGodcards() {
         return godcards;
     }
 
-
+    /**
+     * Returns the list of cuboids.
+     * @return the list of cuboids
+     */
     public ArrayList<Cuboid> getCuboidList() {
         return cuboidList;
     }
 
+    /**
+     * Returns the list of dome objects in the game.
+     * @return the list of dome objects
+     */
     public ArrayList<Dome> getDomeList() {
         return domeList;
     }
 
+    /**
+     * Returns the playing field of the game.
+     * @return The playing field represented as a 2D array of Gamefield objects.
+     */
     public Gamefield[][] getPlayingField() {
         return playingField;
     }
 
-
+    /**
+     * Returns the Figure object with the given name.
+     * @param figureName the name of the figure to retrieve
+     * @return the Figure object with the given name, or null if the figure name is invalid
+     */
     public Figure getFigure(String figureName) {
         for (var player : new Player[]{player1, player2}) {
             for (var figure : player.getFigures()) {
