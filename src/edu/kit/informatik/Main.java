@@ -1,4 +1,4 @@
-package edu.kit;
+package edu.kit.informatik;
 
 import java.util.Scanner;
 

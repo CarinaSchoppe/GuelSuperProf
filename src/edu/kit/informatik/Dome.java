@@ -1,4 +1,4 @@
-package edu.kit;
+package edu.kit.informatik;
 
 /**
  * Represents a dome object.
@@ -17,10 +17,10 @@ public class Dome extends Gameobject {
     private static final BuildObject TYPE = BuildObject.DOME;
 
     /**
-     * Constructs a new edu.kit.Dome object with the specified coordinates.
+     * Constructs a new edu.kit.informatik.Dome object with the specified coordinates.
      *
-     * @param x the x-coordinate of the edu.kit.Dome object
-     * @param y the y-coordinate of the edu.kit.Dome object
+     * @param x the x-coordinate of the edu.kit.informatik.Dome object
+     * @param y the y-coordinate of the edu.kit.informatik.Dome object
      */
     public Dome(int x, int y) {
         super(x, y);

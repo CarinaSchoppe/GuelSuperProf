@@ -1,4 +1,4 @@
-package edu.kit;
+package edu.kit.informatik;
 
 /**
  * Enumeration representing the available God cards in the game.
@@ -35,24 +35,24 @@ public enum Godcard {
     HERMES("Hermes");
 
     /**
-     * The name of the edu.kit.Godcard.
+     * The name of the edu.kit.informatik.Godcard.
      */
     private final String name;
 
     /**
-     * Constructs a new edu.kit.Godcard with the given name.
+     * Constructs a new edu.kit.informatik.Godcard with the given name.
      *
-     * @param name the name of the edu.kit.Godcard
+     * @param name the name of the edu.kit.informatik.Godcard
      */
     Godcard(String name) {
         this.name = name;
     }
 
     /**
-     * Finds a edu.kit.Godcard based on its name.
+     * Finds a edu.kit.informatik.Godcard based on its name.
      *
-     * @param name the name of the edu.kit.Godcard to find
-     * @return the Godcard matching the given name, or null if no matching edu.kit.Godcard is found
+     * @param name the name of the edu.kit.informatik.Godcard to find
+     * @return the Godcard matching the given name, or null if no matching edu.kit.informatik.Godcard is found
      */
     public static Godcard findGodcard(String name) {
         for (Godcard godcard : Godcard.values()) {
@@ -64,8 +64,8 @@ public enum Godcard {
     }
 
     /**
-     * Returns the name of the edu.kit.Godcard.
-     * @return the name of the edu.kit.Godcard
+     * Returns the name of the edu.kit.informatik.Godcard.
+     * @return the name of the edu.kit.informatik.Godcard
      */
     public String getName() {
         return name;

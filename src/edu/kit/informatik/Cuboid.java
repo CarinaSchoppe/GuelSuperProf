@@ -1,4 +1,4 @@
-package edu.kit;
+package edu.kit.informatik;
 
 /**
  * Represents a cuboid object.
@@ -15,7 +15,7 @@ public class Cuboid extends Gameobject {
     private static final BuildObject TYPE = BuildObject.CUBOID;
 
     /**
-     * Constructs a edu.kit.Cuboid object with the given dimensions.
+     * Constructs a edu.kit.informatik.Cuboid object with the given dimensions.
      *
      * @param x the length of the cuboid
      * @param y the width of the cuboid

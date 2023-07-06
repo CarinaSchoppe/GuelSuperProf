@@ -1,4 +1,4 @@
-package edu.kit;
+package edu.kit.informatik;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,7 +18,7 @@ public class Game {
      */
     private static Game instance = null;
     /**
-     * A private final instance variable representing a list of edu.kit.Cuboid objects.
+     * A private final instance variable representing a list of edu.kit.informatik.Cuboid objects.
      *
      * @see Cuboid
      */
@@ -34,7 +34,7 @@ public class Game {
      */
     private final List<Godcard> godcards = new ArrayList<>(List.of(Godcard.values()));
     /**
-     * The domeList variable represents a private, final ArrayList of type edu.kit.Dome.
+     * The domeList variable represents a private, final ArrayList of type edu.kit.informatik.Dome.
      *
      * @see Dome
      */
@@ -106,9 +106,9 @@ public class Game {
     }
 
     /**
-     * Gets the instance of the edu.kit.Game class.
+     * Gets the instance of the edu.kit.informatik.Game class.
      *
-     * @return The instance of the edu.kit.Game class.
+     * @return The instance of the edu.kit.informatik.Game class.
      */
     public static Game getInstance() {
         if (instance == null) {
@@ -374,16 +374,16 @@ public class Game {
     /**
      * Sets the value of player1.
      *
-     * @param player1 The edu.kit.Player object to set as player1.
+     * @param player1 The edu.kit.informatik.Player object to set as player1.
      */
     public void setPlayer1(Player player1) {
         this.player1 = player1;
     }
 
     /**
-     * Retrieves the edu.kit.Player 2 object.
+     * Retrieves the edu.kit.informatik.Player 2 object.
      *
-     * @return the edu.kit.Player 2 object.
+     * @return the edu.kit.informatik.Player 2 object.
      */
     public Player getPlayer2() {
         return player2;

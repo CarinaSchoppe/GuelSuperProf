@@ -1,4 +1,4 @@
-package edu.kit;
+package edu.kit.informatik;
 
 /**
  * Represents a game object.
@@ -23,10 +23,10 @@ public abstract class Gameobject {
     private int y;
 
     /**
-     * Protected constructor for creating a edu.kit.Gameobject object.
+     * Protected constructor for creating a edu.kit.informatik.Gameobject object.
      *
-     * @param x the x-coordinate of the edu.kit.Gameobject
-     * @param y the y-coordinate of the edu.kit.Gameobject
+     * @param x the x-coordinate of the edu.kit.informatik.Gameobject
+     * @param y the y-coordinate of the edu.kit.informatik.Gameobject
      */
     protected Gameobject(int x, int y) {
         this.x = x;
